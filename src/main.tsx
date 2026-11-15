@@ -4,6 +4,8 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import "./styles.css";
 import Landing from "./Landing";
 import Guide from "./Guide";
+import Institutions from "./Institutions";
+import Trust from "./Trust";
 import { AppShell } from "./ui";
 import { Home, Check, Plan, Learn, Tools } from "./AppPages";
 import { Present, Room } from "./Present";
@@ -27,6 +29,8 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<LegacyHash />} />
         <Route path="/how-it-works" element={<Guide />} />
+        <Route path="/institutions" element={<Institutions />} />
+        <Route path="/trust" element={<Trust />} />
         <Route path="/app" element={<AppShell />}>
           <Route index element={<Home />} />
           <Route path="check" element={<Check />} />
