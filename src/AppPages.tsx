@@ -3,7 +3,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Row, { PlantIcon } from "./Row";
 import { AppTop, Html, Fine } from "./ui";
-import { STAGES, PARTS, SEED, CUR, Q, SCORED, compute, levelWord, BUCKETS, roadmap, TRACKS, LESSONS, SITTINGS, SLIDES, REFS, APPROVAL, ROOM, ORIGIN } from "./content";
+import { STAGES, PARTS, SEED, CUR, Q, SCORED, compute, levelWord, BUCKETS, roadmap, TRACKS, LESSONS, SITTINGS, SLIDES, REFS, APPROVAL, ROOM, ORIGIN, money } from "./content";
 import { load, save, useStore, result, saveCheck, api, subscribePush, uuid } from "./store";
 
 const fmt = (d, o) => new Date(d).toLocaleDateString(undefined, o || { weekday: "short", day: "numeric", month: "short" });
@@ -166,15 +166,15 @@ export function Check() {
       <div className="progress"><button className="linkbtn" onClick={() => setStep(step - 1)}>← Back</button><div className="track" role="progressbar" aria-label="Progress" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: pct + "%" }} /></div></div>
       <section className="stack" key={q.id} style={{ gap: 16, animation: "rise .5s cubic-bezier(.16,1,.3,1) both" }}>
         <span className="chip">{q.setup ? q.tag : `${PARTS[q.part].name} · ${idx} of ${SCORED}`}</span>
-        <h2 className="qtitle" id="qh">{q.q}</h2>
-        {q.help && <p className="muted">{q.help}</p>}
+        <h2 className="qtitle" id="qh">{money(q.q, answers.country)}</h2>
+        {q.help && <p className="muted">{money(q.help, answers.country)}</p>}
         <div className="opts" role="group" aria-labelledby="qh">
           {opts.map((o, i) => {
             const on = q.multi ? (cur || []).includes(o.v) : cur === o.v;
             return <button key={i} className={"opt" + (q.multi ? " multi" : "")} aria-pressed={on} onClick={() => {
               if (q.multi) { const set = new Set(cur || []); set.has(o.v) ? set.delete(o.v) : set.add(o.v); setA({ ...answers, [q.id]: [...set] }); }
               else { const next = { ...answers, [q.id]: o.v }; if (q.id === "country") delete next.band; setA(next); setTimeout(() => advance(next), 220); }
-            }}><i className="dot" /><span>{o.l}{o.s && <small>{o.s}</small>}</span></button>;
+            }}><i className="dot" /><span>{o.l}{o.s && <small>{money(o.s, answers.country)}</small>}</span></button>;
           })}
         </div>
         {q.multi && <button className="btn block" onClick={() => { const next = { ...answers, docs: answers.docs || [] }; setA(next); advance(next); }}>{(cur || []).length ? "See my result" : "None of these yet · see my result"}</button>}

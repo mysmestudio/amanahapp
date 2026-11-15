@@ -65,16 +65,16 @@ const Q = [
    opts:[{l:"One",s:"If it stops, everything stops",v:20},{l:"Two",v:65},{l:"Three or more",v:100}]},
   {id:"steady", part:"income", q:"Do you know how much is coming in each month?",
    opts:[{l:"No, it goes up and down a lot",v:20},{l:"Mostly, with some surprises",v:60},{l:"Yes, it's very predictable",v:100}]},
-  {id:"left", part:"surplus", q:"At the end of a normal month, what is left?", help:"After all spending: food, rent, school fees, transport, family support.",
-   opts:[{l:"We run out before month end",s:"We borrow or ask for help",v:0},{l:"Almost nothing",v:15},{l:"A little, less than 1 in every 10",v:45},{l:"About 1 to 2 in every 10",v:75},{l:"More than 2 in every 10",v:100}]},
+  {id:"left", part:"surplus", q:"At the end of a normal month, how much is left?", help:"Think of every {100} that comes into your home. After food, rent, school fees, transport and family support, how much of it is still there?",
+   opts:[{l:"Nothing, we run out",s:"We borrow or ask for help to finish the month",v:0},{l:"Almost nothing",s:"Less than {5} out of every {100}",v:15},{l:"A little",s:"About {5} to {10} out of every {100}",v:45},{l:"A good amount",s:"About {10} to {20} out of every {100}",v:75},{l:"A lot",s:"More than {20} out of every {100}",v:100}]},
   {id:"first", part:"surplus", q:"When money comes in, what happens to savings?",
    opts:[{l:"We save whatever is left, if anything",v:20},{l:"Sometimes we put savings aside first",v:55},{l:"Savings leave automatically on payday",s:"Before we spend anything",v:100}]},
   {id:"runway", part:"safety", q:"If your main income stopped today, how long could you pay for the basics?", help:"Using only money you can get to quickly. No borrowing, no selling things.",
    opts:[{l:"Less than two weeks",v:0},{l:"About a month",v:30},{l:"One to three months",v:60},{l:"Three to six months",v:85},{l:"More than six months",v:100}]},
   {id:"cover", part:"safety", q:"If someone fell seriously ill, is there health cover?", help:"Health insurance, an HMO, or takaful.",
    opts:[{l:"No cover",v:0},{l:"Some of us are covered",v:50},{l:"Everyone is covered",v:100}]},
-  {id:"debtshare", part:"debt", q:"Out of every 10 you earn, how much goes to paying back debts?", help:"Loans, credit, salary advances, money owed to friends or family.",
-   opts:[{l:"Nothing, we have no debts",v:100},{l:"Less than 1 or 2",v:75},{l:"About 2 to 3",v:40},{l:"More than 3",v:10}]},
+  {id:"debtshare", part:"debt", q:"How much of your monthly income goes to paying back debts?", help:"Think of every {100} that comes in. Count loans, credit, salary advances and money owed to friends or family.",
+   opts:[{l:"Nothing",s:"We have no debts",v:100},{l:"A little",s:"Less than {15} out of every {100}",v:75},{l:"A fair amount",s:"About {15} to {35} out of every {100}",v:40},{l:"A lot",s:"More than {35} out of every {100}",v:10}]},
   {id:"borrow", part:"debt", q:"Do you borrow to pay for normal things?", help:"Rent, food, school fees, transport.",
    opts:[{l:"Often",v:0},{l:"Sometimes",v:45},{l:"Never",v:100}]},
   {id:"where", part:"productive", q:"Where are your savings mostly kept?",
@@ -322,3 +322,8 @@ export const REFS = {
  30:["General practice: measure, act, measure again"]
 };
 export const APPROVAL = {by:"Eb'rahim Durosimi", date:"15 November 2026", note:"Qur'an and hadith are given as meanings, not verbatim translations. For personal rulings, especially inheritance, consult a qualified scholar."};
+
+/* Turns "{20}" into a real amount in the family's currency, e.g. ₦20,000 of every ₦100,000. */
+const UNIT = { NG:["₦",100000], US:["$",1000], UK:["£",1000], OTHER:["$",1000] };
+export function money(text, country){ if (!text) return text; const [sym, unit] = UNIT[country || "NG"] || UNIT.NG;
+  return text.replace(/\{(\d+)\}/g, (_, p) => sym + Math.round(unit * (+p) / 100).toLocaleString("en-NG")); }
