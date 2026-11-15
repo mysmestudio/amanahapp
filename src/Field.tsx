@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
-/* The Granary field: grain that sways under a sky that follows the time of day.
+/* The Seedline field: grain that sways under a sky that follows the time of day.
    grow (0..1) sets how tall the field stands. stalks (scores 0..100) draws one stalk per household instead. */
 type Sky = "dawn" | "day" | "golden" | "dusk" | "night";
-const SKIES: Record<Sky, { stops: [string, string, string]; sun: string; grain: [number, number, number]; stem: [number, number, number]; shade: string }> = {
+export const SKIES: Record<Sky, { stops: [string, string, string]; sun: string; grain: [number, number, number]; stem: [number, number, number]; shade: string }> = {
   dawn:   { stops: ["#E9946A", "#F6CFA0", "#FFF0DA"], sun: "255,240,215", grain: [236, 186, 110], stem: [196, 150, 84], shade: "70,38,6" },
   day:    { stops: ["#7DB6DE", "#CBE4F1", "#FFF2D6"], sun: "255,252,235", grain: [226, 182, 96],  stem: [186, 146, 70], shade: "40,40,20" },
   golden: { stops: ["#E3913A", "#F5C46A", "#FFF1D2"], sun: "255,248,225", grain: [240, 190, 100], stem: [200, 150, 70], shade: "70,38,6" },

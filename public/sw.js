@@ -3,7 +3,7 @@ self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
 self.addEventListener('push', e => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (x) { d = { body: e.data && e.data.text() }; }
-  const title = d.title || 'Granary';
+  const title = d.title || 'Seedline';
   e.waitUntil(self.registration.showNotification(title, {
     body: d.body || 'Your next lesson is ready.',
     icon: '/icon-192.png', badge: '/icon-192.png',

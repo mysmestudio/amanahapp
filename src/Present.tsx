@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useEffect, useState } from "react";
-import Field from "./Field";
+import Row from "./Row";
 import { Brand, Html } from "./ui";
 import RoomBoard from "./RoomBoard";
 import { SLIDES } from "./content";
@@ -26,7 +26,7 @@ export function Present() {
       <div className="stage-main">
         {isTitle ? (
           <div className="stage-title" key={s.id}>
-            <Field shade />
+            <Row hero shade grow={.82} />
             <div><span className="small" style={{ fontWeight: 700, color: "#FFE4A8" }}>{s.kick}</span><h2 className="h-lg" style={{ maxWidth: "18ch" }}>{s.title}</h2><Html html={s.body()} className="s-body" /></div>
           </div>
         ) : (

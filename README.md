@@ -1,4 +1,4 @@
-# Granary
+# Seedline
 
 Family wealth planning: from surviving to building. A four-minute family check, a plan made together, a self-paced course ("From Surviving to Building") and practical tools. Launched at the MSMMI Marriage Workshop 2026.
 

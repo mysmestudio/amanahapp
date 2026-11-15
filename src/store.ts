@@ -2,15 +2,15 @@
 import { useEffect, useState } from "react";
 import { CFG, ROOM, compute } from "./content";
 
-const KEY = "granary:";
+const KEY = "seedline:";
 const listeners = new Set<() => void>();
 export const load = (k, d = null) => { try { const v = JSON.parse(localStorage.getItem(KEY + k)); return v ?? d; } catch { return d; } };
 export const save = (k, v) => { try { localStorage.setItem(KEY + k, JSON.stringify(v)); } catch {} listeners.forEach(f => f()); };
 
 /* migrate from the workshop prototype once */
-(function migrate(){ try { if (!localStorage.getItem(KEY + "last") && localStorage.getItem("amanahpath:last")) {
-  ["last","history","picks","course","legacy"].forEach(k => { const v = localStorage.getItem("amanahpath:" + k); if (v) localStorage.setItem(KEY + k, v); });
-} } catch {} })();
+(function migrate(){ try { for (const old of ["granary:", "amanahpath:"]) { if (!localStorage.getItem(KEY + "last") && localStorage.getItem(old + "last")) {
+  ["last","history","picks","course","legacy"].forEach(k => { const v = localStorage.getItem(old + k); if (v) localStorage.setItem(KEY + k, v); });
+} } } catch {} })();
 
 export function useStore<T>(k: string, d: T = null): [T, (v: T) => void] {
   const [, force] = useState(0);

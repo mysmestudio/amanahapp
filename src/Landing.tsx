@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Link } from "react-router-dom";
-import Field, { currentSky } from "./Field";
+import { currentSky } from "./Field";
+import Row, { PlantIcon } from "./Row";
 import { Brand } from "./ui";
 import { SEED, TRACKS, STAGES } from "./content";
 import { result } from "./store";
@@ -11,20 +12,20 @@ export default function Landing() {
   return (
     <>
       <section className={"hero" + (night ? " night" : "")}>
-        <Field className="field-bg" shade />
+        <Row className="field-bg" hero shade grow={.82} />
         <div className="topnav gutter"><div className="container navin">
           <Brand light />
           <nav className="navlinks" aria-label="Site" style={{ color: "#FFF8EC" }}>
             <Link to="/how-it-works">How it works</Link><a href="#course">The course</a><a href="#institutions">For institutions</a>
-            <Link to="/app">{r ? "Open my Granary" : "Open the app"}</Link>
+            <Link to="/app">{r ? "Open my Seedline" : "Open the app"}</Link>
           </nav>
         </div></div>
         <div className="gutter" style={{ flex: 1, display: "flex" }}><div className="container" style={{ flex: 1, display: "flex" }}>
           <div className="in">
-            <h1 className="h-xl">Store for the seasons ahead.</h1>
-            <p className="lede">Granary helps families move from surviving to building wealth that lasts. Take a four-minute check, see what's holding your home back, and follow a plan you make together.</p>
+            <h1 className="h-xl">From seed to harvest, for every generation.</h1>
+            <p className="lede">Your family's wealth is a line you plant: a seed this month, a sprout this year, a harvest your children inherit. Take a four-minute check and see how far your line has grown.</p>
             <div className="row" style={{ gap: 12 }}>
-              <Link className="btn light" to={r ? "/app" : "/app/check"}>{r ? `See my field · ${r.score}` : "Check your family's field"}</Link>
+              <Link className="btn light" to={r ? "/app" : "/app/check"}>{r ? `See my line · ${r.score}` : "Plant your first seed"}</Link>
               <Link className="btn glass" to="/how-it-works">How it works</Link>
             </div>
             <div className="meta"><span><i />About 4 minutes</span><span><i />No exact figures needed</span><span><i />Free for families</span></div>
@@ -34,23 +35,23 @@ export default function Landing() {
 
       <section className="section gutter"><div className="container">
         <div className="section-h">
-          <span className="kicker">Why Granary</span>
+          <span className="kicker">Why Seedline</span>
           <h2 className="h-lg">Income is not wealth.</h2>
           <p className="lede muted">Income is money passing through your hands. Wealth is what stays, works and lasts. Two homes in the same city can earn very different amounts and still end up in surprising places.</p>
         </div>
         <div className="two">
-          <article className="homecard"><Field grow={.28} sky="golden" /><div className="b">
+          <article className="homecard"><Row grow={.3} sky="golden" style={{ height: 220 }} /><div className="b">
             <span className="small muted" style={{ fontWeight: 700 }}>Home A</span>
             <div className="fig"><b>Earns</b><span className="tnum">₦1,000,000 a month</span><b>Spends</b><span className="tnum">₦950,000</span></div>
             <span className="big tnum">Keeps ₦50k</span>
           </div></article>
-          <article className="homecard"><Field grow={.82} sky="golden" /><div className="b">
+          <article className="homecard"><Row grow={.85} sky="golden" style={{ height: 220 }} /><div className="b">
             <span className="small muted" style={{ fontWeight: 700 }}>Home B</span>
             <div className="fig"><b>Earns</b><span className="tnum">₦700,000 a month</span><b>Spends</b><span className="tnum">₦550,000</span></div>
             <span className="big tnum">Keeps ₦150k</span>
           </div></article>
         </div>
-        <p className="muted" style={{ marginTop: 18, maxWidth: "64ch" }}>Home B earns less but keeps three times more, so its field grows taller. That's why your income range is <strong>not part of your Granary score</strong>. For some homes the fix is spending less; for many, it is earning more.</p>
+        <p className="muted" style={{ marginTop: 18, maxWidth: "64ch" }}>Home B earns less but keeps three times more, so its line grows further. That's why your income range is <strong>not part of your Seedline score</strong>. For some homes the fix is spending less; for many, it is earning more.</p>
       </div></section>
 
       <section className="section alt gutter"><div className="container">
@@ -114,7 +115,7 @@ export default function Landing() {
           <div><b>Honest guidance</b><span>Education, not financial or Shariah rulings. No product-pushing, no promised returns.</span></div>
         </div>
         <div className="four" style={{ marginTop: 22 }}>
-          {STAGES.map((s, i) => <div key={s.id} className="stepcard" style={{ borderTop: `5px solid ${s.color}` }}><span className="small muted tnum" style={{ fontWeight: 700 }}>{s.min}–{STAGES[i + 1] ? STAGES[i + 1].min - 1 : 100}</span><h3 className="h-md">{s.name}</h3><p className="muted small">{s.means}</p></div>)}
+          {STAGES.map((s, i) => <div key={s.id} className="stepcard" style={{ borderTop: `5px solid ${s.color}` }}><span className="small muted tnum" style={{ fontWeight: 700 }}>{s.min}–{STAGES[i + 1] ? STAGES[i + 1].min - 1 : 100}</span><PlantIcon stage={i} size={56} /><h3 className="h-md">{s.plant} · {s.name}</h3><p className="muted small">{s.means}</p></div>)}
         </div>
       </div></section>
 
@@ -122,10 +123,10 @@ export default function Landing() {
         <div className="stack" style={{ gap: 16 }}>
           <span className="kicker" style={{ color: "#E8C277" }}>For Islamic institutions</span>
           <h2 className="h-lg">A verified shelf for halal products.</h2>
-          <p className="lede muted">Soon, licensed Islamic banks, fund managers, takaful operators and waqf foundations will be able to list their products in Granary, each one shown with its licence and Shariah board, and checked against the same six questions families learn to ask.</p>
+          <p className="lede muted">Soon, licensed Islamic banks, fund managers, takaful operators and waqf foundations will be able to list their products in Seedline, each one shown with its licence and Shariah board, and checked against the same six questions families learn to ask.</p>
         </div>
         <div className="stack">
-          {["Listings show regulator licence and Shariah board", "No paid rankings or 'recommended' badges", "Families can add the accounts they already hold", "No investing inside the app: Granary educates, institutions serve"].map(t => (
+          {["Listings show regulator licence and Shariah board", "No paid rankings or 'recommended' badges", "Families can add the accounts they already hold", "No investing inside the app: Seedline educates, institutions serve"].map(t => (
             <div key={t} className="row" style={{ gap: 12, padding: "14px 0", borderBottom: "1px solid rgba(255,243,222,.15)", flexWrap: "nowrap" }}><span style={{ width: 10, height: 10, borderRadius: 5, background: "#E8C277", flex: "none" }} /><span>{t}</span></div>
           ))}
           <span className="small muted" style={{ marginTop: 6 }}>Partner programme coming soon.</span>
@@ -135,12 +136,12 @@ export default function Landing() {
       <section className="section gutter"><div className="container narrow" style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
         <h2 className="h-lg">Where does your family stand today?</h2>
         <p className="lede muted">Four minutes. No exact figures. A clear next step.</p>
-        <Link className="btn gold" to={r ? "/app" : "/app/check"}>{r ? "Open my Granary" : "Check your family's field"}</Link>
+        <Link className="btn gold" to={r ? "/app" : "/app/check"}>{r ? "Open my Seedline" : "Plant your first seed"}</Link>
       </div></section>
 
       <footer className="footer gutter"><div className="container navin">
         <div className="stack" style={{ gap: 6 }}><Brand /><span>Launched at the MSMMI Marriage Workshop 2026, Lagos.</span></div>
-        <div className="stack" style={{ gap: 6, maxWidth: "52ch" }}><span>Granary provides financial education, not financial, legal or Shariah advice. For personal decisions, speak to a licensed adviser or a qualified scholar.</span></div>
+        <div className="stack" style={{ gap: 6, maxWidth: "52ch" }}><span>Seedline provides financial education, not financial, legal or Shariah advice. For personal decisions, speak to a licensed adviser or a qualified scholar.</span></div>
       </div></footer>
     </>
   );

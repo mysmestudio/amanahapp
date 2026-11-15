@@ -21,7 +21,7 @@ export function Logo({ color = "currentColor", grain = "#E8C277" }) {
   );
 }
 export function Brand({ to = "/", light = false }) {
-  return <Link to={to} className="brand" style={light ? { color: "#FFF8EC" } : undefined}><Logo color={light ? "#FFF8EC" : "currentColor"} /><span>Granary</span></Link>;
+  return <Link to={to} className="brand" style={light ? { color: "#FFF8EC" } : undefined}><Logo color={light ? "#FFF8EC" : "currentColor"} /><span>Seedline</span></Link>;
 }
 
 const I = {

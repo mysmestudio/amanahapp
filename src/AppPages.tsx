@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Field from "./Field";
+import Row, { PlantIcon } from "./Row";
 import { AppTop, Html, Fine } from "./ui";
 import { STAGES, PARTS, SEED, CUR, Q, SCORED, compute, levelWord, BUCKETS, roadmap, TRACKS, LESSONS, SITTINGS, SLIDES, REFS, APPROVAL, ROOM, ORIGIN } from "./content";
 import { load, save, useStore, result, saveCheck, api, subscribePush, uuid } from "./store";
@@ -36,11 +36,11 @@ export function Home() {
   if (!r) return (
     <div className="app">
       <AppTop />
-      <div className="fieldhead"><Field grow={.16} /><div className="over"><span className="stage">Your field is waiting</span></div></div>
+      <div className="fieldhead"><Row grow={.08} /><div className="over"><span className="stage">Your seed is waiting</span></div></div>
       <h1 className="h-md">Let's see where your family stands.</h1>
       <p className="lede muted">Thirteen questions, about four minutes. You'll get your score, your stage, and the one part of your money holding your home back.</p>
       <Link className="btn gold block" to="/app/check">Start the family check</Link>
-      <Link className="btn ghost block" to="/how-it-works">How Granary works</Link>
+      <Link className="btn ghost block" to="/how-it-works">How Seedline works</Link>
       <Fine>Your answers stay on your phone. Only anonymous totals are shared.</Fine>
     </div>
   );
@@ -54,11 +54,12 @@ export function Home() {
     <div className="app">
       <AppTop />
       <div className="fieldhead">
-        <Field grow={Math.max(.08, r.score / 100)} shade />
-        <div className="over"><div><div className="score tnum">{Math.round(r.score * shown)}</div><div className="stage">{st.name}</div></div>
-          {prev && <span className="chip" style={{ background: "rgba(255,248,236,.85)", color: "#3B2A12" }}>{r.score > prev.score ? `Up ${r.score - prev.score}` : r.score < prev.score ? `Down ${prev.score - r.score}` : "No change"} since last check</span>}</div>
+        <Row grow={Math.max(.06, r.score / 100)} shade />
+        <div className="over"><div><div className="score tnum">{Math.round(r.score * shown)}</div><div className="stage">{st.plant} · {st.name}</div></div>
+          {prev && <span className="chip" style={{ background: "rgba(255,248,236,.85)", color: "#3B2A12" }}>{r.score > prev.score ? `Up ${r.score - prev.score}` : r.score < prev.score ? `Down ${prev.score - r.score}` : "No change"}</span>}</div>
       </div>
-      <p className="explain">This is your <strong>Granary score</strong>: a teaching indicator from 0 to 100, not a verdict. The taller your field, the further your home has moved from surviving towards lasting wealth.</p>
+      <p className="explain">This is your <strong>Seedline score</strong>: a teaching indicator from 0 to 100, not a verdict. As your score rises, your line grows from seed to sprout to stalk to harvest.</p>
+      <div className="plantstrip">{STAGES.map((s, i) => <div key={s.id} className={s.id === st.id ? "on" : ""}><PlantIcon stage={i} size={44} light={s.id === st.id} /><b>{s.plant}</b><span>{s.name}</span></div>)}</div>
 
       <section className="card">
         <span className="kicker">What {r.score} · {st.name} means, in plain words</span>
@@ -84,7 +85,7 @@ export function Home() {
 
       <section className="card raised">
         <span className="kicker">Your seed story</span>
-        <p className="explain">The six parts tell you <strong>what's wrong</strong>. The seed story tells you <strong>why it stops your wealth growing</strong>. It regroups the same answers into the four things a field needs. Income is left out on purpose: it's the rain, helpful but not the point. What matters is the seed you keep.</p>
+        <p className="explain">The six parts tell you <strong>what's wrong</strong>. The seed story tells you <strong>why it stops your wealth growing</strong>. It regroups the same answers into the four things a crop needs. Income is left out on purpose: it's the rain, helpful but not the point. What matters is the seed you keep.</p>
         <div className="seedgrid">{Object.entries(SEED).map(([k, s]) => { const v = r.factors[k], lw = levelWord(v); return (
           <div key={k} className={"seedcard" + (k === weakF ? " weak" : "")} style={{ "--c": s.color }}>
             <div className="k"><b>{k}</b><span>{s.story}</span></div>
@@ -130,7 +131,7 @@ export function Check() {
 
   if (busy) return (
     <div className="app" style={{ minHeight: "70vh", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
-      <div className="fieldhead" style={{ width: "100%" }}><Field grow={.5} /></div>
+      <div className="fieldhead" style={{ width: "100%" }}><Row grow={.5} /></div>
       <p className="lede muted">Reading your seed, season, soil and harvest…</p>
     </div>
   );
@@ -196,7 +197,7 @@ export function Plan() {
   const reason = (b) => { const part = rm[b.id][0]?.part; if (!part) return ""; const lw = levelWord(r.lev[part]); return `because ${PARTS[part].name.toLowerCase()} is ${lw.w.toLowerCase()}`; };
   const start = new Date(picks.made || Date.now()), end = new Date(start.getTime() + 30 * 864e5);
   const lines = BUCKETS.map(b => `${b.name}: ${rm[b.id][p[b.id]].t}`);
-  const text = `My 30-day family wealth plan (Granary)\nScore: ${r.score}/100 · ${r.stage.name}\n${fmt(start, { day: "numeric", month: "short" })} to ${fmt(end, { day: "numeric", month: "short" })}\n\n${lines.join("\n")}\n\nRecheck on ${fmt(end, { day: "numeric", month: "short" })}.\n${ORIGIN}/app`;
+  const text = `My 30-day family wealth plan (Seedline)\nScore: ${r.score}/100 · ${r.stage.name}\n${fmt(start, { day: "numeric", month: "short" })} to ${fmt(end, { day: "numeric", month: "short" })}\n\n${lines.join("\n")}\n\nRecheck on ${fmt(end, { day: "numeric", month: "short" })}.\n${ORIGIN}/app`;
   const copy = async () => { try { await navigator.clipboard.writeText(text); setCopied(true); } catch { setCopied(false); } };
   return (
     <div className="app">
@@ -213,7 +214,7 @@ export function Plan() {
         <section className="card raised" key={b.id}>
           <div className="stack" style={{ gap: 4 }}>
             <h2 className="h-md">{b.name} <span className="small muted" style={{ fontFamily: "var(--body)" }}>· {b.org}</span></h2>
-            <p className="muted small">{b.sub}</p>
+            <p className="muted small"><strong>{b.verb[0].toUpperCase() + b.verb.slice(1)}.</strong> {b.sub}</p>
             <span className={"chip" + (b.id === "fix" && r.lev[rm[b.id][0]?.part] < 35 ? " weak" : "")} style={{ marginTop: 4 }}>{b.name} · {reason(b)}</span>
           </div>
           {rm[b.id].map((x, i) => (
@@ -284,8 +285,8 @@ function Course() {
   const paceW = { daily: "every day", "3x": "Mon, Wed and Fri", weekly: "once a week" }[c.pace];
   const whoW = { alone: "just you", spouse: "you and your spouse", family: "the whole family" }[c.who];
   const toggle = n => { const d = { ...(c.done || {}) }; d[n] ? delete d[n] : d[n] = Date.now(); setCourse({ ...c, done: d }); };
-  const gcal = () => { const n = ls.length, d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Granary lesson") + "&dates=" + icsLocal(d) + "/" + icsLocal(e) + "&details=" + encodeURIComponent("Your next lesson: " + ORIGIN + "/app/learn") + "&recur=" + encodeURIComponent("RRULE:" + rrule(c, n)) + (c.tz ? "&ctz=" + encodeURIComponent(c.tz) : ""); };
-  const ics = () => { const d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); const body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Granary//Course//EN", "BEGIN:VEVENT", "UID:" + uuid() + "@granary", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z", "DTSTART:" + icsLocal(d), "DTEND:" + icsLocal(e), "RRULE:" + rrule(c, ls.length), "SUMMARY:Granary lesson", "DESCRIPTION:Your next lesson: " + ORIGIN + "/app/learn", "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:Granary lesson", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n"); const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([body], { type: "text/calendar" })); a.download = "granary-course.ics"; document.body.appendChild(a); a.click(); a.remove(); };
+  const gcal = () => { const n = ls.length, d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Seedline lesson") + "&dates=" + icsLocal(d) + "/" + icsLocal(e) + "&details=" + encodeURIComponent("Your next lesson: " + ORIGIN + "/app/learn") + "&recur=" + encodeURIComponent("RRULE:" + rrule(c, n)) + (c.tz ? "&ctz=" + encodeURIComponent(c.tz) : ""); };
+  const ics = () => { const d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); const body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Seedline//Course//EN", "BEGIN:VEVENT", "UID:" + uuid() + "@seedline", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z", "DTSTART:" + icsLocal(d), "DTEND:" + icsLocal(e), "RRULE:" + rrule(c, ls.length), "SUMMARY:Seedline lesson", "DESCRIPTION:Your next lesson: " + ORIGIN + "/app/learn", "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:Seedline lesson", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n"); const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([body], { type: "text/calendar" })); a.download = "seedline-course.ics"; document.body.appendChild(a); a.click(); a.remove(); };
   let lastTrack = null;
   const items = [];
   ls.forEach((l, i) => {
@@ -326,11 +327,11 @@ function Course() {
         </div>
         {note && <p className="small muted">{note}</p>}
         {c.remind?.includes("calendar") && <div className="row"><button className="btn sm" onClick={ics}>Add to phone calendar</button><a className="btn sm ghost" target="_blank" rel="noopener" href={gcal()}>Google Calendar</a></div>}
-        {c.remind?.includes("whatsapp") && <a className="btn sm ghost" style={{ alignSelf: "flex-start" }} target="_blank" rel="noopener" href={"https://wa.me/?text=" + encodeURIComponent(`My Granary course: ${ls.length} lessons, ${paceW} at ${c.time}. ${ORIGIN}/app/learn`)}>WhatsApp the schedule to myself</a>}
+        {c.remind?.includes("whatsapp") && <a className="btn sm ghost" style={{ alignSelf: "flex-start" }} target="_blank" rel="noopener" href={"https://wa.me/?text=" + encodeURIComponent(`My Seedline course: ${ls.length} lessons, ${paceW} at ${c.time}. ${ORIGIN}/app/learn`)}>WhatsApp the schedule to myself</a>}
       </section>
       <div className="trackrow">{Object.entries(TRACKS).map(([k, t]) => { const tl = ls.filter(l => l.tr === k), dn = tl.filter(l => done[l.n]).length; return <div key={k}><div className="tb"><i style={{ width: (tl.length ? dn / tl.length * 100 : 0) + "%", background: t.color }} /></div><span>{t.name}</span></div>; })}</div>
       {items}
-      <section className="card"><span className="kicker">Measure your progress</span><p className="muted">Retake the family check at the end of your course and watch your field grow.</p><Link className="btn ghost" to="/app/check">Retake the check</Link></section>
+      <section className="card"><span className="kicker">Measure your progress</span><p className="muted">Retake the family check at the end of your course and watch your line grow.</p><Link className="btn ghost" to="/app/check">Retake the check</Link></section>
     </>
   );
 }
@@ -369,7 +370,7 @@ function CourseSetup({ initial, onCancel, onDone }) {
       <section className="card raised" style={{ gap: 14 }}>
         <span className="field-label">How should we remind you?</span>
         <p className="small muted" style={{ marginTop: -8 }}>Pick any, even more than one.</p>
-        {[["push", "Push notification on this phone", pushOK ? "Android and computers. On iPhone, first tap Share, then Add to Home Screen, and open Granary from there." : "Not available in this browser. On iPhone, add Granary to your Home Screen first."],
+        {[["push", "Push notification on this phone", pushOK ? "Android and computers. On iPhone, first tap Share, then Add to Home Screen, and open Seedline from there." : "Not available in this browser. On iPhone, add Seedline to your Home Screen first."],
           ["email", "Email", "Each lesson in your inbox."],
           ["calendar", "Phone calendar", "A repeating reminder in your own calendar app."],
           ["whatsapp", "WhatsApp to myself", "Send yourself the schedule and link."]].map(([v, l, s]) => (

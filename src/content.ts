@@ -1,5 +1,5 @@
 // @ts-nocheck
-/* Granary content and scoring model. Ported from the workshop prototype. */
+/* Seedline content and scoring model. Ported from the workshop prototype. */
 export const CFG = {
   url: "https://hepkqzdpmntrzsmbxxxj.supabase.co",
   key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlcGtxemRwbW50cnpzbWJ4eHhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ3MDg3NDcsImV4cCI6MjExMDI4NDc0N30.TyNJMh05fUSI2kluyvqwrTxoDQIILtRYF41uWY_x454",
@@ -12,19 +12,19 @@ export const JOIN = ORIGIN + "/app" + (ROOM !== "msmmi26" ? "?room="+ROOM : "");
 export const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 /* =================== MODEL =================== */
 const STAGES = [
-  {id:"survive", name:"Surviving", min:0, color:"var(--survive)",
+  {id:"survive", name:"Surviving", plant:"Seed", min:0, color:"var(--survive)",
    means:"Most months, money in is about the same as money out, or less. Borrowing or help from others fills the gaps.",
    next:"A small amount left over every month that you actually keep.",
    focus:"Fix now: create breathing room before anything else."},
-  {id:"stabilise", name:"Stabilising", min:35, color:"var(--stabilise)",
+  {id:"stabilise", name:"Stabilising", plant:"Sprout", min:35, color:"var(--stabilise)",
    means:"Money comes in and some of it stays. You are not in crisis. But one big hit, like a lost job or a hospital bill, could push you back into borrowing.",
    next:"Savings that happen automatically, debts getting smaller, and enough put aside to live for 3 months without income.",
    focus:"Fix now, then start to Grow."},
-  {id:"build", name:"Building", min:60, color:"var(--build)",
+  {id:"build", name:"Building", plant:"Stalk", min:60, color:"var(--build)",
    means:"Your home can take a hit without falling apart. The question now is whether your money and skills are working for you.",
    next:"More than one income, and money growing in halal places you have checked properly.",
    focus:"Grow next: put your money and skills to work."},
-  {id:"legacy", name:"Legacy", min:80, color:"var(--legacy)",
+  {id:"legacy", name:"Legacy", plant:"Harvest", min:80, color:"var(--legacy)",
    means:"You are building something that can outlive you. The danger now is losing it through missing records, family disputes or fraud.",
    next:"Everything written down, a wasiyyah (Islamic will) in place, and children who understand money.",
    focus:"Protect for later: make sure it lasts and lands well."}
@@ -113,9 +113,9 @@ const levelWord = v => v < 35 ? {w:"Weak", c:"var(--survive)"} : v < 60 ? {w:"Ge
 
 /* =================== ACTIONS (Fix / Grow / Protect) =================== */
 const BUCKETS = [
-  {id:"fix",     name:"Fix now",          org:"Stabilise", sub:"Stop the leaks and build a cushion, so one bad month doesn't throw you back."},
-  {id:"grow",    name:"Grow next",        org:"Build",     sub:"Put your money and skills to work, carefully and halal."},
-  {id:"protect", name:"Protect for later", org:"Document",  sub:"Write things down and plan ahead, so what you build reaches your family."}
+  {id:"fix",     name:"Fix now", verb:"protect the sprout", org:"Stabilise", sub:"Stop the leaks and build a cushion, so one bad month doesn't throw you back."},
+  {id:"grow",    name:"Grow next", verb:"feed the soil", org:"Build",     sub:"Put your money and skills to work, carefully and halal."},
+  {id:"protect", name:"Protect for later", verb:"store the harvest", org:"Document",  sub:"Write things down and plan ahead, so what you build reaches your family."}
 ];
 const ACTIONS = [
   {b:"fix", part:"surplus", t:"Find out where the money goes", why:"You can't keep what you can't see.", week:"Write down every single spend for 7 days, in your phone notes or a notebook.", done:"You can name your top 3 money leaks."},
@@ -208,7 +208,7 @@ function seedCards(f, weak){
 const caseR = compute(CASE.answers);
 const SLIDES = [
   {id:"title", presenter:true, kick:"MSMMI Marriage Workshop 2026 · Day 2", title:"Beyond Survival: Building Wealth and a Generational Muslim Legacy",
-   body:()=>`<p>Eb'rahim Durosimi</p><div class="join-qr"><div class="qrbox" data-qr></div><div class="stack"><span class="label">Open Granary on your phone</span><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div></div>`,
+   body:()=>`<p>Eb'rahim Durosimi</p><div class="join-qr"><div class="qrbox" data-qr></div><div class="stack"><span class="label">Open Seedline on your phone</span><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div></div>`,
    notes:"Welcome. Before I say anything about money, I want every one of you to open this link. We start with you, not with theory."},
   {id:"take", presenter:true, kick:"Step 1 · 4 minutes", title:"Before I teach anything, let's find out where you are.",
    body:()=>`<p>Thirteen quick questions. No exact figures. Completely anonymous. You'll get a score from 0 to 100 and see which part of your money is holding you back.</p><div class="join-qr"><div class="qrbox" data-qr></div><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div>`,
