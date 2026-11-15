@@ -6,22 +6,19 @@ import { QRCodeCanvas } from "qrcode.react";
 import { JOIN } from "./content";
 import RoomBoard from "./RoomBoard";
 
-export function Logo({ color = "currentColor", grain = "#E8C277" }) {
+export function Logo({ tone = "#13306B", mark = "#FFFFFF" }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M16 30V10" stroke={color} strokeWidth="2.2" strokeLinecap="round" />
-      <g fill={grain}>
-        <ellipse cx="12.4" cy="14" rx="2.5" ry="4.5" transform="rotate(-28 12.4 14)" />
-        <ellipse cx="19.6" cy="14" rx="2.5" ry="4.5" transform="rotate(28 19.6 14)" />
-        <ellipse cx="12.4" cy="21" rx="2.5" ry="4.5" transform="rotate(-28 12.4 21)" />
-        <ellipse cx="19.6" cy="21" rx="2.5" ry="4.5" transform="rotate(28 19.6 21)" />
-        <ellipse cx="16" cy="7" rx="2.3" ry="4.2" />
+      <rect width="32" height="32" rx="9" fill={tone} />
+      <g fill="none" stroke={mark} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 26V14" /><path d="M16 17c-5 0-7.5-3-7.5-7.5 4.5 0 7.5 2.5 7.5 7.5z" /><path d="M16 14.5c0-4.5 3-7.5 7.5-7.5 0 4.5-3 7.5-7.5 7.5z" />
       </g>
+      <circle cx="16" cy="27" r="1.6" fill="#D9A93A" />
     </svg>
   );
 }
 export function Brand({ to = "/", light = false }) {
-  return <Link to={to} className="brand" style={light ? { color: "#FFF8EC" } : undefined}><Logo color={light ? "#FFF8EC" : "currentColor"} /><span>Seedline</span></Link>;
+  return <Link to={to} className="brand" style={light ? { color: "#FFFFFF" } : undefined}><Logo tone={light ? "#FFFFFF" : "#13306B"} mark={light ? "#13306B" : "#FFFFFF"} /><span>Seedline</span></Link>;
 }
 
 const I = {
@@ -57,7 +54,7 @@ export function Html({ html, className = "s-body" }) {
   useEffect(() => {
     const el = ref.current; if (!el) return;
     const roots = [];
-    el.querySelectorAll("[data-qr]").forEach(n => { const r = createRoot(n); r.render(<QRCodeCanvas value={JOIN} size={200} fgColor="#3B2A12" />); roots.push(r); });
+    el.querySelectorAll("[data-qr]").forEach(n => { const r = createRoot(n); r.render(<QRCodeCanvas value={JOIN} size={200} fgColor="#0A1A3F" />); roots.push(r); });
     el.querySelectorAll("[data-room]").forEach(n => { const r = createRoot(n); r.render(<RoomBoard compact />); roots.push(r); });
     return () => roots.forEach(r => setTimeout(() => r.unmount()));
   }, [html]);

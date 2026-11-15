@@ -5,7 +5,7 @@ import Field from "./Field";
 import { STAGES, PARTS, ROOM, JOIN, stageOf } from "./content";
 import { api } from "./store";
 
-const STAGE_HEX = { survive: "#B9472F", stabilise: "#C28A1E", build: "#2A7E5C", legacy: "#5A4A9E" };
+const STAGE_HEX = { survive: "#B4472A", stabilise: "#1E7A4E", build: "#13306B", legacy: "#D9A93A" };
 
 export default function RoomBoard({ compact = false }) {
   const [s, setS] = useState(null);
@@ -34,7 +34,7 @@ export default function RoomBoard({ compact = false }) {
         <div className="roomfield">
           <Field stalks={scores.length ? scores : [0]} colors={scores.map(v => STAGE_HEX[stageOf(v).id])} />
           <div style={{ position: "absolute", top: 12, left: 16, right: 16, display: "flex", justifyContent: "space-between" }}>
-            <span className="small" style={{ fontWeight: 800, color: "#3B2A12" }}>{total ? "Every stalk is a household. Taller means further along." : "Scan the code. Each household adds a stalk to this field."}</span>
+            <span className="small" style={{ fontWeight: 800, color: "#0A1A3F" }}>{total ? "Every stalk is a household. Taller means further along." : "Scan the code. Each household adds a stalk to this field."}</span>
             <span className="live">{err ? "Reconnecting…" : <><i />Live</>}</span>
           </div>
           <div className="stagepct">
@@ -43,7 +43,7 @@ export default function RoomBoard({ compact = false }) {
         </div>
       </div>
       <div className="stack" style={{ gap: 14, minWidth: 0 }}>
-        {!compact && <div className="joinbox"><span className="small" style={{ fontWeight: 700 }}>Add your household</span><div className="qrbox"><QRCodeCanvas value={JOIN} size={170} fgColor="#3B2A12" /></div><span className="url">{JOIN.replace(/^https?:\/\//, "")}</span></div>}
+        {!compact && <div className="joinbox"><span className="small" style={{ fontWeight: 700 }}>Add your household</span><div className="qrbox"><QRCodeCanvas value={JOIN} size={170} fgColor="#0A1A3F" /></div><span className="url">{JOIN.replace(/^https?:\/\//, "")}</span></div>}
         <div className="card">
           <span className="small" style={{ fontWeight: 800 }}>What's holding the room back</span>
           {total ? <div className="parts">{ranked.map(k => { const pc = Math.round(s.weakest[k] / total * 100); return (

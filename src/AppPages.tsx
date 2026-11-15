@@ -56,7 +56,7 @@ export function Home() {
       <div className="fieldhead">
         <Row grow={Math.max(.06, r.score / 100)} shade />
         <div className="over"><div><div className="score tnum">{Math.round(r.score * shown)}</div><div className="stage">{st.plant} · {st.name}</div></div>
-          {prev && <span className="chip" style={{ background: "rgba(255,248,236,.85)", color: "#3B2A12" }}>{r.score > prev.score ? `Up ${r.score - prev.score}` : r.score < prev.score ? `Down ${prev.score - r.score}` : "No change"}</span>}</div>
+          {prev && <span className="chip" style={{ background: "rgba(255,255,255,.92)", color: "#0A1A3F" }}>{r.score > prev.score ? `Up ${r.score - prev.score}` : r.score < prev.score ? `Down ${prev.score - r.score}` : "No change"}</span>}</div>
       </div>
       <p className="explain">This is your <strong>Seedline score</strong>: a teaching indicator from 0 to 100, not a verdict. As your score rises, your line grows from seed to sprout to stalk to harvest.</p>
       <div className="plantstrip">{STAGES.map((s, i) => <div key={s.id} className={s.id === st.id ? "on" : ""}><PlantIcon stage={i} size={44} light={s.id === st.id} /><b>{s.plant}</b><span>{s.name}</span></div>)}</div>
@@ -97,9 +97,9 @@ export function Home() {
       </section>
 
       {band && <section className="card dark">
-        <span className="kicker" style={{ color: "#E8C277" }}>One more thing</span>
+        <span className="kicker" style={{ color: "#D9A93A" }}>One more thing</span>
         <p>At the start, you told us about <strong>{band}</strong> comes in each month. <strong>That number is not in your score at all.</strong></p>
-        <p style={{ color: "#E5D4B3" }}>That's deliberate. Income is money passing through your hands; wealth is what you keep, protect, put to work and pass on. A high earner who keeps nothing can score lower than a modest earner who saves.</p>
+        <p style={{ color: "#C9D3E6" }}>That's deliberate. Income is money passing through your hands; wealth is what you keep, protect, put to work and pass on. A high earner who keeps nothing can score lower than a modest earner who saves.</p>
       </section>}
 
       {history.length > 1 && <section className="card">
@@ -231,9 +231,9 @@ export function Plan() {
       ))}
       {!picks.made ? <button className="btn gold block" onClick={() => setPicks({ ...p, made: Date.now() })}>Make my 30-day plan</button> : (
         <section className="planout">
-          <span className="small" style={{ color: "#E5D4B3", fontWeight: 700 }}>My 30-day family wealth plan</span>
+          <span className="small" style={{ color: "#C9D3E6", fontWeight: 700 }}>My 30-day family wealth plan</span>
           <h2 className="h-md">{r.score} · {r.stage.name}</h2>
-          <span className="small tnum" style={{ color: "#E5D4B3" }}>{fmt(start, { day: "numeric", month: "short" })} → recheck on {fmt(end, { day: "numeric", month: "short" })}</span>
+          <span className="small tnum" style={{ color: "#C9D3E6" }}>{fmt(start, { day: "numeric", month: "short" })} → recheck on {fmt(end, { day: "numeric", month: "short" })}</span>
           <ol>{BUCKETS.map(b => <li key={b.id}><b>{b.name}</b><span>{rm[b.id][p[b.id]].t}</span></li>)}</ol>
           <div className="row"><button className="btn sm" onClick={copy}>{copied ? "Copied" : "Copy plan"}</button><a className="btn sm ghost" target="_blank" rel="noopener" href={"https://wa.me/?text=" + encodeURIComponent(text)}>Send on WhatsApp</a></div>
         </section>
@@ -389,10 +389,10 @@ function Curriculum() {
   return (
     <>
       <section className="card dark">
-        <span className="kicker" style={{ color: "#E8C277" }}>About this curriculum</span>
+        <span className="kicker" style={{ color: "#D9A93A" }}>About this curriculum</span>
         <p>30 lessons in four tracks, written for Nigerian Muslim families at home and abroad. Every lesson lists its sources.</p>
-        <p style={{ color: "#E8C277", fontWeight: 700 }}>✓ Reviewed and approved by {APPROVAL.by}, {APPROVAL.date}</p>
-        <p className="small" style={{ color: "#E5D4B3" }}>{APPROVAL.note}</p>
+        <p style={{ color: "#D9A93A", fontWeight: 700 }}>✓ Reviewed and approved by {APPROVAL.by}, {APPROVAL.date}</p>
+        <p className="small" style={{ color: "#C9D3E6" }}>{APPROVAL.note}</p>
       </section>
       {Object.entries(TRACKS).map(([k, t], ti) => (
         <section className="stack" key={k}>

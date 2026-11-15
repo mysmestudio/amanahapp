@@ -86,15 +86,17 @@ export default function Row({ grow = .8, hero = false, shade = false, sky, class
 }
 
 /* Small plant icons for the four stages. */
-export function PlantIcon({ stage = 0, size = 40, light = false }) {
-  const soil = light ? "#E8C277" : "#8A6A3A";
-  return (
-    <svg viewBox="0 0 40 34" width={size} height={size * .85} aria-hidden="true">
-      <path d="M0 30h40" stroke={soil} strokeWidth="2" />
-      {stage === 0 && <ellipse cx="20" cy="27" rx="4" ry="3" fill="#B98A2E" />}
-      {stage === 1 && <><path d="M20 30V20" stroke="#7DB35A" strokeWidth="2" /><path d="M20 22c-5 0-8-4-8-8 5 0 8 4 8 8zM20 22c5 0 8-4 8-8-5 0-8 4-8 8z" fill="#8FC46A" /></>}
-      {stage === 2 && <><path d="M20 30V8" stroke="#6E8F3A" strokeWidth="2" /><path d="M20 20c-6-1-9-5-9-9 5 1 9 4 9 9zM20 15c6-1 9-5 9-9-5 1-9 4-9 9z" fill="#8DB25A" /><ellipse cx="20" cy="7" rx="2.5" ry="5" fill="#C9C26A" /></>}
-      {stage === 3 && <><path d="M20 30V7" stroke="#B88A3A" strokeWidth="2" /><g fill="#E0B048"><ellipse cx="17" cy="12" rx="2.4" ry="4" transform="rotate(-28 17 12)" /><ellipse cx="23" cy="12" rx="2.4" ry="4" transform="rotate(28 23 12)" /><ellipse cx="17" cy="19" rx="2.4" ry="4" transform="rotate(-28 17 19)" /><ellipse cx="23" cy="19" rx="2.4" ry="4" transform="rotate(28 23 19)" /><ellipse cx="20" cy="6" rx="2" ry="3.4" /></g></>}
-    </svg>
-  );
+export const STAGE_TONE = ["#B4472A", "#1E7A4E", "#13306B", "#D9A93A"];
+const PLANT = [
+  <><ellipse cx="12" cy="14.5" rx="5" ry="6" /><path d="M12 8.5c0-2.2 1.2-3.8 3-4.5" /></>,
+  <><path d="M12 21V11" /><path d="M12 13c-4 0-6-2.5-6-6 3.5 0 6 2 6 6z" /><path d="M12 11c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6z" /></>,
+  <><path d="M12 22V4" /><path d="M12 9c-3 0-5-2-5-5 3 0 5 2 5 5z" /><path d="M12 13c3 0 5-2 5-5-3 0-5 2-5 5z" /><path d="M12 18c-3 0-5-2-5-5 3 0 5 2 5 5z" /></>,
+  <><path d="M12 22V7" /><ellipse cx="12" cy="4.5" rx="1.6" ry="2.5" /><ellipse cx="9.3" cy="9" rx="1.8" ry="3" transform="rotate(-28 9.3 9)" /><ellipse cx="14.7" cy="9" rx="1.8" ry="3" transform="rotate(28 14.7 9)" /><ellipse cx="9.3" cy="14" rx="1.8" ry="3" transform="rotate(-28 9.3 14)" /><ellipse cx="14.7" cy="14" rx="1.8" ry="3" transform="rotate(28 14.7 14)" /></>
+];
+/* A plant-stage mark. tile=true draws it white on a solid stage-coloured tile. */
+export function PlantIcon({ stage = 0, size = 40, light = false, tile = false, color }) {
+  const tone = color || STAGE_TONE[stage] || STAGE_TONE[0];
+  const glyph = <svg viewBox="0 0 24 24" width={tile ? size * .5 : size} height={tile ? size * .5 : size} fill="none" stroke={tile ? (stage === 3 ? "#231800" : "#FFFFFF") : light ? "#FFFFFF" : tone} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{PLANT[stage] || PLANT[0]}</svg>;
+  if (!tile) return glyph;
+  return <span aria-hidden="true" style={{ width: size, height: size, borderRadius: size * .32, background: tone, display: "inline-grid", placeItems: "center", flex: "none" }}>{glyph}</span>;
 }

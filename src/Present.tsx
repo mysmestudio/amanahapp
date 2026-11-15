@@ -27,7 +27,7 @@ export function Present() {
         {isTitle ? (
           <div className="stage-title" key={s.id}>
             <Row hero shade grow={.82} />
-            <div><span className="small" style={{ fontWeight: 700, color: "#FFE4A8" }}>{s.kick}</span><h2 className="h-lg" style={{ maxWidth: "18ch" }}>{s.title}</h2><Html html={s.body()} className="s-body" /></div>
+            <div><span className="small" style={{ fontWeight: 700, color: "#D9A93A" }}>{s.kick}</span><h2 className="h-lg" style={{ maxWidth: "18ch" }}>{s.title}</h2><Html html={s.body()} className="s-body" /></div>
           </div>
         ) : (
           <div className="stage-inner" key={s.id}><span className="kick">{s.kick}</span><h2>{s.title}</h2><Html html={s.body()} /></div>
