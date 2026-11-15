@@ -87,29 +87,34 @@ function Story() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const [k, setK] = useState(0);
-  useMotionValueEvent(scrollYProgress, "change", p => setK(Math.min(4, Math.max(0, Math.floor(p * 5.0001)))));
-  const idea = k === 0, i = Math.max(0, k - 1), st = STAGES[i];
-  const bg = idea ? "#2A4FA8" : STAGE_TONE[i], dark = idea || i !== 3;
+  useMotionValueEvent(scrollYProgress, "change", p => setK(Math.min(5, Math.max(0, Math.floor(p * 6.0001)))));
+  const idea = k === 0, end = k === 5, i = Math.min(3, Math.max(0, k - 1)), st = STAGES[i];
+  const bg = idea ? "#2A4FA8" : end ? "#0A1A3F" : STAGE_TONE[i], dark = idea || end || i !== 3;
   const range = `${st.min}–${STAGES[i + 1] ? STAGES[i + 1].min - 1 : 100}`;
-  const RAIL = ["The idea", ...STAGES.map(s => s.plant)];
+  const RAIL = ["The idea", ...STAGES.map(s => s.plant), "You"];
   return (
     <section className="lp-story" ref={ref} aria-label="The big idea, then the four stages from seed to harvest">
       <motion.div className="lp-story-pin" animate={{ backgroundColor: bg, color: dark ? "#FFFFFF" : "#231800" }} transition={{ duration: .35, ease: "easeInOut" }}>
         <div className="lp-wrap lp-story-in">
           <div className="lp-story-top">
-            <span className="lp-eyebrow" style={{ color: "inherit", opacity: .8 }}>{idea ? "The big idea" : "From seed to harvest · every family is somewhere on the line"}</span>
+            <span className="lp-eyebrow" style={{ color: "inherit", opacity: .8 }}>{idea ? "The big idea" : end ? "Your turn" : "From seed to harvest · every family is somewhere on the line"}</span>
             <ol className="lp-story-rail">{RAIL.map((s, n) => <li key={s} className={n <= k ? "on" : ""}><i /><span>{s}</span></li>)}</ol>
           </div>
           <div className="lp-story-main">
             <AnimatePresence mode="wait">
               <motion.div key={k} className="lp-story-plant" initial={{ opacity: 0, scale: .7, rotate: -10 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: .85, rotate: 6 }} transition={{ duration: .3, ease: [.16, 1, .3, 1] }}>
-                {idea ? <span className="lp-story-x">3<em>×</em></span> : <PlantIcon stage={i} size={150} color={STAGE_TONE[i]} />}
+                {idea ? <span className="lp-story-x">3<em>×</em></span> : end ? <span className="lp-story-q">?</span> : <PlantIcon stage={i} size={150} color={STAGE_TONE[i]} />}
               </motion.div>
             </AnimatePresence>
             <div className="lp-story-copy">
               <AnimatePresence mode="wait">
                 <motion.div key={k} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: .3, ease: [.16, 1, .3, 1] }}>
-                  {idea ? <>
+                  {end ? <>
+                    <span className="lp-story-range">Seed, sprout, stalk or harvest?</span>
+                    <h2 className="lp-story-name idea end">Where does your family stand <span>today?</span></h2>
+                    <p className="lp-story-end">Four minutes. No exact figures. A clear next step.</p>
+                    <Link to="/start" className="btn gold hx-btn">Start free<Ic n="arrow" s={20} /></Link>
+                  </> : idea ? <>
                     <span className="lp-story-range">Why your income isn't in your score</span>
                     <h2 className="lp-story-name idea">Income is <span>not</span> wealth.</h2>
                     <div className="lp-story-lines">
@@ -129,8 +134,8 @@ function Story() {
             </div>
           </div>
           <div className="lp-story-foot">
-            <Link to="/start" className={"btn " + (dark ? "light" : "")}>Find your stage · 4 min<Ic n="arrow" s={18} /></Link>
-            <span className="lp-story-hint">{k < 4 ? "Keep scrolling" : "That's the whole line."}</span>
+            {!end ? <Link to="/start" className={"btn " + (dark ? "light" : "")}>Find your stage · 4 min<Ic n="arrow" s={18} /></Link> : <span />}
+            <span className="lp-story-hint">{end ? "Free for families · No sign-up" : "Keep scrolling"}</span>
           </div>
         </div>
       </motion.div>
@@ -170,45 +175,6 @@ export default function Landing() {
       {/* pinned story */}
       <Story />
 
-      {/* two doors */}
-      <section className="lp-sec" id="institutions"><div className="lp-wrap">
-        <motion.div className="lp-head center" {...rise}>
-          <span className="lp-eyebrow">Two sides of the table</span>
-          <h2>Families plan. Institutions serve.</h2>
-        </motion.div>
-        <div className="lp-doors">
-          <motion.div className="lp-door fam" {...rise} whileHover={{ y: -6 }}>
-            <span className="lp-eyebrow gold">For families</span>
-            <h3>Your family office, in your pocket.</h3>
-            <ul>
-              <li><Ic n="pulse" s={18} />A health-check in four minutes</li>
-              <li><Ic n="plan" s={18} />A plan you make together</li>
-              <li><Ic n="doc" s={18} />A certificate worth sharing</li>
-              <li><Ic n="book" s={18} />Thirty short lessons, with sources</li>
-            </ul>
-            <Link to={checkTo} className="btn gold">{r ? "Open my SeedLine" : "Get started"}<Ic n="arrow" s={18} /></Link>
-            <div className="lp-door-cert" aria-hidden="true">
-              <span className="lp-eyebrow gold">Family Wealth Check</span>
-              <b>The ___ Family</b>
-              <span className="lp-door-score">{r ? r.score : 71}</span>
-            </div>
-          </motion.div>
-          <motion.div className="lp-door inst" {...rise} whileHover={{ y: -6 }}>
-            <span className="lp-eyebrow">For Islamic institutions</span>
-            <h3>Be found by families ready to act.</h3>
-            <ul>
-              <li><Ic n="badge" s={18} />Free, verified listing</li>
-              <li><Ic n="equal" s={18} />Shown equally, never ranked</li>
-              <li><Ic n="inbox" s={18} />Families contact you directly</li>
-            </ul>
-            <div className="lp-ctas">
-              <button className="btn" onClick={() => setListing(true)}>List your institution<Ic n="arrow" s={18} /></button>
-            </div>
-            <div className="lp-door-stack" aria-hidden="true">{["Bank", "Takaful", "Sukuk"].map((t, k) => <span key={t} style={{ "--k": k }}>{t}</span>)}</div>
-          </motion.div>
-        </div>
-      </div></section>
-
       {/* trust strip */}
       <section className="lp-trustbar"><div className="lp-wrap lp-trustbar-in">
         {[["lock", "Private by default", "Your answers stay on your phone."], ["ranges", "Ranges, not figures", "No account numbers. No exact salaries."], ["equal", "No paid rankings", "We educate. Institutions serve."]].map(([n, t, d]) => (
@@ -216,17 +182,6 @@ export default function Landing() {
         ))}
         <Link to="/trust" className="lp-textlink">How we protect your family <Ic n="arrow" s={16} /></Link>
       </div></section>
-
-      {/* close */}
-      <section className="lp-close">
-        <div className="lp-close-field" aria-hidden="true">{Array.from({ length: 28 }).map((_, k) => <i key={k} style={{ "--k": k, "--h": `${30 + ((k * 37) % 60)}%` }} />)}</div>
-        <div className="lp-wrap lp-close-in">
-          <div><h2>Where does your family stand today?</h2><p>Four minutes. No exact figures. A clear next step.</p></div>
-          <div className="lp-ctas">
-            <Link to={checkTo} className="btn gold lp-btn-lg">{checkLabel}<Ic n="arrow" s={18} /></Link>
-          </div>
-        </div>
-      </section>
 
       <SiteFooter onList={() => setListing(true)} />
       <ListingModal open={listing} onClose={() => setListing(false)} />

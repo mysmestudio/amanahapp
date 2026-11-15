@@ -7,6 +7,7 @@ import Guide from "./Guide";
 import Institutions from "./Institutions";
 import Trust from "./Trust";
 import Start from "./Start";
+import TwoSides from "./TwoSides";
 import { AppShell } from "./ui";
 import { Check, Learn, Tools } from "./AppPages";
 import { Home } from "./Result";
@@ -35,6 +36,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/how-it-works" element={<Guide />} />
         <Route path="/institutions" element={<ToDirectory />} />
         <Route path="/start" element={<Start />} />
+        <Route path="/two-sides" element={<TwoSides />} />
         <Route path="/trust" element={<Trust />} />
         <Route path="/app" element={<AppShell />}>
           <Route index element={<Home />} />

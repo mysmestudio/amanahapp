@@ -67,7 +67,7 @@ export function SiteNav({ dark = false }) {
       <Brand light={dark} sub />
       <nav className="lp-links" aria-label="Site">
         <NavLink to="/how-it-works">How it works</NavLink>
-        <a href="/#institutions">For institutions</a>
+        <NavLink to="/two-sides">For institutions</NavLink>
         <NavLink to="/trust">Trust &amp; privacy</NavLink>
       </nav>
       <div className="lp-nav-cta">
@@ -79,16 +79,27 @@ export function SiteNav({ dark = false }) {
 
 export function SiteFooter({ onList }) {
   return (
-    <footer className="lp-foot"><div className="lp-wrap lp-foot-in">
-      <div className="lp-foot-brand"><Brand sub /><span>Your family office, online. A product of the MSMMI Marriage Workshop 2026, Lagos.</span></div>
-      <div className="lp-foot-cols">
-        <div><b>Families</b><Link to="/start">Get started</Link><Link to="/how-it-works">How it works</Link></div>
-        <div><b>Institutions</b>{onList ? <button onClick={onList}>Request a free listing</button> : <a href="/#institutions">Request a free listing</a>}</div>
-        <div><b>Workshop</b><Link to="/room">Live room board</Link><Link to="/present">Session slides</Link></div>
-        <div><b>SeedLine</b><Link to="/how-it-works">How it works</Link><Link to="/trust">Trust &amp; privacy</Link></div>
+    <footer className="bf">
+      <div className="lp-wrap">
+        <div className="bf-top">
+          <div className="bf-lead">
+            <span className="bf-eyebrow">Your family office, online</span>
+            <p>Grow your family's wealth, seed by seed. A product of the MSMMI Marriage Workshop 2026, Lagos.</p>
+            <Link to="/start" className="btn gold">Start free <Ic n="arrow" s={18} /></Link>
+          </div>
+          <nav className="bf-cols" aria-label="Footer">
+            <div><b>SeedLine</b><Link to="/start">Get started</Link><Link to="/how-it-works">How it works</Link><Link to="/two-sides">Two sides of the table</Link><Link to="/trust">Trust &amp; privacy</Link></div>
+            <div><b>Institutions</b><Link to="/two-sides">Why list with us</Link>{onList ? <button onClick={onList}>Request a free listing</button> : <Link to="/two-sides">Request a free listing</Link>}</div>
+            <div><b>Workshop</b><Link to="/room">Live room board</Link><Link to="/present">Session slides</Link></div>
+          </nav>
+        </div>
       </div>
-      <p className="lp-disclaim">SeedLine provides financial education, not financial, legal or Shariah advice. A listing is not a recommendation. For personal decisions, speak to a licensed adviser or a qualified scholar.</p>
-    </div></footer>
+      <div className="bf-mark" aria-hidden="true"><span>Seed</span><em>Line</em></div>
+      <div className="lp-wrap bf-bottom">
+        <span>© 2026 SeedLine</span>
+        <p>SeedLine provides financial education, not financial, legal or Shariah advice. A listing is not a recommendation. For personal decisions, speak to a licensed adviser or a qualified scholar.</p>
+      </div>
+    </footer>
   );
 }
 
