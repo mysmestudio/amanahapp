@@ -205,7 +205,7 @@ export default function Landing() {
             <Link to={checkTo} className="btn lp-btn-lg">{checkLabel}<Ic n="arrow" s={18} /></Link>
             <Link to="/institutions" className="btn ghost lp-btn-lg">Find halal providers</Link>
           </div>
-          <div className="lp-hero-note"><span className="lp-live" />Launched live at the MSMMI Marriage Workshop 2026 · Free for families</div>
+          <div className="lp-hero-note"><span className="lp-live" />Free for families · No sign-up · Your result in 4 minutes</div>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 30, rotate: 1.5 }} animate={{ opacity: 1, y: 0, rotate: 0 }} transition={{ duration: .9, delay: .15, ease: [.16, 1, .3, 1] }}>
           <GrowCard />

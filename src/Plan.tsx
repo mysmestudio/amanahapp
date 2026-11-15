@@ -7,6 +7,7 @@ import { AppTop } from "./ui";
 import { PARTS, BUCKETS, levelWord, roadmap, ORIGIN } from "./content";
 import { useStore, result } from "./store";
 import { Ic } from "./site";
+import { SaveCard } from "./Result";
 
 const fmt = (d, o) => new Date(d).toLocaleDateString(undefined, o || { day: "numeric", month: "short" });
 const RUNWAY = { 0: "less than two weeks", 30: "about a month", 60: "one to three months", 85: "three to six months", 100: "more than six months" };
@@ -43,6 +44,7 @@ export function Plan() {
   const [picks, setPicks] = useStore("picks", {});
   const [step, setStep] = useState(() => (picks.made ? 4 : 0));
   const [copied, setCopied] = useState(false);
+  const [certName] = useStore("certName", "");
   useEffect(() => { const part = params.get("part"); if (part && r) { const rm = roadmap(r, r.last.answers); const bi = BUCKETS.findIndex(b => rm[b.id].some(x => x.part === part)); if (bi >= 0 && !picks.made) setStep(bi + 1); } }, []);
   if (!r) return (
     <div className="app"><AppTop />
@@ -77,7 +79,11 @@ export function Plan() {
                 <div style={{ "--t": "#13306B" }}><small>Your stage</small><b>{r.stage.plant} · {r.score}</b><span>{r.stage.name}</span></div>
               </div>
               <div className="pl-preview">{BUCKETS.map((b, i) => <div key={b.id} style={{ "--t": BTONE[b.id] }}><span className="pl-pi"><Ic n={BICON[b.id]} s={18} /></span><span><b>{b.name}</b><small>{b.sub}</small></span></div>)}</div>
-              <button className="btn block lg" onClick={() => go(1)}>Start with Fix now <Ic n="arrow" s={18} /></button>
+              <div className="pl-choose">
+                <button className="btn block lg" onClick={() => { setPicks({ ...p, made: Date.now() }); go(4); }}><Ic n="spark" s={18} />Use my recommended plan</button>
+                <button className="btn ghost block" onClick={() => go(1)}>Choose each step myself</button>
+                <small>Your recommended plan picks the best place to start in each step. You can change any of it later.</small>
+              </div>
             </div>
           )}
 
@@ -97,12 +103,13 @@ export function Plan() {
           {step === 4 && (
             <div className="rs-stack">
               <motion.div className="pl-out" initial={{ scale: .96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: .5, ease: [.16, 1, .3, 1] }}>
-                <span className="rs-eyebrow">My 30-day family wealth plan</span>
+                <span className="rs-eyebrow">{certName.trim() ? `${certName.trim()}'s` : "Our"} 30-day plan · built by you</span>
                 <h2>{r.stage.plant} · {r.score}</h2>
                 <span className="pl-dates tnum">{fmt(start)} → recheck on {fmt(end)}</span>
                 <ol>{BUCKETS.map((b, i) => <motion.li key={b.id} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: .2 + i * .12 }} style={{ "--t": BTONE[b.id] }}><span className="pl-pi"><Ic n={BICON[b.id]} s={18} /></span><span><small>{b.name}</small><b>{rm[b.id][p[b.id]].t}</b><em>{rm[b.id][p[b.id]].week}</em></span><button className="pl-edit" onClick={() => go(i + 1)} aria-label={`Change ${b.name}`}>Change</button></motion.li>)}</ol>
                 <div className="pl-out-act"><button className="btn light sm" onClick={copy}>{copied ? "Copied" : "Copy plan"}</button><a className="btn sm pl-wa" target="_blank" rel="noopener" href={"https://wa.me/?text=" + encodeURIComponent(text)}>Send on WhatsApp</a></div>
               </motion.div>
+              <SaveCard r={r} plan={lines} />
               <div className="rs-doors">
                 <Link to="/app/learn" className="rs-door navy"><span className="rs-door-ic"><Ic n="book" s={22} /></span><b>Turn it into habits</b><small>Short lessons with reminders that fit your week.</small><Ic n="arrow" s={18} /></Link>
                 <Link to={rm.grow[p.grow]?.part === "productive" ? "/institutions?goal=grow" : "/institutions?goal=save"} className="rs-door"><span className="rs-door-ic"><Ic n="building" s={22} /></span><b>Find a halal provider</b><small>Matched to your plan.</small><Ic n="arrow" s={18} /></Link>

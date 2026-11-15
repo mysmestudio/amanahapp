@@ -24,6 +24,8 @@ export function partSays(k, v, a) {
 const RUNWAY_WORDS = { 0: "less than two weeks", 30: "about a month", 60: "one to three months", 85: "three to six months", 100: "more than six months" };
 
 /* ============================ CHECK ============================ */
+/* Smart default: suggest a country from the phone's time zone (scan and adjust, not a blank choice). */
+const SUGGEST_COUNTRY = (() => { try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; return tz.startsWith("Africa/Lagos") ? "NG" : tz === "Europe/London" ? "UK" : tz.startsWith("America/") ? "US" : null; } catch { return null; } })();
 export function Check() {
   const nav = useNavigate();
   const r = result();
@@ -49,6 +51,7 @@ export function Check() {
         <span className="rs-eyebrow">Family wealth check</span>
         <h1>Where does your home stand today?</h1>
         <p>Thirteen quick questions about six parts of your family's money.</p>
+        <ol className="ck-journey" aria-label="Your Seedline journey"><li className="done"><i><Ic n="check" s={12} w={3} /></i>Opened Seedline</li><li className="now"><i>2</i>Family check</li><li><i>3</i>Your plan</li><li><i>4</i>Grow</li></ol>
         <div className="ck-pills"><span><Ic n="pulse" s={15} />4 minutes</span><span><Ic n="ranges" s={15} />Ranges only</span><span><Ic n="lock" s={15} />Private</span></div>
         <button className="btn gold block lg" onClick={() => { if (partial) setStep(firstGap); else { setA({}); setStep(0); } }}>{partial ? "Continue my check" : r ? "Take it again" : "Start my check"}<Ic n="arrow" s={18} /></button>
       </div>
@@ -60,7 +63,7 @@ export function Check() {
   const q = Q[step];
   const opts = q.opts === "bands" ? CUR[answers.country || "NG"].bands.map((l, i) => ({ l, v: i })) : q.opts;
   const idx = Q.slice(0, step + 1).filter(x => !x.setup).length;
-  const pct = Math.round(step / Q.length * 100);
+  const pct = Math.round((step + 1) / (Q.length + 1) * 100);
   const cur = answers[q.id];
   const advance = (next) => {
     if (step < Q.length - 1) { setStep(step + 1); window.scrollTo(0, 0); }
@@ -69,7 +72,7 @@ export function Check() {
   return (
     <div className="app">
       <AppTop />
-      <div className="ck-top"><button className="ck-back" onClick={() => setStep(step - 1)} aria-label="Back">←</button><div className="ck-track" role="progressbar" aria-label="Progress" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>{Q.map((x, i) => <i key={x.id} className={i < step ? "done" : i === step ? "now" : ""} />)}</div><span className="ck-count tnum">{q.setup ? "Setup" : `${idx}/${SCORED}`}</span></div>
+      <div className="ck-top"><button className="ck-back" onClick={() => setStep(step - 1)} aria-label="Back">←</button><div className="ck-track" role="progressbar" aria-label="Progress" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i className="done head" title="You started" />{Q.map((x, i) => <i key={x.id} className={i < step ? "done" : i === step ? "now" : ""} />)}</div><span className="ck-count tnum">{q.setup ? "Setup" : `${idx}/${SCORED}`}</span></div>
       <section className="ck-q" key={q.id}>
         <span className="ck-chip" style={{ "--t": q.setup ? "#4A556B" : ["#13306B", "#1E7A4E", "#2A4FA8", "#B4472A", "#0F6E6E", "#B98A1F"][Object.keys(PARTS).indexOf(q.part)] }}>{q.setup ? q.tag : `${PARTS[q.part].name} · ${idx} of ${SCORED}`}</span>
         <h2 className="qtitle" id="qh">{money(q.q, answers.country)}</h2>
@@ -77,10 +80,11 @@ export function Check() {
         <div className="opts" role="group" aria-labelledby="qh">
           {opts.map((o, i) => {
             const on = q.multi ? (cur || []).includes(o.v) : cur === o.v;
-            return <button key={i} className={"opt" + (q.multi ? " multi" : "")} aria-pressed={on} onClick={() => {
+            const sug = q.id === "country" && cur == null && o.v === SUGGEST_COUNTRY;
+            return <button key={i} className={"opt" + (q.multi ? " multi" : "") + (sug ? " suggest" : "")} aria-pressed={on} onClick={() => {
               if (q.multi) { const set = new Set(cur || []); set.has(o.v) ? set.delete(o.v) : set.add(o.v); setA({ ...answers, [q.id]: [...set] }); }
               else { const next = { ...answers, [q.id]: o.v }; if (q.id === "country") delete next.band; setA(next); setTimeout(() => advance(next), 220); }
-            }}><i className="dot" /><span>{o.l}{o.s && <small>{money(o.s, answers.country)}</small>}</span></button>;
+            }}><i className="dot" /><span>{o.l}{o.s && <small>{money(o.s, answers.country)}</small>}</span>{sug && <em className="opt-sug">Suggested</em>}</button>;
           })}
         </div>
         {q.multi && <button className="btn block" onClick={() => { const next = { ...answers, docs: answers.docs || [] }; setA(next); advance(next); }}>{(cur || []).length ? "See my result" : "None of these yet · see my result"}</button>}
@@ -211,9 +215,9 @@ function CourseSetup({ initial, onCancel, onDone }) {
     <>
       <p className="muted">Thirty short lessons in four tracks: Keep, Last, Grow and Pass on. Set it up to fit your life. You can change this any time.</p>
       <section className="card raised" style={{ gap: 18 }}>
-        <div className="stack"><span className="field-label">How many lessons?</span><Seg k="length" items={[[7, "7", "Quick start"], [14, "14", "Core"], [30, "30", "Complete"]]} /></div>
+        <div className="stack"><span className="field-label">How many lessons?</span><Seg k="length" items={[[7, "7", "Quick start"], [14, "14", "Recommended"], [30, "30", "Complete"]]} /></div>
         <div className="stack"><span className="field-label">How often?</span><Seg k="pace" items={[["daily", "Daily"], ["3x", "3× a week", "Mon, Wed, Fri"], ["weekly", "Weekly"]]} /></div>
-        <div className="stack"><span className="field-label">How long each time?</span><Seg k="minutes" items={[[5, "5 min", "The essentials"], [10, "10 min", "+ family task"], [20, "20 min", "+ going deeper"]]} /></div>
+        <div className="stack"><span className="field-label">How long each time?</span><Seg k="minutes" items={[[5, "5 min", "The essentials"], [10, "10 min", "Recommended"], [20, "20 min", "+ going deeper"]]} /></div>
         <div className="stack"><span className="field-label">Who's learning?</span><Seg k="who" items={[["alone", "Just me"], ["spouse", "With my spouse"], ["family", "Whole family", "With children"]]} /></div>
       </section>
       <section className="card raised" style={{ gap: 14 }}>
@@ -320,6 +324,7 @@ function Cushion({ sym }) {
     <div className="stack"><label className="field-label" htmlFor="cs">Savings you can reach quickly ({sym})</label><input id="cs" type="number" inputMode="decimal" min="0" placeholder="250000" value={s} onChange={x => setS(x.target.value)} /></div>
     <div className="stack"><label className="field-label" htmlFor="ce">Essential spending each month ({sym})</label><input id="ce" type="number" inputMode="decimal" min="0" placeholder="610000" value={e} onChange={x => setE(x.target.value)} /></div>
     {months == null ? <p className="small muted">Example: the Bakare family has {sym}250,000 saved and spends {sym}610,000 a month on basics, so they could last about 12 days.</p> : <>
+      <span className="small muted" style={{ fontWeight: 700 }}>If income stopped today, you'd have to borrow in</span>
       <div className="bigout tnum" style={{ color: lw.c }}>{months < 1 ? Math.round(months * 30) + " days" : months.toFixed(1) + " months"}</div>
       <p className="muted">{months < 1 ? `Less than a month. One emergency would force you to borrow. Your first target is one full month of basics: ${sym}${Math.round(E).toLocaleString()}.` : months < 3 ? `A start. Your next target is three months: ${sym}${Math.round(E * 3).toLocaleString()}.` : months < 6 ? `Good resilience. Six months, ${sym}${Math.round(E * 6).toLocaleString()}, makes your home very hard to knock down.` : "Strong. Your cushion lets your other money grow without being dug up."}</p></>}
   </>);
@@ -334,7 +339,7 @@ function Surplus({ sym }) {
     <div className="stack"><label className="field-label" htmlFor="so">Money out each month ({sym})</label><input id="so" type="number" inputMode="decimal" min="0" placeholder="750000" value={o} onChange={x => setO(x.target.value)} /></div>
     {pct == null ? <p className="small muted">Surplus = money in − money out. It's what you have to build with.</p> : <>
       <div className="bigout tnum" style={{ color: lw.c }}>{s < 0 ? "−" : ""}{sym}{Math.abs(Math.round(s)).toLocaleString()}</div>
-      <p className="small tnum" style={{ fontWeight: 700 }}>{pct}% of what comes in</p>
+      <p className="small tnum" style={{ fontWeight: 700 }}>{pct}% of what comes in{s > 0 ? ` · that's ${sym}${Math.round(s * 12).toLocaleString()} a year to build with` : ""}</p>
       <p className="muted">{pct <= 0 ? "More goes out than comes in. Before anything else, find one cut and one way to earn a little more. For many homes, earning more is the real fix." : pct < 10 ? "A small seed. Protect it: move it out on payday before it disappears, and aim for 1 in every 10." : pct < 20 ? "A healthy seed. Make sure it moves automatically, and build your cushion with it first." : "A strong seed. Once your cushion is ready, this is what can grow into real wealth."}</p></>}
   </>);
 }
@@ -365,6 +370,6 @@ function Seven() {
     <h2 className="h-sm">Could your family find everything within 7 days?</h2>
     <div>{LEGACY_ITEMS.map((t, i) => <button key={i} className="checkrow" aria-pressed={!!lg[i]} onClick={() => setLg({ ...lg, [i]: !lg[i] })}><span className="box">{lg[i] ? "✓" : ""}</span><span>{t}</span></button>)}</div>
     <div className="row" style={{ justifyContent: "space-between" }}><span className="bigout tnum" style={{ color: lw.c }}>{n} of {LEGACY_ITEMS.length}</span><b style={{ color: lw.c }}>{n === LEGACY_ITEMS.length ? "Ready" : n >= 5 ? "Nearly there" : "Not ready yet"}</b></div>
-    <p className="muted">{n === LEGACY_ITEMS.length ? "Your family would know where to start. Review it once a year." : "Start with the first unticked item. Each one saves your family weeks of searching and stress."}</p>
+    <p className="muted">{n === LEGACY_ITEMS.length ? "Your family would know where to start. Review it once a year." : `If something happened tonight, your family would still be searching for ${LEGACY_ITEMS.length - n} of these ${LEGACY_ITEMS.length} things. Start with the first unticked item.`}</p>
   </>);
 }

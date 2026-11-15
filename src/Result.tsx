@@ -7,7 +7,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import { PlantIcon, STAGE_TONE } from "./Row";
 import { AppTop, Fine } from "./ui";
 import { STAGES, PARTS, SEED, CUR, levelWord, roadmap, ORIGIN } from "./content";
-import { load, save, useStore, result } from "./store";
+import { load, save, useStore, result, api } from "./store";
 import { partSays } from "./AppPages";
 import { drawCertificate, canvasBlob } from "./cert";
 import { Ic } from "./site";
@@ -60,6 +60,11 @@ function ScoreStep({ r, prev, go }) {
           </div>
         ))}
       </div>
+      {toNext > 0 && (() => { const lo = st.min, hi = STAGES[si + 1].min, pc = Math.round((r.score - lo) / (hi - lo) * 100); return (
+        <div className="rs-gradient">
+          <div className="rs-gradient-h"><b>You're {pc}% of the way to {STAGES[si + 1].plant}</b><span className="tnum">{toNext} points to go</span></div>
+          <div className="rs-gradient-bar"><motion.i initial={{ width: 0 }} animate={{ width: pc + "%" }} transition={{ duration: 1.2, delay: .6, ease: [.16, 1, .3, 1] }} /><span style={{ left: "100%" }}><PlantIcon stage={si + 1} size={26} tile /></span></div>
+        </div>); })()}
       <div className="rs-two">
         <div className="rs-tile"><small>Next goal</small><p>{st.next}</p></div>
         <div className="rs-tile gold"><small>{toNext > 0 ? `${toNext} points to ${STAGES[si + 1].plant}` : "You've reached Harvest"}</small><p>{st.focus}</p></div>
@@ -203,6 +208,25 @@ function WhyStep({ r, go }) {
   );
 }
 
+
+/* Reciprocity + honest loss framing: ask for an email only after giving the result, certificate and plan. */
+export function SaveCard({ r, plan = null }) {
+  const [saved, setSaved] = useStore("savedEmail", null);
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState("idle");
+  if (saved) return <div className="rs-save done"><span className="rs-save-ic"><Ic n="check" s={20} w={2.6} /></span><span><b>Saved for {saved}</b><small>We'll email your result and plan to this address, so you keep them even if this phone forgets.</small></span></div>;
+  const ok = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim());
+  const submit = async e => { e.preventDefault(); if (!ok) return; setState("sending"); try { await api("followups", { check_id: r.last.checkId || null, email: email.trim(), plan: { score: r.score, stage: r.stage.name, picks: plan } }); setSaved(email.trim()); } catch { setState("error"); } };
+  return (
+    <form className="rs-save" onSubmit={submit}>
+      <span className="rs-save-ic"><Ic n="lock" s={20} /></span>
+      <span className="rs-save-t"><b>Don't lose your result</b><small>Right now it lives only on this phone. Clear your browser or change phones, and it's gone. Get a copy by email.</small></span>
+      <div className="rs-save-f"><input type="email" required placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} aria-label="Your email" autoComplete="email" /><button className="btn" disabled={!ok || state === "sending"}>{state === "sending" ? "Saving…" : "Email me a copy"}</button></div>
+      {state === "error" && <small className="rs-save-err">That didn't send. Try again in a moment.</small>}
+    </form>
+  );
+}
+
 /* ---------- 5. next ---------- */
 function NextStep({ r, history }) {
   const [picks] = useStore("picks", {}); const [course] = useStore("course");
@@ -216,6 +240,7 @@ function NextStep({ r, history }) {
         <Link to="/institutions" className="rs-door"><span className="rs-door-ic"><Ic n="building" s={22} /></span><b>Find halal providers</b><small>36 institutions, matched to your goal.</small><Ic n="arrow" s={18} /></Link>
         <Link to="/app/tools" className="rs-door"><span className="rs-door-ic"><Ic n="pulse" s={22} /></span><b>Family money tools</b><small>Cushion, surplus, investment check.</small><Ic n="arrow" s={18} /></Link>
       </div>
+      <SaveCard r={r} />
       {history.length > 1 && <div className="rs-tile"><small>Your score over time</small><div className="history" style={{ marginTop: 22 }}>{history.slice(-8).map((h, i) => <div key={i} style={{ height: Math.max(6, h.score) + "%" }}><span className="tnum">{h.score}</span></div>)}</div></div>}
       <Link className="btn ghost block" to="/app/check">Retake the check</Link>
       <Fine>A teaching indicator, not financial or Shariah advice. {load("offline") ? "Your result couldn't reach the room, but it's saved on this phone." : ""}</Fine>
@@ -237,7 +262,7 @@ export function Home() {
       <AppTop />
       <div className="rs-welcome">
         <div className="rs-welcome-plants">{[0, 1, 2, 3].map(i => <motion.span key={i} initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: .2 + i * .12 }}><PlantIcon stage={i} size={56} tile /></motion.span>)}</div>
-        <span className="rs-eyebrow">Welcome to Seedline</span>
+        <span className="rs-eyebrow">Step 1 of 4 done · you're in</span>
         <h1>Let's see where your family stands.</h1>
         <p>Thirteen questions, about four minutes. You'll get your score, your stage, a certificate, and the one part holding your home back.</p>
         <Link className="btn gold block lg" to="/app/check">Start the family check <Ic n="arrow" s={18} /></Link>
