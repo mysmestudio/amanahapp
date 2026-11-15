@@ -89,7 +89,7 @@ function Story() {
   const [k, setK] = useState(0);
   useMotionValueEvent(scrollYProgress, "change", p => setK(Math.min(4, Math.max(0, Math.floor(p * 5.0001)))));
   const idea = k === 0, i = Math.max(0, k - 1), st = STAGES[i];
-  const bg = idea ? "#0A1A3F" : STAGE_TONE[i], dark = idea || i !== 3;
+  const bg = idea ? "#2A4FA8" : STAGE_TONE[i], dark = idea || i !== 3;
   const range = `${st.min}–${STAGES[i + 1] ? STAGES[i + 1].min - 1 : 100}`;
   const RAIL = ["The idea", ...STAGES.map(s => s.plant)];
   return (
