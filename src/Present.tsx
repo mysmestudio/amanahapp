@@ -46,9 +46,9 @@ export function Present() {
 export function Room() {
   return (
     <div className="room-page">
-      <div className="room-top"><Brand light /><span>MSMMI Marriage Workshop 2026 · Live</span></div>
+      <div className="room-top"><Brand /><span>MSMMI Marriage Workshop 2026 · Live</span></div>
       <h1>Where this room stands, <span>right now.</span></h1>
-      <RoomBoard dark />
+      <RoomBoard />
     </div>
   );
 }

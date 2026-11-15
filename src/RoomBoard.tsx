@@ -5,10 +5,12 @@ import { QRCodeCanvas } from "qrcode.react";
 import { motion, AnimatePresence } from "framer-motion";
 import { STAGES, PARTS, ROOM, JOIN, stageOf } from "./content";
 import { api } from "./store";
+import Field from "./Field";
 import "./room.css";
 
 const STAGE_HEX = { survive: "#B4472A", stabilise: "#1E7A4E", build: "#2A4FA8", legacy: "#D9A93A" };
 const PLANT = ["Seed", "Sprout", "Stalk", "Harvest"];
+const STAGE_FIELD = { survive: "#B4472A", stabilise: "#1E7A4E", build: "#13306B", legacy: "#B98A1F" };
 
 function useRoom() {
   const [s, setS] = useState(null);
@@ -88,7 +90,7 @@ export default function RoomBoard({ compact = false, dark = false }) {
             <span>{total ? "Every stalk is a household. Taller means further along." : "Scan the code. Each household adds a stalk to this field."}</span>
             <span className={"rb-live" + (err ? " off" : "")}><i />{err ? "Reconnecting…" : "Live"}</span>
           </div>
-          <Stalks scores={scores} />
+          <div className="rb-canvas"><Field stalks={scores.length ? scores : [0]} colors={scores.map(v => STAGE_FIELD[stageOf(v).id])} /></div>
           <div className="rb-pct">
             {STAGES.map(st => <div key={st.id} style={{ "--t": STAGE_HEX[st.id] }}><b className="tnum">{total ? Math.round(s.stages[st.id] / total * 100) : 0}%</b><span>{st.plant} · {st.name}</span></div>)}
           </div>
