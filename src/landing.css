@@ -99,7 +99,7 @@
 .lp-home.win .lp-home-keep b{color:var(--navy)}
 
 /* pinned story */
-.lp-story{position:relative;height:420vh}
+.lp-story{position:relative;height:370vh}
 .lp-story-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:flex}
 .lp-story-in{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-block:clamp(84px,10vh,110px) clamp(28px,5vh,52px)}
 .lp-story-top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
@@ -486,3 +486,12 @@
   .hs-steps{gap:12px}
   .hs-steps li{font-size:12px}
 }
+
+.hx-made{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:#9FB0CC;margin-top:-8px}
+.hx-made i{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.lp-story-x{font-family:var(--display);font-size:clamp(80px,10vw,130px);font-weight:800;letter-spacing:-.06em;color:var(--navy-deep);line-height:1}
+.lp-story-x em{font-style:normal;color:var(--gold)}
+.lp-story-name.idea{font-size:clamp(52px,7.6vw,112px) !important}
+.lp-story-name.idea span{color:var(--gold)}
+.brand-sub{display:block;font-size:10px;font-weight:600;letter-spacing:.02em;opacity:.7;margin-top:2px}
+.brand .brand-t{display:flex;flex-direction:column;line-height:1}

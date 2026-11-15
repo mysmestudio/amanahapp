@@ -1,7 +1,7 @@
 // @ts-nocheck
 // Opening screens (like ScrollQuran): a splash, then "What should we call you?", then into the app.
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Logo } from "./ui";
 import { load, save } from "./store";
@@ -24,6 +24,8 @@ function Sprout() {
 
 export default function Start() {
   const nav = useNavigate();
+  const [params] = useSearchParams();
+  const back = !!load("onboarded");
   const reduce = useReducedMotion();
   const [screen, setScreen] = useState(0);
   const [w, setW] = useState(0);
@@ -34,7 +36,7 @@ export default function Start() {
     const n = name.trim().slice(0, 40);
     save("name", n); save("onboarded", Date.now());
     if (n && !load("certName")) save("certName", n);
-    nav("/app", { replace: true });
+    const next = params.get("next"); nav(next && next.startsWith("/app") ? next : "/app", { replace: true });
   };
   return (
     <AnimatePresence mode="wait">
@@ -48,7 +50,7 @@ export default function Start() {
               <motion.span className="st-logo" initial={{ scale: .6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 200, damping: 14 }}><Logo /></motion.span>
               <motion.span className="st-badge" initial={{ rotate: -20, scale: 0 }} animate={{ rotate: 8, scale: 1 }} transition={{ delay: .6, type: "spring" }}>Your family<br />office</motion.span>
             </div>
-            <motion.h1 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .3 }}>Seed<span>line</span></motion.h1>
+            <motion.h1 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .3 }}>Seed<span>Line</span></motion.h1>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .5 }}>
               Grow your family's wealth, one{" "}
               <span className="st-word"><AnimatePresence mode="wait"><motion.b key={w} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: .3 }}>{WORDS[w]}</motion.b></AnimatePresence></span>{" "}
@@ -68,12 +70,12 @@ export default function Start() {
           <motion.form className="st-arch" onSubmit={begin} initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .7, ease: [.16, 1, .3, 1] }}>
             <span className="st-lamp"><Sprout /></span>
             <span className="st-salam">Assalamu alaikum</span>
-            <h1>Welcome to Seedline</h1>
+            <h1>{back ? "Welcome back" : "Welcome to SeedLine"}</h1>
             <p>A calm place to see where your family's money stands, and grow from there.</p>
             <div className="st-fill" />
             <label htmlFor="st-name">What should we call you?</label>
             <input id="st-name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your name or family name (optional)" autoComplete="name" maxLength={40} autoFocus />
-            <button className="btn gold block st-go" type="submit">Bismillah, let's begin <Ic n="arrow" s={18} /></button>
+            <button className="btn gold block st-go" type="submit">{back ? "Bismillah, let's continue" : "Bismillah, let's begin"} <Ic n="arrow" s={18} /></button>
             <small>No account needed. Your answers stay on this phone.</small>
           </motion.form>
         </motion.main>

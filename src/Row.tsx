@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { SKIES, currentSky } from "./Field";
 
-/* The Seedline signature: planted rows running to the horizon. The centre row is the family line.
+/* The SeedLine signature: planted rows running to the horizon. The centre row is the family line.
    grow (0..1) is how far the family has come: seed, sprout, stalk, harvest. */
 const SOIL = {
   dawn: ["#C99A6A", "#6E4A2A"], day: ["#C9A36A", "#74522A"], golden: ["#C99A5E", "#6E4A24"],

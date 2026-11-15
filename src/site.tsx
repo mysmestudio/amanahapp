@@ -64,14 +64,14 @@ export function SiteNav({ dark = false }) {
   const r = result(); const named = !!load("onboarded");
   return (
     <header className={"lp-nav" + (dark ? " dark" : "")}><div className="lp-wrap lp-nav-in">
-      <Brand light={dark} />
+      <Brand light={dark} sub />
       <nav className="lp-links" aria-label="Site">
         <NavLink to="/how-it-works">How it works</NavLink>
         <a href="/#institutions">For institutions</a>
         <NavLink to="/trust">Trust &amp; privacy</NavLink>
       </nav>
       <div className="lp-nav-cta">
-        <Link to={r || named ? "/app" : "/start"} className={"btn sm" + (dark ? " gold" : "")}>{r || named ? "Open my Seedline" : "Start free"}</Link>
+        <Link to="/start" className={"btn sm" + (dark ? " gold" : "")}>{r || named ? "Open my SeedLine" : "Start free"}</Link>
       </div>
     </div></header>
   );
@@ -80,13 +80,14 @@ export function SiteNav({ dark = false }) {
 export function SiteFooter({ onList }) {
   return (
     <footer className="lp-foot"><div className="lp-wrap lp-foot-in">
-      <div className="lp-foot-brand"><Brand /><span>Your family office, online. Launched at the MSMMI Marriage Workshop 2026, Lagos.</span></div>
+      <div className="lp-foot-brand"><Brand sub /><span>Your family office, online. A product of the MSMMI Marriage Workshop 2026, Lagos.</span></div>
       <div className="lp-foot-cols">
         <div><b>Families</b><Link to="/start">Get started</Link><Link to="/how-it-works">How it works</Link></div>
         <div><b>Institutions</b>{onList ? <button onClick={onList}>Request a free listing</button> : <a href="/#institutions">Request a free listing</a>}</div>
-        <div><b>Seedline</b><Link to="/how-it-works">How it works</Link><Link to="/trust">Trust &amp; privacy</Link></div>
+        <div><b>Workshop</b><Link to="/room">Live room board</Link><Link to="/present">Session slides</Link></div>
+        <div><b>SeedLine</b><Link to="/how-it-works">How it works</Link><Link to="/trust">Trust &amp; privacy</Link></div>
       </div>
-      <p className="lp-disclaim">Seedline provides financial education, not financial, legal or Shariah advice. A listing is not a recommendation. For personal decisions, speak to a licensed adviser or a qualified scholar.</p>
+      <p className="lp-disclaim">SeedLine provides financial education, not financial, legal or Shariah advice. A listing is not a recommendation. For personal decisions, speak to a licensed adviser or a qualified scholar.</p>
     </div></footer>
   );
 }
@@ -118,7 +119,7 @@ export function ListingModal({ open, onClose }) {
         ) : (
           <form onSubmit={submit} className="lp-form">
             <span className="lp-eyebrow">For institutions · free verified listing</span>
-            <h3 id="lm-t">List your institution on Seedline</h3>
+            <h3 id="lm-t">List your institution on SeedLine</h3>
             <p className="lp-muted">Families looking for halal banking, investing, takaful and waqf will find you, see your licence and Shariah board, and contact you directly.</p>
             <label>Institution name<input type="text" required value={f.org_name} onChange={set("org_name")} autoComplete="organization" /></label>
             <label>What you offer<select value={f.org_type} onChange={set("org_type")}>{ORG_TYPES.map(t => <option key={t}>{t}</option>)}</select></label>

@@ -87,10 +87,10 @@ function CelebrateStep({ r, go }) {
   const display = name.trim() || "Your Family";
   const date = fmtDate(r.last.at);
   const make = async () => drawCertificate({ name: display, score: r.score, stageIdx: si, plantName: st.plant, stageName: st.name, strengths, date, qr: qrRef.current?.querySelector("canvas") });
-  const download = async () => { setBusy("dl"); try { const c = await make(); const b = await canvasBlob(c); const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `Seedline-certificate-${display.replace(/\s+/g, "-")}.png`; document.body.appendChild(a); a.click(); a.remove(); setMsg("Saved. Check your downloads."); } catch { setMsg("Couldn't create the image on this browser."); } setBusy(""); };
+  const download = async () => { setBusy("dl"); try { const c = await make(); const b = await canvasBlob(c); const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `SeedLine-certificate-${display.replace(/\s+/g, "-")}.png`; document.body.appendChild(a); a.click(); a.remove(); setMsg("Saved. Check your downloads."); } catch { setMsg("Couldn't create the image on this browser."); } setBusy(""); };
   const share = async () => {
     setBusy("sh");
-    const text = `${display} scored ${r.score}/100 on the Seedline Family Wealth Check (${st.plant} · ${st.name}). Where does your family stand? ${ORIGIN}/app/check`;
+    const text = `${display} scored ${r.score}/100 on the SeedLine Family Wealth Check (${st.plant} · ${st.name}). Where does your family stand? ${ORIGIN}/app/check`;
     try {
       const b = await canvasBlob(await make()); const file = new File([b], "seedline-certificate.png", { type: "image/png" });
       if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], text });
@@ -99,8 +99,8 @@ function CelebrateStep({ r, go }) {
     setBusy("");
   };
   const invite = async () => {
-    const text = `Assalamu alaikum! I just took the Seedline Family Wealth Check. It takes 4 minutes and shows where our family's money stands. Take yours: ${ORIGIN}/app/check`;
-    try { if (navigator.share) await navigator.share({ text, title: "Seedline" }); else window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener"); } catch {}
+    const text = `Assalamu alaikum! I just took the SeedLine Family Wealth Check. It takes 4 minutes and shows where our family's money stands. Take yours: ${ORIGIN}/app/check`;
+    try { if (navigator.share) await navigator.share({ text, title: "SeedLine" }); else window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener"); } catch {}
   };
   return (
     <div className="rs-stack">
@@ -108,7 +108,7 @@ function CelebrateStep({ r, go }) {
       <motion.div className="rs-cert" initial={{ rotateX: 20, opacity: 0, y: 30 }} animate={{ rotateX: 0, opacity: 1, y: 0 }} transition={{ duration: .8, ease: [.16, 1, .3, 1] }}>
         <div className="rs-cert-in">
           <div className="rs-cert-l">
-            <span className="rs-eyebrow">Seedline · Family Wealth Check</span>
+            <span className="rs-eyebrow">SeedLine · Family Wealth Check</span>
             <small>This certifies that</small>
             <b className="rs-cert-name">{display}</b>
             <small>is growing at the {st.plant} stage: {st.name.toLowerCase()}.</small>

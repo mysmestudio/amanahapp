@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet, useLocation } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import { JOIN } from "./content";
 import RoomBoard from "./RoomBoard";
@@ -18,8 +18,8 @@ export function Logo({ tone = "#13306B", mark = "#FFFFFF" }) {
     </svg>
   );
 }
-export function Brand({ to = "/", light = false }) {
-  return <Link to={to} className="brand" style={light ? { color: "#FFFFFF" } : undefined}><Logo tone={light ? "#FFFFFF" : "#13306B"} mark={light ? "#13306B" : "#FFFFFF"} /><span>Seedline</span></Link>;
+export function Brand({ to = "/", light = false, sub = false }) {
+  return <Link to={to} className="brand" style={light ? { color: "#FFFFFF" } : undefined}><Logo tone={light ? "#FFFFFF" : "#13306B"} mark={light ? "#13306B" : "#FFFFFF"} /><span className="brand-t"><span>SeedLine</span>{sub && <small className="brand-sub">A product of the MSMMI Workshop</small>}</span></Link>;
 }
 
 const I = {
@@ -33,10 +33,13 @@ const I = {
 const TABS = [["/app", "Home", "home", true], ["/app/check", "Check", "check"], ["/app/plan", "Plan", "plan"], ["/app/directory", "Halal", "dir"], ["/app/learn", "Learn", "learn"], ["/app/tools", "Tools", "tools"]];
 
 export function AppShell() {
+  const loc = useLocation();
+  const onboarded = (() => { try { return !!JSON.parse(localStorage.getItem("seedline:onboarded")); } catch { return false; } })();
+  if (!onboarded) return <Navigate to={"/start?next=" + encodeURIComponent(loc.pathname + loc.search)} replace />;
   const last = (() => { try { return JSON.parse(localStorage.getItem("seedline:last")); } catch { return null; } })();
   return (
     <div className="ashell">
-      <aside className="aside" aria-label="Seedline">
+      <aside className="aside" aria-label="SeedLine">
         <Brand to="/" light />
         <nav aria-label="App sections">
           {TABS.map(([to, label, ic, end]) => (

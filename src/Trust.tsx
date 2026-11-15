@@ -10,7 +10,7 @@ export default function Trust() {
       <section className="lp-phero"><div className="lp-wrap lp-phero-in">
         <span className="lp-eyebrow gold">Trust and privacy</span>
         <h1>Your family's numbers stay yours.</h1>
-        <p className="lp-lede">Money is personal. Here is exactly what Seedline asks, what it keeps, and what it will never do.</p>
+        <p className="lp-lede">Money is personal. Here is exactly what SeedLine asks, what it keeps, and what it will never do.</p>
       </div></section>
 
       <section className="lp-sec"><div className="lp-wrap">
@@ -27,12 +27,12 @@ export default function Trust() {
       <section className="lp-sec alt"><div className="lp-wrap lp-faq">
         <motion.div className="lp-head" {...rise}><span className="lp-eyebrow">Questions</span><h2>Good to know.</h2><Link to="/app/check" className="btn">Take the check<Ic n="arrow" s={18} /></Link></motion.div>
         <div className="lp-faq-list">
-          <Acc q="What exactly does Seedline store?"><p>On your phone: your answers, your plan picks and your course progress. On our server: an anonymous record of your score, stage, country and which parts are strongest and weakest, with no name and no contact details, used for overall totals. If you choose email or push reminders, we store that address or device token only to send them.</p></Acc>
-          <Acc q="Is Seedline free?"><p>Yes, for families. The check, your plan, your certificate and the course are free. Institutions list for free too.</p></Acc>
+          <Acc q="What exactly does SeedLine store?"><p>On your phone: your answers, your plan picks and your course progress. On our server: an anonymous record of your score, stage, country and which parts are strongest and weakest, with no name and no contact details, used for overall totals. If you choose email or push reminders, we store that address or device token only to send them.</p></Acc>
+          <Acc q="Is SeedLine free?"><p>Yes, for families. The check, your plan, your certificate and the course are free. Institutions list for free too.</p></Acc>
           <Acc q="Is it Shariah-conscious?"><p>Every lesson is built on halal earning, careful checking and lasting benefit, with its sources shown. It's education, not a fatwa. For personal rulings, especially inheritance, speak to a qualified scholar.</p></Acc>
-          <Acc q="Does Seedline give financial advice?"><p>No. Seedline teaches and helps you plan. It doesn't sell products, take deposits or recommend one provider over another. For personal decisions, speak to a licensed adviser.</p></Acc>
+          <Acc q="Does SeedLine give financial advice?"><p>No. SeedLine teaches and helps you plan. It doesn't sell products, take deposits or recommend one provider over another. For personal decisions, speak to a licensed adviser.</p></Acc>
           <Acc q="How do institutions get listed?"><p>They request a free listing. We check their regulator licence and Shariah board before they appear. Nobody can pay to be ranked higher.</p></Acc>
-          <Acc q="Who is behind Seedline?"><p>Seedline was launched by Eb'rahim Durosimi at the MSMMI Marriage Workshop 2026 in Lagos, and every lesson is reviewed before it goes live.</p></Acc>
+          <Acc q="Who is behind SeedLine?"><p>SeedLine was launched by Eb'rahim Durosimi at the MSMMI Marriage Workshop 2026 in Lagos, and every lesson is reviewed before it goes live.</p></Acc>
         </div>
       </div></section>
       <SiteFooter />

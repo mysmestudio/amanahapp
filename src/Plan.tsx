@@ -57,7 +57,7 @@ export function Plan() {
   const go = n => { setStep(n); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const start = new Date(picks.made || Date.now()), end = new Date(start.getTime() + 30 * 864e5);
   const lines = BUCKETS.map(b => `${b.name}: ${rm[b.id][p[b.id]].t}`);
-  const text = `My 30-day family wealth plan (Seedline)\nScore: ${r.score}/100 · ${r.stage.name}\n${fmt(start)} to ${fmt(end)}\n\n${lines.join("\n")}\n\nRecheck on ${fmt(end)}.\n${ORIGIN}/app`;
+  const text = `My 30-day family wealth plan (SeedLine)\nScore: ${r.score}/100 · ${r.stage.name}\n${fmt(start)} to ${fmt(end)}\n\n${lines.join("\n")}\n\nRecheck on ${fmt(end)}.\n${ORIGIN}/app`;
   const copy = async () => { try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {} };
 
   return (

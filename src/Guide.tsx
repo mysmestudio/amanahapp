@@ -38,9 +38,9 @@ export default function Guide() {
     <>
       <header className="gutter" style={{ paddingTop: "calc(18px + env(safe-area-inset-top, 0px))" }}><div className="container row" style={{ justifyContent: "space-between" }}><Brand /><Link className="btn sm" to="/app/check">Start the check</Link></div></header>
       <section className="gutter" style={{ paddingBlock: "56px 24px" }}><div className="container stack" style={{ gap: 16, maxWidth: 820 }}>
-        <span className="kicker">How Seedline works</span>
+        <span className="kicker">How SeedLine works</span>
         <h1 className="h-lg">From a four-minute check to a family that keeps growing.</h1>
-        <p className="lede muted">Seedline walks your family through six simple steps. You can stop and come back at any point; everything saves on your phone.</p>
+        <p className="lede muted">SeedLine walks your family through six simple steps. You can stop and come back at any point; everything saves on your phone.</p>
       </div></section>
       <section className="gutter" style={{ paddingBottom: 80 }}><div className="container guide">
         <nav className="guide-nav" aria-label="Steps">{STEPS.map((s, i) => <a key={s.id} href={"#" + s.id} className={on === s.id ? "on" : ""}><span>{i + 1}</span>{s.t}</a>)}</nav>

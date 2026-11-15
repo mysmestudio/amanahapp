@@ -1,5 +1,5 @@
 // @ts-nocheck
-/* Seedline content and scoring model. Ported from the workshop prototype. */
+/* SeedLine content and scoring model. Ported from the workshop prototype. */
 export const CFG = {
   url: "https://hepkqzdpmntrzsmbxxxj.supabase.co",
   key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlcGtxemRwbW50cnpzbWJ4eHhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ3MDg3NDcsImV4cCI6MjExMDI4NDc0N30.TyNJMh05fUSI2kluyvqwrTxoDQIILtRYF41uWY_x454",
@@ -208,7 +208,7 @@ function seedCards(f, weak){
 const caseR = compute(CASE.answers);
 const SLIDES = [
   {id:"title", presenter:true, kick:"MSMMI Marriage Workshop 2026 · Day 2", title:"Beyond Survival: Building Wealth and a Generational Muslim Legacy",
-   body:()=>`<p>Eb'rahim Durosimi</p><div class="join-qr"><div class="qrbox" data-qr></div><div class="stack"><span class="label">Open Seedline on your phone</span><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div></div>`,
+   body:()=>`<p>Eb'rahim Durosimi</p><div class="join-qr"><div class="qrbox" data-qr></div><div class="stack"><span class="label">Open SeedLine on your phone</span><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div></div>`,
    notes:"Welcome. Before I say anything about money, I want every one of you to open this link. We start with you, not with theory."},
   {id:"take", presenter:true, kick:"Step 1 · 4 minutes", title:"Before I teach anything, let's find out where you are.",
    body:()=>`<p>Thirteen quick questions. No exact figures. Completely anonymous. You'll get a score from 0 to 100 and see which part of your money is holding you back.</p><div class="join-qr"><div class="qrbox" data-qr></div><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div>`,

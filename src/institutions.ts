@@ -1,6 +1,6 @@
 // Nigeria Shariah-compliant financial services directory (2026), loaded from Eb'rahim's master spreadsheet
 // (Nigeria_Islamic_Financial_Institutions_Directory_2026.xlsx → src/directory.json).
-// Seedline never ranks: institutions are always shown A to Z.
+// SeedLine never ranks: institutions are always shown A to Z.
 import data from "./directory.json";
 
 export type Goal = "save" | "grow" | "protect" | "home" | "retire" | "business" | "give";

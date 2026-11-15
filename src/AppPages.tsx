@@ -51,7 +51,7 @@ export function Check() {
         <span className="rs-eyebrow">Family wealth check</span>
         <h1>Where does your home stand today?</h1>
         <p>Thirteen quick questions about six parts of your family's money.</p>
-        <ol className="ck-journey" aria-label="Your Seedline journey"><li className="done"><i><Ic n="check" s={12} w={3} /></i>Opened Seedline</li><li className="now"><i>2</i>Family check</li><li><i>3</i>Your plan</li><li><i>4</i>Grow</li></ol>
+        <ol className="ck-journey" aria-label="Your SeedLine journey"><li className="done"><i><Ic n="check" s={12} w={3} /></i>Opened SeedLine</li><li className="now"><i>2</i>Family check</li><li><i>3</i>Your plan</li><li><i>4</i>Grow</li></ol>
         <div className="ck-pills"><span><Ic n="pulse" s={15} />4 minutes</span><span><Ic n="ranges" s={15} />Ranges only</span><span><Ic n="lock" s={15} />Private</span></div>
         <button className="btn gold block lg" onClick={() => { if (partial) setStep(firstGap); else { setA({}); setStep(0); } }}>{partial ? "Continue my check" : r ? "Take it again" : "Start my check"}<Ic n="arrow" s={18} /></button>
       </div>
@@ -138,8 +138,8 @@ function Course() {
   const paceW = { daily: "every day", "3x": "Mon, Wed and Fri", weekly: "once a week" }[c.pace];
   const whoW = { alone: "just you", spouse: "you and your spouse", family: "the whole family" }[c.who];
   const toggle = n => { const d = { ...(c.done || {}) }; d[n] ? delete d[n] : d[n] = Date.now(); setCourse({ ...c, done: d }); };
-  const gcal = () => { const n = ls.length, d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Seedline lesson") + "&dates=" + icsLocal(d) + "/" + icsLocal(e) + "&details=" + encodeURIComponent("Your next lesson: " + ORIGIN + "/app/learn") + "&recur=" + encodeURIComponent("RRULE:" + rrule(c, n)) + (c.tz ? "&ctz=" + encodeURIComponent(c.tz) : ""); };
-  const ics = () => { const d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); const body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Seedline//Course//EN", "BEGIN:VEVENT", "UID:" + uuid() + "@seedline", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z", "DTSTART:" + icsLocal(d), "DTEND:" + icsLocal(e), "RRULE:" + rrule(c, ls.length), "SUMMARY:Seedline lesson", "DESCRIPTION:Your next lesson: " + ORIGIN + "/app/learn", "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:Seedline lesson", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n"); const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([body], { type: "text/calendar" })); a.download = "seedline-course.ics"; document.body.appendChild(a); a.click(); a.remove(); };
+  const gcal = () => { const n = ls.length, d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("SeedLine lesson") + "&dates=" + icsLocal(d) + "/" + icsLocal(e) + "&details=" + encodeURIComponent("Your next lesson: " + ORIGIN + "/app/learn") + "&recur=" + encodeURIComponent("RRULE:" + rrule(c, n)) + (c.tz ? "&ctz=" + encodeURIComponent(c.tz) : ""); };
+  const ics = () => { const d = firstReminder(c), e = new Date(d.getTime() + c.minutes * 60000); const body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//SeedLine//Course//EN", "BEGIN:VEVENT", "UID:" + uuid() + "@seedline", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z", "DTSTART:" + icsLocal(d), "DTEND:" + icsLocal(e), "RRULE:" + rrule(c, ls.length), "SUMMARY:SeedLine lesson", "DESCRIPTION:Your next lesson: " + ORIGIN + "/app/learn", "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:SeedLine lesson", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n"); const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([body], { type: "text/calendar" })); a.download = "seedline-course.ics"; document.body.appendChild(a); a.click(); a.remove(); };
   let lastTrack = null;
   const items = [];
   ls.forEach((l, i) => {
@@ -180,7 +180,7 @@ function Course() {
         </div>
         {note && <p className="small muted">{note}</p>}
         {c.remind?.includes("calendar") && <div className="row"><button className="btn sm" onClick={ics}>Add to phone calendar</button><a className="btn sm ghost" target="_blank" rel="noopener" href={gcal()}>Google Calendar</a></div>}
-        {c.remind?.includes("whatsapp") && <a className="btn sm ghost" style={{ alignSelf: "flex-start" }} target="_blank" rel="noopener" href={"https://wa.me/?text=" + encodeURIComponent(`My Seedline course: ${ls.length} lessons, ${paceW} at ${c.time}. ${ORIGIN}/app/learn`)}>WhatsApp the schedule to myself</a>}
+        {c.remind?.includes("whatsapp") && <a className="btn sm ghost" style={{ alignSelf: "flex-start" }} target="_blank" rel="noopener" href={"https://wa.me/?text=" + encodeURIComponent(`My SeedLine course: ${ls.length} lessons, ${paceW} at ${c.time}. ${ORIGIN}/app/learn`)}>WhatsApp the schedule to myself</a>}
       </section>
       <div className="trackrow">{Object.entries(TRACKS).map(([k, t]) => { const tl = ls.filter(l => l.tr === k), dn = tl.filter(l => done[l.n]).length; return <div key={k}><div className="tb"><i style={{ width: (tl.length ? dn / tl.length * 100 : 0) + "%", background: t.color }} /></div><span>{t.name}</span></div>; })}</div>
       {items}
@@ -223,7 +223,7 @@ function CourseSetup({ initial, onCancel, onDone }) {
       <section className="card raised" style={{ gap: 14 }}>
         <span className="field-label">How should we remind you?</span>
         <p className="small muted" style={{ marginTop: -8 }}>Pick any, even more than one.</p>
-        {[["push", "Push notification on this phone", pushOK ? "Android and computers. On iPhone, first tap Share, then Add to Home Screen, and open Seedline from there." : "Not available in this browser. On iPhone, add Seedline to your Home Screen first."],
+        {[["push", "Push notification on this phone", pushOK ? "Android and computers. On iPhone, first tap Share, then Add to Home Screen, and open SeedLine from there." : "Not available in this browser. On iPhone, add SeedLine to your Home Screen first."],
           ["email", "Email", "Each lesson in your inbox."],
           ["calendar", "Phone calendar", "A repeating reminder in your own calendar app."],
           ["whatsapp", "WhatsApp to myself", "Send yourself the schedule and link."]].map(([v, l, s]) => (

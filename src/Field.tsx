@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-/* The Seedline field: grain that sways under a sky that follows the time of day.
+/* The SeedLine field: grain that sways under a sky that follows the time of day.
    grow (0..1) sets how tall the field stands. stalks (scores 0..100) draws one stalk per household instead. */
 type Sky = "dawn" | "day" | "golden" | "dusk" | "night";
 export const SKIES: Record<Sky, { stops: [string, string, string]; sun: string; grain: [number, number, number]; stem: [number, number, number]; shade: string }> = {

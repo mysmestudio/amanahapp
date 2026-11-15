@@ -1,5 +1,5 @@
 // @ts-nocheck
-// Draws the Seedline family certificate as a 1600×1000 PNG (download / share). No external libraries.
+// Draws the SeedLine family certificate as a 1600×1000 PNG (download / share). No external libraries.
 const NAVY = "#0A1A3F", NAVY2 = "#13306B", GOLD = "#D9A93A", GOLD_ON = "#231800", WHITE = "#FFFFFF", MUTED = "#C9D3E6";
 const PLANT = [
   ["M12 8.5c0-2.2 1.2-3.8 3-4.5", "E12,14.5,5,6"],
@@ -40,7 +40,7 @@ export async function drawCertificate({ name, score, stageIdx, plantName, stageN
   // brand
   ctx.fillStyle = WHITE; rr(ctx, 110, 108, 64, 64, 18); ctx.fillStyle = NAVY2; ctx.fill();
   plant(ctx, 1, 122, 120, 40, WHITE);
-  ctx.fillStyle = WHITE; ctx.font = "800 38px Geist, Inter, sans-serif"; ctx.textBaseline = "middle"; ctx.fillText("Seedline", 192, 141);
+  ctx.fillStyle = WHITE; ctx.font = "800 38px Geist, Inter, sans-serif"; ctx.textBaseline = "middle"; ctx.fillText("SeedLine", 192, 141);
   ctx.fillStyle = GOLD; ctx.font = "700 22px Geist, Inter, sans-serif"; ctx.fillText("FAMILY WEALTH CHECK · CERTIFICATE", 110, 238);
   // name
   ctx.fillStyle = MUTED; ctx.font = "500 30px Geist, Inter, sans-serif"; ctx.fillText("This certifies that", 110, 300);

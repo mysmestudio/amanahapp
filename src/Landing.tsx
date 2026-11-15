@@ -86,40 +86,51 @@ const STORY = [
 function Story() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const [i, setI] = useState(0);
-  useMotionValueEvent(scrollYProgress, "change", p => setI(Math.min(3, Math.max(0, Math.floor(p * 4.0001)))));
-  const st = STAGES[i], dark = i !== 3;
+  const [k, setK] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", p => setK(Math.min(4, Math.max(0, Math.floor(p * 5.0001)))));
+  const idea = k === 0, i = Math.max(0, k - 1), st = STAGES[i];
+  const bg = idea ? "#0A1A3F" : STAGE_TONE[i], dark = idea || i !== 3;
   const range = `${st.min}–${STAGES[i + 1] ? STAGES[i + 1].min - 1 : 100}`;
+  const RAIL = ["The idea", ...STAGES.map(s => s.plant)];
   return (
-    <section className="lp-story" ref={ref} aria-label="The four stages, from seed to harvest">
-      <motion.div className="lp-story-pin" animate={{ backgroundColor: STAGE_TONE[i], color: dark ? "#FFFFFF" : "#231800" }} transition={{ duration: .6, ease: "easeInOut" }}>
+    <section className="lp-story" ref={ref} aria-label="The big idea, then the four stages from seed to harvest">
+      <motion.div className="lp-story-pin" animate={{ backgroundColor: bg, color: dark ? "#FFFFFF" : "#231800" }} transition={{ duration: .35, ease: "easeInOut" }}>
         <div className="lp-wrap lp-story-in">
           <div className="lp-story-top">
-            <span className="lp-eyebrow" style={{ color: "inherit", opacity: .8 }}>From seed to harvest · every family is somewhere on the line</span>
-            <ol className="lp-story-rail">{STAGES.map((s, k) => <li key={s.id} className={k <= i ? "on" : ""}><i /><span>{s.plant}</span></li>)}</ol>
+            <span className="lp-eyebrow" style={{ color: "inherit", opacity: .8 }}>{idea ? "The big idea" : "From seed to harvest · every family is somewhere on the line"}</span>
+            <ol className="lp-story-rail">{RAIL.map((s, n) => <li key={s} className={n <= k ? "on" : ""}><i /><span>{s}</span></li>)}</ol>
           </div>
           <div className="lp-story-main">
             <AnimatePresence mode="wait">
-              <motion.div key={i} className="lp-story-plant" initial={{ opacity: 0, scale: .6, rotate: -12 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: .8, rotate: 8 }} transition={{ duration: .5, ease: [.16, 1, .3, 1] }}>
-                <PlantIcon stage={i} size={150} color={STAGE_TONE[i]} />
+              <motion.div key={k} className="lp-story-plant" initial={{ opacity: 0, scale: .7, rotate: -10 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: .85, rotate: 6 }} transition={{ duration: .3, ease: [.16, 1, .3, 1] }}>
+                {idea ? <span className="lp-story-x">3<em>×</em></span> : <PlantIcon stage={i} size={150} color={STAGE_TONE[i]} />}
               </motion.div>
             </AnimatePresence>
             <div className="lp-story-copy">
               <AnimatePresence mode="wait">
-                <motion.div key={i} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -24 }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }}>
-                  <span className="lp-story-range tnum">Score {range}</span>
-                  <h2 className="lp-story-name">{st.plant}<em> · {st.name}</em></h2>
-                  <div className="lp-story-lines">
-                    <p><small>What it feels like</small>{STORY[i].feels}</p>
-                    <p><small>Your next move</small>{STORY[i].next}</p>
-                  </div>
+                <motion.div key={k} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: .3, ease: [.16, 1, .3, 1] }}>
+                  {idea ? <>
+                    <span className="lp-story-range">Why your income isn't in your score</span>
+                    <h2 className="lp-story-name idea">Income is <span>not</span> wealth.</h2>
+                    <div className="lp-story-lines">
+                      <p><small>Home A</small>Earns ₦1m, spends ₦950k. Keeps ₦50k a month.</p>
+                      <p><small>Home B</small>Earns ₦700k, spends ₦550k. Keeps ₦150k: three times more.</p>
+                    </div>
+                  </> : <>
+                    <span className="lp-story-range tnum">Score {range}</span>
+                    <h2 className="lp-story-name">{st.plant}<em> · {st.name}</em></h2>
+                    <div className="lp-story-lines">
+                      <p><small>What it feels like</small>{STORY[i].feels}</p>
+                      <p><small>Your next move</small>{STORY[i].next}</p>
+                    </div>
+                  </>}
                 </motion.div>
               </AnimatePresence>
             </div>
           </div>
           <div className="lp-story-foot">
-            <Link to="/app/check" className={"btn " + (dark ? "light" : "")}>Find your stage · 4 min<Ic n="arrow" s={18} /></Link>
-            <span className="lp-story-hint">{i < 3 ? "Keep scrolling to grow" : "That's the whole line."}</span>
+            <Link to="/start" className={"btn " + (dark ? "light" : "")}>Find your stage · 4 min<Ic n="arrow" s={18} /></Link>
+            <span className="lp-story-hint">{k < 4 ? "Keep scrolling" : "That's the whole line."}</span>
           </div>
         </div>
       </motion.div>
@@ -133,8 +144,8 @@ export default function Landing() {
   const r = result();
   const [listing, setListing] = useState(false);
   const named = !!load("onboarded");
-  const checkTo = r || named ? "/app" : "/start";
-  const checkLabel = r ? `Open my Seedline · ${r.score}` : named ? "Open my Seedline" : "Start free";
+  const checkTo = "/start";
+  const checkLabel = r ? `Open my SeedLine · ${r.score}` : named ? "Open my SeedLine" : "Start free";
   return (
     <div className="lp">
       <SiteNav dark />
@@ -145,6 +156,7 @@ export default function Landing() {
           <span className="hx-eyebrow">Your family office, online</span>
           <h1>Grow your family's <span>wealth.</span></h1>
           <p>See where your family stands. Grow from there, together.</p>
+          <span className="hx-made"><i />Developed for the MSMMI Marriage Workshop 2026</span>
           <div className="hx-cta">
             <Link to={checkTo} className="btn gold hx-btn">{checkLabel}<Ic n="arrow" s={20} /></Link>
             <span className="hx-note">Free for families · No sign-up · 4 minutes</span>
@@ -153,16 +165,6 @@ export default function Landing() {
         <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: .2, ease: [.16, 1, .3, 1] }}>
           <HeroSeed />
         </motion.div>
-      </div></section>
-
-      {/* income is not wealth */}
-      <section className="lp-sec"><div className="lp-wrap lp-split">
-        <motion.div className="lp-head" {...rise}>
-          <span className="lp-eyebrow">The big idea</span>
-          <h2>Income is <span className="lp-not">not<svg viewBox="0 0 120 16" preserveAspectRatio="none" aria-hidden="true"><motion.path d="M3 11C30 4 70 3 117 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: .8, delay: .4 }} /></svg></span> wealth.</h2>
-          <p className="lp-lede">Income passes through your hands. Wealth is what stays, works and lasts. That's why your income is <b>never part of your score</b>.</p>
-        </motion.div>
-        <Homes />
       </div></section>
 
       {/* pinned story */}
@@ -184,7 +186,7 @@ export default function Landing() {
               <li><Ic n="doc" s={18} />A certificate worth sharing</li>
               <li><Ic n="book" s={18} />Thirty short lessons, with sources</li>
             </ul>
-            <Link to={checkTo} className="btn gold">{r ? "Open my Seedline" : "Start the check"}<Ic n="arrow" s={18} /></Link>
+            <Link to={checkTo} className="btn gold">{r ? "Open my SeedLine" : "Get started"}<Ic n="arrow" s={18} /></Link>
             <div className="lp-door-cert" aria-hidden="true">
               <span className="lp-eyebrow gold">Family Wealth Check</span>
               <b>The ___ Family</b>
