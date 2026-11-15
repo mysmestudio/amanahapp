@@ -69,22 +69,36 @@ const Q = [
    opts:[{l:"Nothing, we run out",s:"We borrow or ask for help to finish the month",v:0},{l:"Almost nothing",s:"Less than {5} out of every {100}",v:15},{l:"A little",s:"About {5} to {10} out of every {100}",v:45},{l:"A good amount",s:"About {10} to {20} out of every {100}",v:75},{l:"A lot",s:"More than {20} out of every {100}",v:100}]},
   {id:"first", part:"surplus", q:"When money comes in, what happens to savings?",
    opts:[{l:"We save whatever is left, if anything",v:20},{l:"Sometimes we put savings aside first",v:55},{l:"Savings leave automatically on payday",s:"Before we spend anything",v:100}]},
+  {id:"spend", part:"surplus", q:"Without opening your banking app, how much did your home spend last month?", help:"Be honest. Most families are surprised by the real number.",
+   opts:[{l:"I could say within {20}",s:"I track it",v:100},{l:"Roughly",s:"I have a fair idea",v:60},{l:"I'd be guessing",v:25},{l:"No idea at all",v:5}]},
+  {id:"social", part:"surplus", q:"How do family support, owambe, aso-ebi and contributions affect your month?", help:"Money for parents, siblings, celebrations, weddings and community dues.",
+   opts:[{l:"Planned and budgeted",s:"We know the amount and set it aside",v:100},{l:"Unplanned, but manageable",s:"It surprises us, but we cope",v:50},{l:"They often push us into debt or to zero",v:10}]},
   {id:"runway", part:"safety", q:"If your main income stopped today, how long could you pay for the basics?", help:"Using only money you can get to quickly. No borrowing, no selling things.",
    opts:[{l:"Less than two weeks",v:0},{l:"About a month",v:30},{l:"One to three months",v:60},{l:"Three to six months",v:85},{l:"More than six months",v:100}]},
   {id:"cover", part:"safety", q:"If someone fell seriously ill, is there health cover?", help:"Health insurance, an HMO, or takaful.",
    opts:[{l:"No cover",v:0},{l:"Some of us are covered",v:50},{l:"Everyone is covered",v:100}]},
+  {id:"emergency", part:"safety", q:"A family emergency needs {500} within 7 days. Where does it come from?", help:"Pick what would really happen, not what you'd like to happen.",
+   opts:[{l:"Our own savings",v:100},{l:"Selling something we own",v:55},{l:"Borrowing from family or friends",v:35},{l:"A loan app or lender",v:10},{l:"We couldn't raise it",v:0}]},
   {id:"debtshare", part:"debt", q:"How much of your monthly income goes to paying back debts?", help:"Think of every {100} that comes in. Count loans, credit, salary advances and money owed to friends or family.",
    opts:[{l:"Nothing",s:"We have no debts",v:100},{l:"A little",s:"Less than {15} out of every {100}",v:75},{l:"A fair amount",s:"About {15} to {35} out of every {100}",v:40},{l:"A lot",s:"More than {35} out of every {100}",v:10}]},
   {id:"borrow", part:"debt", q:"Do you borrow to pay for normal things?", help:"Rent, food, school fees, transport.",
    opts:[{l:"Often",v:0},{l:"Sometimes",v:45},{l:"Never",v:100}]},
+  {id:"hidden", part:"debt", q:"Is there any debt your spouse or family doesn't know about?", help:"Your answer never leaves this phone. Hidden debt is one of the biggest risks to a family's money.",
+   opts:[{l:"No, everything is known",v:100},{l:"Yes, a small amount",v:40},{l:"Yes, a significant amount",v:5},{l:"I'd rather not say",v:20}]},
   {id:"where", part:"productive", q:"Where are your savings mostly kept?",
    opts:[{l:"Cash at home or a normal current account",s:"It shrinks as prices rise",v:15},{l:"A savings account",v:45},{l:"Spread across halal investments or a business",v:100}]},
   {id:"check", part:"productive", q:"When someone brings you an investment, how do you decide?",
    opts:[{l:"I don't invest yet",v:30},{l:"I trust the person who brought it",s:"A friend, a relative, a WhatsApp group",v:5},{l:"I check who runs it, its licence and whether it is halal",v:100}]},
   {id:"grow", part:"productive", q:"In the last year, did you spend money or time building a skill or business?",
    opts:[{l:"No",v:10},{l:"A little",v:55},{l:"Yes, seriously",v:100}]},
+  {id:"inflation", part:"productive", q:"Over the last 12 months, did your savings grow faster than prices?", help:"Food, rent and school fees went up. Did your money keep up?",
+   opts:[{l:"Yes, they beat rising prices",v:100},{l:"About the same",v:55},{l:"No, they lost value",v:20},{l:"I honestly don't know",v:10}]},
   {id:"talk", part:"legacy", q:"How often do you talk openly about money at home?", help:"With your spouse or family. If single, with whoever you share money matters with.",
    opts:[{l:"Rarely or never",v:10},{l:"Only when there's a problem",v:40},{l:"Regularly, as a habit",v:100}]},
+  {id:"tonight", part:"legacy", q:"If the main earner died tonight, how soon could the family get money to run the home?", help:"Think of accounts in one person's name, passwords, and documents.",
+   opts:[{l:"Within days",s:"Joint access or clear instructions exist",v:100},{l:"Within a month",v:55},{l:"Months, through court or bank processes",v:20},{l:"They wouldn't know where to start",v:5}]},
+  {id:"zakat", part:"legacy", q:"Did you calculate and pay zakat on your wealth last year?", help:"Zakat is due on wealth above the nisab held for a lunar year.",
+   opts:[{l:"Yes, calculated properly and paid",v:100},{l:"Our wealth is below the nisab",v:70},{l:"Paid something, but didn't calculate",v:55},{l:"Not sure if it applies to us",v:30},{l:"No",v:15}]},
   {id:"docs", part:"legacy", multi:true, q:"Which of these are already true for you?", help:"Tick all that apply. It's fine if none are.",
    opts:[{l:"There's a written list of what we own and owe",v:"register"},{l:"Someone I trust knows where our documents are",v:"location"},{l:"A wasiyyah (Islamic will) has been written",v:"wasiyyah"},{l:"Next of kin is up to date on our bank and pension accounts",v:"kin"},{l:"Our children are learning about money",v:"children"},{l:"We give regularly to a sadaqah jariyah or waqf",v:"jariyah"}]}
 ];
@@ -92,15 +106,15 @@ const SCORED = Q.filter(q => !q.setup).length;
 
 function compute(a){
   const val = id => { const q = Q.find(x=>x.id===id); const o = (q.opts==="bands"?[]:q.opts).find(o=>o.v===a[id]); return o ? o.v : 0; };
-  const avg = ids => Math.round(ids.reduce((t,id)=>t+val(id),0)/ids.length);
+  const avg = ids => { const got = ids.filter(id => a[id] != null || ["sources","steady","left","first","runway","cover","debtshare","borrow","where","check","grow","talk"].includes(id)); return Math.round(got.reduce((t,id)=>t+val(id),0)/Math.max(1, got.length)); };
   const docs = (a.docs||[]).length;
   const lev = {
     income: avg(["sources","steady"]),
-    surplus: avg(["left","first"]),
-    safety: avg(["runway","cover"]),
-    debt: avg(["debtshare","borrow"]),
-    productive: avg(["where","check","grow"]),
-    legacy: Math.round(0.35*val("talk") + 0.65*(docs/6*100))
+    surplus: avg(["left","first","spend","social"]),
+    safety: avg(["runway","cover","emergency"]),
+    debt: avg(["debtshare","borrow","hidden"]),
+    productive: avg(["where","check","grow","inflation"]),
+    legacy: a.tonight != null ? Math.round(0.2*val("talk") + 0.2*val("tonight") + 0.15*val("zakat") + 0.45*(docs/6*100)) : Math.round(0.35*val("talk") + 0.65*(docs/6*100))
   };
   let score = Math.round(Object.keys(WEIGHTS).reduce((t,k)=>t+lev[k]*WEIGHTS[k]/100,0));
   const capped = lev.surplus <= 10 && score > 34;
@@ -210,8 +224,8 @@ const SLIDES = [
   {id:"title", presenter:true, kick:"MSMMI Marriage Workshop 2026 · Day 2", title:"Beyond Survival: Building Wealth and a Generational Muslim Legacy",
    body:()=>`<p>Eb'rahim Durosimi</p><div class="join-qr"><div class="qrbox" data-qr></div><div class="stack"><span class="label">Open SeedLine on your phone</span><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div></div>`,
    notes:"Welcome. Before I say anything about money, I want every one of you to open this link. We start with you, not with theory."},
-  {id:"take", presenter:true, kick:"Step 1 · 4 minutes", title:"Before I teach anything, let's find out where you are.",
-   body:()=>`<p>Thirteen quick questions. No exact figures. Completely anonymous. You'll get a score from 0 to 100 and see which part of your money is holding you back.</p><div class="join-qr"><div class="qrbox" data-qr></div><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div>`,
+  {id:"take", presenter:true, kick:"Step 1 · 6 minutes", title:"Before I teach anything, let's find out where you are.",
+   body:()=>`<p>Twenty quick questions. No exact figures. Completely anonymous. You'll get a score from 0 to 100 and see which part of your money is holding you back.</p><div class="join-qr"><div class="qrbox" data-qr></div><span class="join-url">${esc(JOIN.replace(/^https?:\/\//,""))}</span></div>`,
    notes:"Give them 4–5 minutes. Encourage couples to do it together on one phone. Then move to the live board."},
   {id:"room", presenter:true, kick:"Live", title:"This is where our room stands right now", body:()=>`<div data-room></div>`,
    notes:"Read the board out loud. Where is the biggest cluster? What is the most common weakest part? Say: nobody here is being judged. This is a starting line."},

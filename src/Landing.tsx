@@ -112,7 +112,7 @@ function Story() {
                   {end ? <>
                     <span className="lp-story-range">Seed, sprout, stalk or harvest?</span>
                     <h2 className="lp-story-name idea end">Where does your family stand <span>today?</span></h2>
-                    <p className="lp-story-end">Four minutes. No exact figures. A clear next step.</p>
+                    <p className="lp-story-end">Six minutes. No exact figures. A clear next step.</p>
                     <Link to="/start" className="btn gold hx-btn">Start free<Ic n="arrow" s={20} /></Link>
                   </> : idea ? <>
                     <span className="lp-story-range">Why your income isn't in your score</span>
@@ -134,7 +134,7 @@ function Story() {
             </div>
           </div>
           <div className="lp-story-foot">
-            {!end ? <Link to="/start" className={"btn " + (dark ? "light" : "")}>Find your stage · 4 min<Ic n="arrow" s={18} /></Link> : <span />}
+            {!end ? <Link to="/start" className={"btn " + (dark ? "light" : "")}>Find your stage · 6 min<Ic n="arrow" s={18} /></Link> : <span />}
             <span className="lp-story-hint">{end ? "Free for families · No sign-up" : "Keep scrolling"}</span>
           </div>
         </div>
@@ -164,7 +164,7 @@ export default function Landing() {
           <span className="hx-made"><i />Developed for the MSMMI Marriage Workshop 2026</span>
           <div className="hx-cta">
             <Link to={checkTo} className="btn gold hx-btn">{checkLabel}<Ic n="arrow" s={20} /></Link>
-            <span className="hx-note">Free for families · No sign-up · 4 minutes</span>
+            <span className="hx-note">Free for families · No sign-up · 6 minutes</span>
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: .2, ease: [.16, 1, .3, 1] }}>

@@ -65,7 +65,7 @@ function QRFull({ onClose, total }) {
         <QRCodeCanvas value={JOIN} size={size} fgColor="#0A1A3F" />
       </motion.div>
       <span className="rb-full-url">{JOIN.replace(/^https?:\/\//, "")}</span>
-      <span className="rb-full-count"><i />{total} household{total === 1 ? "" : "s"} so far · 4 minutes · no sign-up</span>
+      <span className="rb-full-count"><i />{total} household{total === 1 ? "" : "s"} so far · 6 minutes · no sign-up</span>
     </motion.div>
   );
 }

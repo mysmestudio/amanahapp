@@ -50,9 +50,9 @@ export function Check() {
       <div className="ck-hero">
         <span className="rs-eyebrow">Family wealth check</span>
         <h1>Where does your home stand today?</h1>
-        <p>Thirteen quick questions about six parts of your family's money.</p>
+        <p>Twenty questions about six parts of your family's money. Some will make you think. Answer honestly.</p>
         <ol className="ck-journey" aria-label="Your SeedLine journey"><li className="done"><i><Ic n="check" s={12} w={3} /></i>Opened SeedLine</li><li className="now"><i>2</i>Family check</li><li><i>3</i>Your plan</li><li><i>4</i>Grow</li></ol>
-        <div className="ck-pills"><span><Ic n="pulse" s={15} />4 minutes</span><span><Ic n="ranges" s={15} />Ranges only</span><span><Ic n="lock" s={15} />Private</span></div>
+        <div className="ck-pills"><span><Ic n="pulse" s={15} />6 minutes</span><span><Ic n="ranges" s={15} />Ranges only</span><span><Ic n="lock" s={15} />Private</span></div>
         <button className="btn gold block lg" onClick={() => { if (partial) setStep(firstGap); else { setA({}); setStep(0); } }}>{partial ? "Continue my check" : r ? "Take it again" : "Start my check"}<Ic n="arrow" s={18} /></button>
       </div>
       <div className="ck-parts">{Object.entries(PARTS).map(([k, p], i) => <div key={k} style={{ "--t": ["#13306B", "#1E7A4E", "#2A4FA8", "#B4472A", "#0F6E6E", "#B98A1F"][i] }}><i>{i + 1}</i><span><b>{p.name}</b><small>{p.plain}</small></span></div>)}</div>

@@ -99,7 +99,7 @@ function CelebrateStep({ r, go }) {
     setBusy("");
   };
   const invite = async () => {
-    const text = `Assalamu alaikum! I just took the SeedLine Family Wealth Check. It takes 4 minutes and shows where our family's money stands. Take yours: ${ORIGIN}/app/check`;
+    const text = `Assalamu alaikum! I just took the SeedLine Family Wealth Check. It takes about 6 minutes and shows where our family's money stands. Take yours: ${ORIGIN}/app/check`;
     try { if (navigator.share) await navigator.share({ text, title: "SeedLine" }); else window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener"); } catch {}
   };
   return (
@@ -264,7 +264,7 @@ export function Home() {
         <div className="rs-welcome-plants">{[0, 1, 2, 3].map(i => <motion.span key={i} initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: .2 + i * .12 }}><PlantIcon stage={i} size={56} tile /></motion.span>)}</div>
         <span className="rs-eyebrow">Step 1 of 4 done · you're in</span>
         <h1>{load("name") ? `${load("name")}, let's` : "Let's"} see where your family stands.</h1>
-        <p>Thirteen questions, about four minutes. You'll get your score, your stage, a certificate, and the one part holding your home back.</p>
+        <p>Twenty questions, about six minutes. You'll get your score, your stage, a certificate, and the one part holding your home back.</p>
         <Link className="btn gold block lg" to="/app/check">Start the family check <Ic n="arrow" s={18} /></Link>
       </div>
       <div className="rs-two">

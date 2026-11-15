@@ -23,7 +23,7 @@ export default function TwoSides() {
             <span className="lp-eyebrow gold">For families</span>
             <h3>Your family office, in your pocket.</h3>
             <ul>
-              <li><Ic n="pulse" s={18} />A health-check in four minutes</li>
+              <li><Ic n="pulse" s={18} />A 20-question health-check</li>
               <li><Ic n="plan" s={18} />A plan you make together</li>
               <li><Ic n="doc" s={18} />A certificate worth sharing</li>
               <li><Ic n="book" s={18} />Thirty short lessons, with sources</li>
