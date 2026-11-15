@@ -6,12 +6,14 @@ import Landing from "./Landing";
 import Guide from "./Guide";
 import Institutions from "./Institutions";
 import Trust from "./Trust";
+import Start from "./Start";
 import { AppShell } from "./ui";
 import { Check, Learn, Tools } from "./AppPages";
 import { Home } from "./Result";
 import { Plan } from "./Plan";
 import { Present, Room } from "./Present";
 
+function ToDirectory() { return <Navigate to={"/app/directory" + (typeof location !== "undefined" ? location.search : "")} replace />; }
 function ScrollTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -31,7 +33,8 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<LegacyHash />} />
         <Route path="/how-it-works" element={<Guide />} />
-        <Route path="/institutions" element={<Institutions />} />
+        <Route path="/institutions" element={<ToDirectory />} />
+        <Route path="/start" element={<Start />} />
         <Route path="/trust" element={<Trust />} />
         <Route path="/app" element={<AppShell />}>
           <Route index element={<Home />} />
@@ -39,6 +42,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="plan" element={<Plan />} />
           <Route path="learn" element={<Learn />} />
           <Route path="tools" element={<Tools />} />
+          <Route path="directory" element={<Institutions inApp />} />
         </Route>
         <Route path="/present" element={<Present />} />
         <Route path="/room" element={<Room />} />

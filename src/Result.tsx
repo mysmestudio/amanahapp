@@ -237,7 +237,7 @@ function NextStep({ r, history }) {
       <div className="rs-doors">
         <Link to="/app/plan" className="rs-door navy"><span className="rs-door-ic"><Ic n="plan" s={22} /></span><b>{picks.made ? "My 30-day plan" : "Make my plan"}</b><small>Three actions, chosen from your answers.</small><Ic n="arrow" s={18} /></Link>
         <Link to="/app/learn" className="rs-door"><span className="rs-door-ic"><Ic n="book" s={22} /></span><b>{course ? `Continue course · ${done} done` : "Start the course"}</b><small>Short lessons, alone or as a family.</small><Ic n="arrow" s={18} /></Link>
-        <Link to="/institutions" className="rs-door"><span className="rs-door-ic"><Ic n="building" s={22} /></span><b>Find halal providers</b><small>36 institutions, matched to your goal.</small><Ic n="arrow" s={18} /></Link>
+        <Link to="/app/directory" className="rs-door"><span className="rs-door-ic"><Ic n="building" s={22} /></span><b>Find halal providers</b><small>36 institutions, matched to your goal.</small><Ic n="arrow" s={18} /></Link>
         <Link to="/app/tools" className="rs-door"><span className="rs-door-ic"><Ic n="pulse" s={22} /></span><b>Family money tools</b><small>Cushion, surplus, investment check.</small><Ic n="arrow" s={18} /></Link>
       </div>
       <SaveCard r={r} />
@@ -263,7 +263,7 @@ export function Home() {
       <div className="rs-welcome">
         <div className="rs-welcome-plants">{[0, 1, 2, 3].map(i => <motion.span key={i} initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: .2 + i * .12 }}><PlantIcon stage={i} size={56} tile /></motion.span>)}</div>
         <span className="rs-eyebrow">Step 1 of 4 done · you're in</span>
-        <h1>Let's see where your family stands.</h1>
+        <h1>{load("name") ? `${load("name")}, let's` : "Let's"} see where your family stands.</h1>
         <p>Thirteen questions, about four minutes. You'll get your score, your stage, a certificate, and the one part holding your home back.</p>
         <Link className="btn gold block lg" to="/app/check">Start the family check <Ic n="arrow" s={18} /></Link>
       </div>

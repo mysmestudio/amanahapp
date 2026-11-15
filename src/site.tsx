@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Brand } from "./ui";
-import { result, api } from "./store";
+import { result, api, load } from "./store";
 import "./landing.css";
 
 const ic = {
@@ -60,19 +60,18 @@ export function Acc({ q, children, dark = false }) {
   );
 }
 
-export function SiteNav() {
-  const r = result();
+export function SiteNav({ dark = false }) {
+  const r = result(); const named = !!load("onboarded");
   return (
-    <header className="lp-nav"><div className="lp-wrap lp-nav-in">
-      <Brand />
+    <header className={"lp-nav" + (dark ? " dark" : "")}><div className="lp-wrap lp-nav-in">
+      <Brand light={dark} />
       <nav className="lp-links" aria-label="Site">
         <NavLink to="/how-it-works">How it works</NavLink>
-        <NavLink to="/institutions">Institutions</NavLink>
+        <a href="/#institutions">For institutions</a>
         <NavLink to="/trust">Trust &amp; privacy</NavLink>
-        <NavLink to="/app/learn">Learn</NavLink>
       </nav>
       <div className="lp-nav-cta">
-        <Link to={r ? "/app" : "/app/check"} className="btn sm">{r ? "Open my Seedline" : "Start free"}</Link>
+        <Link to={r || named ? "/app" : "/start"} className={"btn sm" + (dark ? " gold" : "")}>{r || named ? "Open my Seedline" : "Start free"}</Link>
       </div>
     </div></header>
   );
@@ -83,8 +82,8 @@ export function SiteFooter({ onList }) {
     <footer className="lp-foot"><div className="lp-wrap lp-foot-in">
       <div className="lp-foot-brand"><Brand /><span>Your family office, online. Launched at the MSMMI Marriage Workshop 2026, Lagos.</span></div>
       <div className="lp-foot-cols">
-        <div><b>Families</b><Link to="/app/check">Take the check</Link><Link to="/app/plan">Your plan</Link><Link to="/app/learn">Lessons</Link></div>
-        <div><b>Institutions</b><Link to="/institutions">Directory</Link>{onList ? <button onClick={onList}>Request a listing</button> : <Link to="/institutions#list">Request a listing</Link>}</div>
+        <div><b>Families</b><Link to="/start">Get started</Link><Link to="/how-it-works">How it works</Link></div>
+        <div><b>Institutions</b>{onList ? <button onClick={onList}>Request a free listing</button> : <a href="/#institutions">Request a free listing</a>}</div>
         <div><b>Seedline</b><Link to="/how-it-works">How it works</Link><Link to="/trust">Trust &amp; privacy</Link></div>
       </div>
       <p className="lp-disclaim">Seedline provides financial education, not financial, legal or Shariah advice. A listing is not a recommendation. For personal decisions, speak to a licensed adviser or a qualified scholar.</p>

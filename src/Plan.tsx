@@ -112,7 +112,7 @@ export function Plan() {
               <SaveCard r={r} plan={lines} />
               <div className="rs-doors">
                 <Link to="/app/learn" className="rs-door navy"><span className="rs-door-ic"><Ic n="book" s={22} /></span><b>Turn it into habits</b><small>Short lessons with reminders that fit your week.</small><Ic n="arrow" s={18} /></Link>
-                <Link to={rm.grow[p.grow]?.part === "productive" ? "/institutions?goal=grow" : "/institutions?goal=save"} className="rs-door"><span className="rs-door-ic"><Ic n="building" s={22} /></span><b>Find a halal provider</b><small>Matched to your plan.</small><Ic n="arrow" s={18} /></Link>
+                <Link to={rm.grow[p.grow]?.part === "productive" ? "/app/directory?goal=grow" : "/app/directory?goal=save"} className="rs-door"><span className="rs-door-ic"><Ic n="building" s={22} /></span><b>Find a halal provider</b><small>Matched to your plan.</small><Ic n="arrow" s={18} /></Link>
               </div>
             </div>
           )}

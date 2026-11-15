@@ -27,9 +27,10 @@ const I = {
   check: <><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M12 12l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /><circle cx="12" cy="12" r="1.6" fill="currentColor" /></>,
   plan: <path d="M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />,
   learn: <path d="M12 21V11 M12 11c0-4 3-6 7-6 0 4-3 6-7 6z M12 14c0-3-2-5-6-5 0 3 2 5 6 5z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />,
+  dir: <path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />,
   tools: <><rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>
 };
-const TABS = [["/app", "Home", "home", true], ["/app/check", "Check", "check"], ["/app/plan", "Plan", "plan"], ["/app/learn", "Learn", "learn"], ["/app/tools", "Tools", "tools"]];
+const TABS = [["/app", "Home", "home", true], ["/app/check", "Check", "check"], ["/app/plan", "Plan", "plan"], ["/app/directory", "Halal", "dir"], ["/app/learn", "Learn", "learn"], ["/app/tools", "Tools", "tools"]];
 
 export function AppShell() {
   const last = (() => { try { return JSON.parse(localStorage.getItem("seedline:last")); } catch { return null; } })();
@@ -43,7 +44,6 @@ export function AppShell() {
               <svg viewBox="0 0 24 24" aria-hidden="true">{I[ic]}</svg>{label}
             </NavLink>
           ))}
-          <Link to="/institutions" className="aside-ext"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>Halal directory</Link>
         </nav>
         {last && <Link to="/app" className="aside-score"><span>Your score</span><b className="tnum">{last.score}</b><small>{last.stageName}</small></Link>}
         <span className="aside-foot">Launched at the MSMMI Marriage Workshop 2026</span>
@@ -60,7 +60,8 @@ export function AppShell() {
   );
 }
 export function AppTop({ title = null }) {
-  return <header className="apptop"><Brand to="/" />{title ? <span className="apptop-t">{title}</span> : <div className="co">Your family<br />office, online</div>}</header>;
+  const name = (() => { try { return JSON.parse(localStorage.getItem("seedline:name")) || ""; } catch { return ""; } })();
+  return <header className="apptop"><Brand to="/" />{title ? <span className="apptop-t">{title}</span> : <div className="co">{name ? <>Assalamu alaikum,<br /><b>{name}</b></> : <>Your family<br />office, online</>}</div>}</header>;
 }
 
 /* Renders trusted slide HTML from content.ts, then mounts live pieces (QR codes, room board). */

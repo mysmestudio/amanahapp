@@ -125,7 +125,7 @@ function Flip({ c, i }) {
   );
 }
 
-export default function Institutions() {
+export default function Institutions({ inApp = false }) {
   const [params, setParams] = useSearchParams();
   const goal = params.get("goal");
   const [q, setQ] = useState("");
@@ -145,8 +145,8 @@ export default function Institutions() {
   }, [q, sector]);
 
   return (
-    <div className="lp">
-      <SiteNav />
+    <div className={"lp" + (inApp ? " lp-inapp" : "")}>
+      {!inApp && <SiteNav />}
 
       {/* hero */}
       <section className="lp-phero dir"><div className="lp-wrap lp-phero-in">
@@ -240,7 +240,7 @@ export default function Institutions() {
         <p className="lp-fine" style={{ marginTop: 20, textAlign: "left" }}>Compiled from public sources (2026). Information, not a recommendation or financial advice; confirm details directly with each institution. Not sure where you stand yet? <Link to="/app/check">Take the family check</Link> first.</p>
       </div></section>
 
-      <SiteFooter onList={() => setListing(true)} />
+      {!inApp && <SiteFooter onList={() => setListing(true)} />}
       <ListingModal open={listing} onClose={() => setListing(false)} />
       {inst && <InstSheet inst={inst} onClose={() => setInst(null)} onContract={c => { setInst(null); setCtr(c); }} />}
       {ctr && <ContractSheet c={ctr} onClose={() => setCtr(null)} />}

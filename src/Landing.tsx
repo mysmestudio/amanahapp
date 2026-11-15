@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useInView, useReducedMotion, animate } from "framer-motion";
 import { PlantIcon, STAGE_TONE } from "./Row";
 import { STAGES } from "./content";
-import { result } from "./store";
-import { GOALS, countByGoal, INSTITUTIONS } from "./institutions";
+import { result, load } from "./store";
 import { Ic, GOAL_ICON, rise, naira, SiteNav, SiteFooter, ListingModal } from "./site";
 
 /* ---------- motion helpers ---------- */
@@ -25,89 +24,34 @@ function CountUp({ to, fmt = x => Math.round(x), dur = 1.4, start }) {
   return <>{fmt(v)}</>;
 }
 
-/* ---------- the living field (hero) ---------- */
-const kept2stage = k => (k < 5 ? 0 : k < 12 ? 1 : k < 25 ? 2 : 3);
-function Plant({ x, y, s, g, gold }) {
-  const h = (10 + 62 * g) * s, stroke = gold ? "#D9A93A" : "rgba(255,255,255,.6)", w = Math.max(.9, 2.6 * s);
-  const leaf = g > .12, grain = g > .72;
-  return (
-    <g transform={`translate(${x} ${y})`} stroke={stroke} strokeWidth={w} strokeLinecap="round" fill="none">
-      {g < .06 ? <ellipse cx="0" cy={-3 * s} rx={3.2 * s} ry={2.4 * s} fill={stroke} stroke="none" /> : <path d={`M0 0V${-h}`} />}
-      {leaf && <><path d={`M0 ${-h * .35}c${-10 * s * g} 0 ${-15 * s * g} ${-4 * s} ${-15 * s * g} ${-14 * s * g}c${8 * s * g} 0 ${15 * s * g} ${4 * s} ${15 * s * g} ${10 * s * g}z`} fill={stroke} fillOpacity=".25" />
-        <path d={`M0 ${-h * .55}c${10 * s * g} 0 ${15 * s * g} ${-4 * s} ${15 * s * g} ${-10 * s * g}c${-6 * s * g} 0 ${-15 * s * g} ${4 * s} ${-15 * s * g} ${10 * s * g}z`} fill={stroke} fillOpacity=".25" /></>}
-      {grain && <g fill={gold ? "#D9A93A" : "rgba(255,255,255,.7)"} stroke="none">
-        <ellipse cx="0" cy={-h - 3 * s} rx={2.2 * s} ry={4.4 * s} />
-        <ellipse cx={-3 * s} cy={-h + 4 * s} rx={2 * s} ry={3.8 * s} transform={`rotate(-28 ${-3 * s} ${-h + 4 * s})`} />
-        <ellipse cx={3 * s} cy={-h + 4 * s} rx={2 * s} ry={3.8 * s} transform={`rotate(28 ${3 * s} ${-h + 4 * s})`} />
-      </g>}
-    </g>
-  );
-}
-function Field({ g }) {
-  const W = 460, H = 300, vx = 230, vy = 118, rows = 13;
-  const plants = [];
-  for (let i = 0; i < rows; i++) {
-    const bx = -260 + (i * (W + 520)) / (rows - 1);
-    [.28, .52, .8].forEach(t => plants.push({ x: vx + (bx - vx) * t, y: vy + (H + 20 - vy) * t, s: t, gold: i === (rows - 1) / 2, key: i + "-" + t }));
-  }
-  const sunY = 128 - 46 * g;
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="lp-field" role="img" aria-label="A field of plants that grows taller as more money stays">
-      <rect width={W} height={H} fill="#0A1A3F" />
-      {[[40, 30], [96, 62], [150, 22], [300, 40], [372, 70], [420, 26], [250, 18], [60, 86]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="1.3" fill="#FFFFFF" opacity={.5 - g * .35} />)}
-      <circle cx={vx} cy={sunY} r="34" fill="#D9A93A" opacity={.25 + g * .75} />
-      <rect y={vy} width={W} height={H - vy} fill="#0A1A3F" />
-      <rect y={vy} width={W} height={H - vy} fill="#13306B" opacity={.55} />
-      {Array.from({ length: rows }).map((_, i) => { const bx = -260 + (i * (W + 520)) / (rows - 1); return <line key={i} x1={vx} y1={vy} x2={bx} y2={H + 20} stroke={i === (rows - 1) / 2 ? "#D9A93A" : "#FFFFFF"} strokeOpacity={i === (rows - 1) / 2 ? .55 : .1} strokeWidth="1" />; })}
-      <line x1="0" y1={vy} x2={W} y2={vy} stroke="#FFFFFF" strokeOpacity=".18" />
-      {plants.sort((a, b) => a.s - b.s).map(p => <Plant key={p.key} {...p} g={Math.max(0, Math.min(1, g * (1.05 - (1 - p.s) * .15)))} />)}
-    </svg>
-  );
-}
-function GrowCard() {
+/* ---------- hero: one seed, growing (calm, looping) ---------- */
+const GROW = [
+  { label: "Seed", paths: [], ellipses: [[12, 15, 4.2, 5.2, 0]], extra: ["M12 9.8c0-2 1.1-3.5 2.8-4.2"] },
+  { label: "Sprout", paths: ["M12 21V11.5", "M12 14c-4 0-6-2.5-6-6 3.5 0 6 2 6 6z", "M12 12c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6z"], ellipses: [], extra: [] },
+  { label: "Stalk", paths: ["M12 22V4", "M12 9c-3 0-5-2-5-5 3 0 5 2 5 5z", "M12 13c3 0 5-2 5-5-3 0-5 2-5 5z", "M12 18c-3 0-5-2-5-5 3 0 5 2 5 5z"], ellipses: [], extra: [] },
+  { label: "Harvest", paths: ["M12 22V7"], ellipses: [[12, 4.5, 1.6, 2.5, 0], [9.3, 9, 1.8, 3, -28], [14.7, 9, 1.8, 3, 28], [9.3, 14, 1.8, 3, -28], [14.7, 14, 1.8, 3, 28]], extra: [] }
+];
+function HeroSeed() {
   const reduce = useReducedMotion();
-  const [kept, setKept] = useState(reduce ? 18 : 0);
-  const [touched, setTouched] = useState(false);
-  useEffect(() => {
-    if (reduce || touched) return;
-    const c = animate(0, 18, { duration: 2.6, delay: .6, ease: [.45, 0, .2, 1], onUpdate: v => setKept(Math.round(v)) });
-    return () => c.stop();
-  }, [touched]);
-  const g = useSmooth(Math.min(1, kept / 30));
-  const st = kept2stage(kept);
+  const [i, setI] = useState(reduce ? 3 : 0);
+  useEffect(() => { if (reduce) return; const t = setInterval(() => setI(n => (n + 1) % 4), 2800); return () => clearInterval(t); }, []);
+  const g = GROW[i];
+  const draw = k => ({ initial: { pathLength: 0, opacity: 0 }, animate: { pathLength: 1, opacity: 1 }, transition: { pathLength: { duration: 1.3, delay: .15 + k * .22, ease: [.45, 0, .2, 1] }, opacity: { duration: .2, delay: .15 + k * .22 } } });
   return (
-    <div className="lp-grow">
-      <div className="lp-grow-field"><Field g={g} /></div>
-      <div className="lp-grow-panel">
-        <div className="lp-grow-q">Of every <b>₦100,000</b> your family earns, how much stays?</div>
-        <div className="lp-grow-read">
-          <span className="lp-grow-amt tnum">₦{(kept * 1000).toLocaleString("en-NG")}</span>
-          <AnimatePresence mode="wait">
-            <motion.span key={st} className="lp-grow-stage" style={{ background: STAGE_TONE[st], color: st === 3 ? "#231800" : "#FFFFFF" }}
-              initial={{ opacity: 0, y: 8, scale: .9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: .9 }} transition={{ duration: .3 }}>
-              <PlantIcon stage={st} size={18} light={st !== 3} color={st === 3 ? "#231800" : undefined} />{STAGES[st].plant}
-            </motion.span>
-          </AnimatePresence>
-        </div>
-        <input type="range" min="0" max="40" step="1" value={kept} aria-label="Amount that stays from every ₦100,000"
-          onChange={e => { setTouched(true); setKept(+e.target.value); }} className="lp-range" style={{ "--p": `${(kept / 40) * 100}%` }} />
-        <div className="lp-grow-foot"><span>A taste only. The real check looks at six parts of your money.</span><Link to="/app/check">Full check <Ic n="arrow" s={15} /></Link></div>
-      </div>
+    <div className="hs" aria-label={`A seed growing: now at the ${g.label} stage`} role="img">
+      <div className="hs-rings" aria-hidden="true"><i /><i /><i /></div>
+      <motion.div className="hs-disc" animate={{ scale: [1, 1.025, 1] }} transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}>
+        <AnimatePresence mode="wait">
+          <motion.svg key={i} viewBox="0 0 24 24" className="hs-plant" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+            exit={{ opacity: 0, scale: .92, transition: { duration: .35 } }}>
+            {g.ellipses.map((e, k) => <motion.ellipse key={"e" + k} fill={i === 0 || i === 3 ? "currentColor" : "none"} cx={e[0]} cy={e[1]} rx={e[2]} ry={e[3]} transform={e[4] ? `rotate(${e[4]} ${e[0]} ${e[1]})` : undefined} {...draw(g.paths.length + k)} />)}
+            {[...g.paths, ...g.extra].map((d, k) => <motion.path key={k} d={d} {...draw(k)} />)}
+          </motion.svg>
+        </AnimatePresence>
+        <span className="hs-soil" aria-hidden="true" />
+      </motion.div>
+      <ol className="hs-steps" aria-hidden="true">{GROW.map((s, k) => <li key={s.label} className={k === i ? "on" : k < i ? "past" : ""}><i />{s.label}</li>)}</ol>
     </div>
-  );
-}
-
-const WORDS = ["together.", "the halal way.", "seed by seed.", "for good."];
-function Rotator() {
-  const reduce = useReducedMotion();
-  const [i, setI] = useState(0);
-  useEffect(() => { if (reduce) return; const t = setInterval(() => setI(n => (n + 1) % WORDS.length), 2600); return () => clearInterval(t); }, []);
-  return (
-    <span className="lp-rot" aria-live="off">
-      <AnimatePresence mode="wait">
-        <motion.span key={i} className="lp-rot-w" initial={{ y: "70%", opacity: 0 }} animate={{ y: "0%", opacity: 1 }} exit={{ y: "-70%", opacity: 0 }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }}>{WORDS[i]}</motion.span>
-      </AnimatePresence>
-    </span>
   );
 }
 
@@ -184,38 +128,32 @@ function Story() {
 }
 
 /* ---------- page ---------- */
-const MARQUEE = ["Non-interest savings", "Emergency cushion", "Takaful", "Sovereign sukuk", "Halal funds", "Home finance", "Zakat", "Wasiyyah", "Waqf", "Family money talks", "Records that last", "Sadaqah"];
 
 export default function Landing() {
   const r = result();
   const [listing, setListing] = useState(false);
-  const checkTo = r ? "/app" : "/app/check";
-  const checkLabel = r ? `Open my Seedline · ${r.score}` : "Check my family · 4 min";
+  const named = !!load("onboarded");
+  const checkTo = r || named ? "/app" : "/start";
+  const checkLabel = r ? `Open my Seedline · ${r.score}` : named ? "Open my Seedline" : "Start free";
   return (
     <div className="lp">
-      <SiteNav />
+      <SiteNav dark />
 
-      {/* hero */}
-      <section className="lp-hero"><div className="lp-wrap lp-hero-in">
-        <motion.div className="lp-hero-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease: [.16, 1, .3, 1] }}>
-          <span className="lp-pill tint"><i className="lp-dot" />Your family office, online</span>
-          <h1>Grow your family's wealth <Rotator /></h1>
-          <p className="lp-lede">One private place to see where your family stands, make a plan together, and find halal places to grow your money.</p>
-          <div className="lp-ctas">
-            <Link to={checkTo} className="btn lp-btn-lg">{checkLabel}<Ic n="arrow" s={18} /></Link>
-            <Link to="/institutions" className="btn ghost lp-btn-lg">Find halal providers</Link>
+      {/* hero: bold, solid, calm */}
+      <section className="hx"><div className="lp-wrap hx-in">
+        <motion.div className="hx-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, ease: [.16, 1, .3, 1] }}>
+          <span className="hx-eyebrow">Your family office, online</span>
+          <h1>Grow your family's <span>wealth.</span></h1>
+          <p>See where your family stands. Grow from there, together.</p>
+          <div className="hx-cta">
+            <Link to={checkTo} className="btn gold hx-btn">{checkLabel}<Ic n="arrow" s={20} /></Link>
+            <span className="hx-note">Free for families · No sign-up · 4 minutes</span>
           </div>
-          <div className="lp-hero-note"><span className="lp-live" />Free for families · No sign-up · Your result in 4 minutes</div>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 30, rotate: 1.5 }} animate={{ opacity: 1, y: 0, rotate: 0 }} transition={{ duration: .9, delay: .15, ease: [.16, 1, .3, 1] }}>
-          <GrowCard />
+        <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: .2, ease: [.16, 1, .3, 1] }}>
+          <HeroSeed />
         </motion.div>
       </div></section>
-
-      {/* marquee */}
-      <div className="lp-marquee" aria-hidden="true"><div className="lp-marquee-track">
-        {[...MARQUEE, ...MARQUEE].map((t, i) => <span key={i}><i />{t}</span>)}
-      </div></div>
 
       {/* income is not wealth */}
       <section className="lp-sec"><div className="lp-wrap lp-split">
@@ -231,7 +169,7 @@ export default function Landing() {
       <Story />
 
       {/* two doors */}
-      <section className="lp-sec"><div className="lp-wrap">
+      <section className="lp-sec" id="institutions"><div className="lp-wrap">
         <motion.div className="lp-head center" {...rise}>
           <span className="lp-eyebrow">Two sides of the table</span>
           <h2>Families plan. Institutions serve.</h2>
@@ -262,39 +200,9 @@ export default function Landing() {
               <li><Ic n="inbox" s={18} />Families contact you directly</li>
             </ul>
             <div className="lp-ctas">
-              <button className="btn" onClick={() => setListing(true)}>List your institution</button>
-              <Link to="/institutions" className="lp-textlink">See the directory <Ic n="arrow" s={16} /></Link>
+              <button className="btn" onClick={() => setListing(true)}>List your institution<Ic n="arrow" s={18} /></button>
             </div>
             <div className="lp-door-stack" aria-hidden="true">{["Bank", "Takaful", "Sukuk"].map((t, k) => <span key={t} style={{ "--k": k }}>{t}</span>)}</div>
-          </motion.div>
-        </div>
-      </div></section>
-
-      {/* directory teaser */}
-      <section className="lp-sec alt"><div className="lp-wrap">
-        <motion.div className="lp-head" {...rise}>
-          <span className="lp-eyebrow">The directory</span>
-          <h2>Find a halal home for your money.</h2>
-          <p className="lp-lede">36 licensed institutions and 38 halal products across Nigeria. Start with what you want your money to do. Never ranked, never paid.</p>
-        </motion.div>
-        <div className="lp-goals">
-          {GOALS.map((g, k) => (
-            <motion.div key={g.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .5, delay: k * .07 }}>
-              <Link to={`/institutions?goal=${g.id}`} className="lp-goal" style={{ "--t": g.tone }}>
-                <span className="lp-goal-ic"><Ic n={GOAL_ICON[g.id]} s={22} /></span>
-                <b>{g.label}</b>
-                <small>{g.line}</small>
-                <span className="lp-goal-n">{countByGoal(g.id)} institution{countByGoal(g.id) === 1 ? "" : "s"} <Ic n="arrow" s={15} /></span>
-              </Link>
-            </motion.div>
-          ))}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .5, delay: .5 }}>
-            <Link to="/institutions" className="lp-goal all">
-              <span className="lp-goal-ic"><Ic n="search" s={22} /></span>
-              <b>See all {INSTITUTIONS.length} institutions</b>
-              <small>Banks, takaful, funds, pensions and fintechs across Nigeria.</small>
-              <span className="lp-goal-n">Open the directory <Ic n="arrow" s={15} /></span>
-            </Link>
           </motion.div>
         </div>
       </div></section>
