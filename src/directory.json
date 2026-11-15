@@ -1,0 +1,1416 @@
+{
+"institutions": [
+{
+"id": "NIB-001",
+"name": "Jaiz Bank Plc",
+"sector": "Commercial Banking",
+"kind": "Full-Fledged Non-Interest Bank",
+"regulator": "CBN",
+"licence": "National NIB License; NGX Listed (JAIZBANK)",
+"since": "2011 (Ops 2012)",
+"hq": "Kano House, 73 Ralph Shodeinde St, CBD, Abuja",
+"site": "https://jaizbankplc.com",
+"contact": "info@jaizbankplc.com | +234-9-4605294",
+"protection": "NDIC Insured (up to ₦5,000,000)",
+"shariah": "In-House ACE",
+"suite": "Qard Current, Mudarabah Savings & JAPSA Term Deposit, FX Domiciliary, Diminishing Musharakah Home Finance, Murabaha Auto/Appliances, Salam Agric, Istisna'a Project Finance, Trade LCs",
+"goals": [
+"save",
+"home",
+"business"
+],
+"products": [
+"PRD-001",
+"PRD-002",
+"PRD-003",
+"PRD-004",
+"PRD-005"
+]
+},
+{
+"id": "NIB-002",
+"name": "TAJBank Limited",
+"sector": "Commercial Banking",
+"kind": "Full-Fledged Non-Interest Bank",
+"regulator": "CBN",
+"licence": "National NIB License (Regional 2019; National 2022)",
+"since": "2019",
+"hq": "Plot 72 Ahmadu Bello Way, CBD, Abuja",
+"site": "https://tajbank.com",
+"contact": "tajconnect@tajbank.com | +234 700 825 2265",
+"protection": "NDIC Insured (up to ₦5,000,000)",
+"shariah": "In-House ACE",
+"suite": "Tiered Qard & Mudarabah Savings, Emerald Kids, Partnership Term Deposit, Wakalah Investment Services, Murabaha for Traders (MFT), Ijara Lease, Istisna'a Construction, Retail Sukuk",
+"goals": [
+"save",
+"home",
+"business",
+"grow"
+],
+"products": [
+"PRD-006",
+"PRD-007",
+"PRD-008",
+"PRD-009"
+]
+},
+{
+"id": "NIB-003",
+"name": "LOTUS Bank Limited",
+"sector": "Commercial Banking",
+"kind": "Full-Fledged Non-Interest Bank",
+"regulator": "CBN",
+"licence": "National NIB License",
+"since": "2021",
+"hq": "30A Adetokunbo Ademola St, Victoria Island, Lagos",
+"site": "https://lotusbank.com",
+"contact": "0700 56887 2265",
+"protection": "NDIC Insured (up to ₦5,000,000)",
+"shariah": "In-House ACE",
+"suite": "LOTUS Current & Salary (Qard), Mudarabah Savings & Term Deposits, LOTUS Homes (Diminishing Musharakah/Ijarah), LOTUS Rides (Auto Murabaha), Appliance Finance, Export/Import & Agric Finance",
+"goals": [
+"save",
+"home",
+"business"
+],
+"products": [
+"PRD-010",
+"PRD-011",
+"PRD-012",
+"PRD-013"
+]
+},
+{
+"id": "NIB-004",
+"name": "The Alternative Bank (AltBank)",
+"sector": "Commercial Banking",
+"kind": "Full-Fledged Non-Interest Bank",
+"regulator": "CBN",
+"licence": "Standalone NIB License (Spun off from Sterling Bank)",
+"since": "2023 (Window 2014)",
+"hq": "239 Ikorodu Road, Ilupeju, Lagos",
+"site": "https://altbank.ng",
+"contact": "help@altbank.ng | 02 017 000 555",
+"protection": "NDIC Insured (up to ₦5,000,000)",
+"shariah": "In-House ACE",
+"suite": "AltSave, Salary Account with Noor Takaful Job-Loss/Health Cover, Qard Hassan Salary Advance, Solar/Renewable Murabaha, Ijarah Device Upgrade, AltInvest, AltBiz SME Finance",
+"goals": [
+"save",
+"home",
+"business",
+"protect",
+"grow"
+],
+"products": [
+"PRD-014",
+"PRD-015",
+"PRD-016",
+"PRD-017"
+]
+},
+{
+"id": "NIB-005",
+"name": "Summit Bank Limited",
+"sector": "Commercial Banking",
+"kind": "Full-Fledged Non-Interest Bank",
+"regulator": "CBN",
+"licence": "CBN Non-Interest Banking License",
+"since": "2025 (Prov. 2024)",
+"hq": "No. 5 Amal Pepple St, Off Ameyo Adadevoh Way, Jahi, Abuja",
+"site": "https://summitbankng.com",
+"contact": "info@summitbankng.com | +234 (0) 700 700 0005",
+"protection": "NDIC Insured (up to ₦5,000,000)",
+"shariah": "In-House ACE",
+"suite": "Personal/Corporate Current (Qard), Mudarabah Savings & MTD Term Deposit, Summit Cost-Plus (SCP Murabaha), Summit Lease to Own (SLOF Ijara), Istisna'a, Salam & Musharakah",
+"goals": [
+"save",
+"home",
+"business"
+],
+"products": [
+"PRD-018",
+"PRD-019"
+]
+},
+{
+"id": "WIN-001",
+"name": "SunTrust Bank Nigeria (NIB Window)",
+"sector": "Banking Window & DFI",
+"kind": "Commercial NIB Window",
+"regulator": "CBN",
+"licence": "CBN-Approved Non-Interest Window",
+"since": "2016",
+"hq": "Victoria Island, Lagos",
+"site": "https://suntrustng.com",
+"contact": "Via SunTrust channels",
+"protection": "NDIC Insured (up to ₦5,000,000)",
+"shariah": "ACE / FRACE Framework",
+"suite": "Ring-fenced Qard Current, Mudarabah Investment Accounts, Digital/USSD Non-Interest Banking, Murabaha & Ijarah SME/Retail Financing",
+"goals": [
+"save",
+"business",
+"home"
+],
+"products": []
+},
+{
+"id": "WIN-002",
+"name": "Bank of Industry (BOI) — NIB Window",
+"sector": "Banking Window & DFI",
+"kind": "Development Finance NIB Window",
+"regulator": "CBN",
+"licence": "CBN-Approved DFI Non-Interest Window",
+"since": "Feb 2026",
+"hq": "23 Marina, Lagos",
+"site": "https://boi.ng",
+"contact": "Via BOI channels",
+"protection": "Federal DFI Mandate",
+"shariah": "ACE / FRACE Framework",
+"suite": "Industrial & MSME Murabaha (Raw Materials/Inputs), Ijarah (Machinery & Equipment Leasing), Istisna'a (Factory/Project Construction)",
+"goals": [
+"save",
+"business",
+"home"
+],
+"products": [
+"PRD-020"
+]
+},
+{
+"id": "WIN-003",
+"name": "Federal Mortgage Bank of Nigeria (FMBN) — NIB Window",
+"sector": "Banking Window & DFI",
+"kind": "Mortgage DFI NIB Window",
+"regulator": "CBN",
+"licence": "NHF Non-Interest Mortgage Framework",
+"since": "Oct 2026",
+"hq": "Plot 266 Cadastral AO, CBD, Abuja",
+"site": "https://fmbn.gov.ng",
+"contact": "Via FMBN channels",
+"protection": "NHF Statutory Backing",
+"shariah": "ACE / FRACE Framework",
+"suite": "Non-Interest Mortgage Loan (Ijarah Lease-to-Own, e.g., Ijarah-01 Estate Kano) and Non-Interest Rent Assistance for NHF contributors",
+"goals": [
+"save",
+"business",
+"home"
+],
+"products": [
+"PRD-021"
+]
+},
+{
+"id": "MFB-001",
+"name": "Tijarah Microfinance Bank Limited",
+"sector": "Microfinance & Finance Co.",
+"kind": "Non-Interest Microfinance Bank",
+"regulator": "CBN",
+"licence": "CBN Non-Interest MFB License",
+"since": "2014",
+"hq": "Bauchi, Bauchi State",
+"site": null,
+"contact": "Branch network (Bauchi)",
+"protection": "NDIC Insured (up to ₦2,000,000)",
+"shariah": "Shariah Advisory Committee",
+"suite": "Pioneer non-interest MFB: Qard/Mudarabah micro-savings, micro-Murabaha trader inventory finance, agricultural Salam micro-credit",
+"goals": [
+"save",
+"business"
+],
+"products": []
+},
+{
+"id": "MFB-002",
+"name": "I-Care Microfinance Bank Limited",
+"sector": "Microfinance & Finance Co.",
+"kind": "Non-Interest Unit MFB",
+"regulator": "CBN",
+"licence": "CBN Non-Interest Unit MFB License",
+"since": "2017",
+"hq": "296 Rimi Market Road, Kano, Kano State",
+"site": null,
+"contact": "Branch network (Kano)",
+"protection": "NDIC Insured (up to ₦2,000,000)",
+"shariah": "Shariah Advisory Committee",
+"suite": "Qard micro-deposits and Murabaha stock/inventory financing for market traders and micro-enterprises",
+"goals": [
+"save",
+"business"
+],
+"products": []
+},
+{
+"id": "MFB-003",
+"name": "Halal Credit Microfinance Bank Limited",
+"sector": "Microfinance & Finance Co.",
+"kind": "Non-Interest Microfinance Bank",
+"regulator": "CBN",
+"licence": "CBN Non-Interest MFB License (NIBSS 090291)",
+"since": "2019",
+"hq": "Katsina, Katsina State",
+"site": null,
+"contact": "Branch network (Katsina)",
+"protection": "NDIC Insured (up to ₦2,000,000)",
+"shariah": "Shariah Advisory Committee",
+"suite": "Murabaha asset acquisition, Ijarah equipment leasing, Musharakah micro-business partnerships",
+"goals": [
+"save",
+"business"
+],
+"products": []
+},
+{
+"id": "MFB-004",
+"name": "Al-Barakah Microfinance Bank Limited",
+"sector": "Microfinance & Finance Co.",
+"kind": "Non-Interest Microfinance Bank",
+"regulator": "CBN",
+"licence": "CBN Microfinance License (Islamic Model)",
+"since": "2010",
+"hq": "Jibowu, Lagos State",
+"site": null,
+"contact": "Branch network (Lagos)",
+"protection": "NDIC Insured (up to ₦2,000,000)",
+"shariah": "Shariah Advisory Committee",
+"suite": "Pioneer Southwest Islamic MFB: Qard savings, Murabaha micro-enterprise and cooperative asset finance",
+"goals": [
+"save",
+"business"
+],
+"products": []
+},
+{
+"id": "MFB-005",
+"name": "Amaanah Non-Interest Finance Company Limited",
+"sector": "Microfinance & Finance Co.",
+"kind": "Non-Interest Finance Company",
+"regulator": "CBN",
+"licence": "CBN Non-Interest Finance Company License",
+"since": "2026",
+"hq": "Nigeria (Digital & Corporate)",
+"site": "https://amaanahfinance.com",
+"contact": "Via Amaanah portal",
+"protection": "CBN Regulated Finance Co.",
+"shariah": "Shariah Advisory Committee",
+"suite": "HomeFlex (property finance), BizFlex (MSME inventory/equipment Murabaha), Goal Based Savings, Medium Mudarabah (6-mo notes, min ₦1M)",
+"goals": [
+"save",
+"business"
+],
+"products": [
+"PRD-022"
+]
+},
+{
+"id": "SEC-001",
+"name": "Lotus Capital Limited",
+"sector": "Capital Markets & Funds",
+"kind": "Dedicated Islamic Investment Bank",
+"regulator": "SEC",
+"licence": "SEC Fund/Portfolio Manager & Issuing House",
+"since": "2004",
+"hq": "1b Udi Street, Osborne Foreshore Estate, Ikoyi, Lagos",
+"site": "https://lotuscapitallimited.com",
+"contact": "Via Lotus Capital portal",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "In-House Shariah Advisory Board",
+"suite": "Lotus Halal Investment Fund, Lotus Halal Fixed Income Fund, Lotus Halal Equity ETF (LOTUSHAL15), Lotus Waqf Fund, Islamic Estate Planning (Wasiyyah/Faraid), Sukuk Advisory",
+"goals": [
+"grow",
+"give"
+],
+"products": [
+"PRD-023",
+"PRD-024",
+"PRD-025",
+"PRD-026"
+]
+},
+{
+"id": "SEC-002",
+"name": "Marble Capital Limited",
+"sector": "Capital Markets & Funds",
+"kind": "Dedicated Islamic Asset Manager",
+"regulator": "SEC",
+"licence": "SEC Fund/Portfolio Manager",
+"since": "2020",
+"hq": "Broad Street, Lagos & Jabi, Abuja",
+"site": "https://marblecapitalltd.com",
+"contact": "Via Marble Capital portal",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "In-House Shariah Advisory Board",
+"suite": "Marble Halal Commodities Fund (MHCF), Marble Halal Fixed Income Fund (MHFI), Alpha/Beta/Gamma Ethical Portfolios, Islamic Wills",
+"goals": [
+"grow"
+],
+"products": [
+"PRD-027"
+]
+},
+{
+"id": "SEC-003",
+"name": "One17 Capital Limited",
+"sector": "Capital Markets & Funds",
+"kind": "Dedicated Islamic Asset Manager",
+"regulator": "SEC",
+"licence": "SEC Fund/Portfolio Manager",
+"since": "2021",
+"hq": "Lagos, Nigeria",
+"site": "https://one17capital.com",
+"contact": "Via One17 portal",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "In-House Shariah Advisory Board",
+"suite": "One17 Halal Fund, Mudarabah Private Portfolio Investment (Agri & Real Estate), Kids Investment Accounts, Waqf Endowment Management",
+"goals": [
+"grow"
+],
+"products": []
+},
+{
+"id": "SEC-004",
+"name": "Arthur Capital (TrustBanc Arthur)",
+"sector": "Capital Markets & Funds",
+"kind": "Boutique Islamic Investment House",
+"regulator": "SEC",
+"licence": "SEC Capital Market Operator",
+"since": "Active 2026",
+"hq": "Lagos, Nigeria",
+"site": "https://arthurgroup.org/arthur-capital",
+"contact": "Via Arthur Capital portal",
+"protection": "SEC Regulated",
+"shariah": "External Shariah Adviser",
+"suite": "Shariah-compliant private wealth management, Sukuk structuring, and ethical SME/project financing",
+"goals": [
+"grow"
+],
+"products": []
+},
+{
+"id": "SEC-005",
+"name": "Buraq Capital / D'Namaz / Rasmal / Ascent Capital",
+"sector": "Capital Markets & Funds",
+"kind": "Boutique Islamic Investment Houses",
+"regulator": "SEC",
+"licence": "SEC Registered Operators / NIFIAN Members",
+"since": "Active 2026",
+"hq": "Lagos & Abuja, Nigeria",
+"site": null,
+"contact": "Via respective portals",
+"protection": "SEC Regulated",
+"shariah": "External Shariah Advisers",
+"suite": "Boutique Shariah-compliant wealth management, ethical advisory, and Sukuk distribution",
+"goals": [
+"grow"
+],
+"products": []
+},
+{
+"id": "SEC-006",
+"name": "Stanbic IBTC Asset Management (Halal Windows)",
+"sector": "Capital Markets & Funds",
+"kind": "Conventional Manager — Halal Funds",
+"regulator": "SEC",
+"licence": "SEC Licensed Fund Manager",
+"since": "Active 2026",
+"hq": "Walter Carrington Crescent, Victoria Island, Lagos",
+"site": "https://stanbicibtcassetmanagement.com",
+"contact": "Via Stanbic IBTC channels",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "Certified Shariah Adviser",
+"suite": "Stanbic IBTC Imaan Fund (Equity-heavy, ~₦31.9bn NAV) & Stanbic IBTC Shari'ah Fixed Income Fund",
+"goals": [
+"grow"
+],
+"products": [
+"PRD-028"
+]
+},
+{
+"id": "SEC-007",
+"name": "First Asset Management (FBN Halal Fund)",
+"sector": "Capital Markets & Funds",
+"kind": "Conventional Manager — Halal Fund",
+"regulator": "SEC",
+"licence": "SEC Licensed Fund Manager (formerly FBNQuest AM)",
+"since": "Active 2026",
+"hq": "16 Keffi Street, Ikoyi, Lagos",
+"site": "https://firstassetmanagement.com",
+"contact": "Via First Asset channels",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "Certified Shariah Adviser",
+"suite": "FBN Halal Fund / First Asset Halal Fund (Sukuk & screened fixed-term contracts)",
+"goals": [
+"grow"
+],
+"products": []
+},
+{
+"id": "SEC-008",
+"name": "ARM Investment Managers (Halal Windows)",
+"sector": "Capital Markets & Funds",
+"kind": "Conventional Manager — Halal Funds",
+"regulator": "SEC",
+"licence": "SEC Licensed Fund Manager",
+"since": "Active 2026",
+"hq": "1 Mekunwen Road, Ikoyi, Lagos",
+"site": "https://arm.com.ng",
+"contact": "Via ARM channels",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "Certified Shariah Adviser",
+"suite": "ARM Halal Balanced Fund (~₦18.5bn NAV) & ARM Shari'ah Fixed Income Fund",
+"goals": [
+"grow"
+],
+"products": [
+"PRD-029"
+]
+},
+{
+"id": "SEC-009",
+"name": "United Capital Asset Management (Sukuk Fund)",
+"sector": "Capital Markets & Funds",
+"kind": "Conventional Manager — Sukuk Fund",
+"regulator": "SEC",
+"licence": "SEC Licensed Fund Manager",
+"since": "Active 2026",
+"hq": "3rd & 4th Floor, Afriland Towers, Broad St, Lagos",
+"site": "https://unitedcapitalplcgroup.com",
+"contact": "Via United Capital channels",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "Certified Shariah Adviser",
+"suite": "United Capital Sukuk Fund (FGN, sub-national & corporate Sukuk)",
+"goals": [
+"grow"
+],
+"products": [
+"PRD-030"
+]
+},
+{
+"id": "SEC-010",
+"name": "Afrinvest / Capitaltrust / Norrenberger / FSDH / Cordros / Emerging Africa",
+"sector": "Capital Markets & Funds",
+"kind": "Conventional Managers — Halal Funds",
+"regulator": "SEC",
+"licence": "SEC Licensed Fund Managers",
+"since": "Active 2026",
+"hq": "Lagos & Abuja, Nigeria",
+"site": null,
+"contact": "Via respective channels",
+"protection": "SEC Custodian Ring-Fenced",
+"shariah": "Certified Shariah Advisers",
+"suite": "Afrinvest Halal Fund, Capitaltrust Halal Fixed Income Fund, Norrenberger Islamic Fund, FSDH Halal Fund, Cordros Halal Fixed Income Fund, Emerging Africa Halal Fund",
+"goals": [
+"grow"
+],
+"products": [
+"PRD-031"
+]
+},
+{
+"id": "TAK-001",
+"name": "Noor Takaful Insurance Plc",
+"sector": "Takaful (Islamic Insurance)",
+"kind": "Composite Takaful Operator",
+"regulator": "NAICOM",
+"licence": "NAICOM Composite License RTC 091 (002)",
+"since": "2016",
+"hq": "22B Oladipo Diya Crescent, Ikoyi, Lagos",
+"site": "https://noortakaful.ng",
+"contact": "Via Noor Takaful portal",
+"protection": "Segregated Tabarru Pool",
+"shariah": "Advisory Council of Experts (ACE)",
+"suite": "Motor (Third-Party Plus & Comprehensive), Home/Fire/Flood, Marine, SME Cover, Education Plus, Prosave/Provest/Flexip Savings, Hajj & Umrah Takaful",
+"goals": [
+"protect"
+],
+"products": [
+"PRD-032"
+]
+},
+{
+"id": "TAK-002",
+"name": "Jaiz Takaful Insurance Plc",
+"sector": "Takaful (Islamic Insurance)",
+"kind": "Composite Takaful Operator",
+"regulator": "NAICOM",
+"licence": "NAICOM Composite License RTC 092 (001)",
+"since": "2016",
+"hq": "Plot 1050, O.P. Fingesi St, Utako, Abuja",
+"site": "https://jaiztakafulinsurance.com",
+"contact": "Via Jaiz Takaful portal",
+"protection": "Segregated Tabarru Pool",
+"shariah": "Advisory Council of Experts (ACE)",
+"suite": "Motor, Fire & Burglary, Marine, Engineering, Agric Takaful (Poultry, Crops, Livestock, Fishery), Child Education Plan, Group Family, Credit/Mortgage Takaful",
+"goals": [
+"protect"
+],
+"products": [
+"PRD-033"
+]
+},
+{
+"id": "TAK-003",
+"name": "Hilal Takaful Nigeria Limited",
+"sector": "Takaful (Islamic Insurance)",
+"kind": "Composite Takaful Operator",
+"regulator": "NAICOM",
+"licence": "NAICOM Composite License RTC 003",
+"since": "2020 (Window 2010)",
+"hq": "191 Herbert Macaulay Way, Ebute Metta, Lagos",
+"site": "https://hilaltakaful.com.ng",
+"contact": "Via Hilal Takaful portal",
+"protection": "Segregated Tabarru Pool",
+"shariah": "Advisory Council of Experts (ACE)",
+"suite": "Esusu Takaful (from ₦200/day), Hajj & Umrah Plan, Marriage Takaful, Pilgrim Care, Motor, Property Guard, Commercial/Engineering/Performance Bonds, Group Family & Keyman",
+"goals": [
+"protect"
+],
+"products": [
+"PRD-034"
+]
+},
+{
+"id": "TAK-004",
+"name": "Salam Takaful Insurance Limited",
+"sector": "Takaful (Islamic Insurance)",
+"kind": "Composite Takaful Operator",
+"regulator": "NAICOM",
+"licence": "NAICOM Composite License RTC 004",
+"since": "2020",
+"hq": "65 Ibrahim Taiwo Rd, Fagge, Kano",
+"site": "https://salamtakafulinsurance.com",
+"contact": "USSD *2200# | SalamShield App",
+"protection": "Segregated Tabarru Pool",
+"shariah": "Advisory Council of Experts (ACE)",
+"suite": "Comprehensive Agric Takaful (Crop, Livestock, Poultry, Area-Yield Index, Plantation), Motor, Property, Family Savings & Investment Plans (48-hr claims target)",
+"goals": [
+"protect"
+],
+"products": [
+"PRD-035"
+]
+},
+{
+"id": "TAK-005",
+"name": "Crown Takaful Insurance Limited",
+"sector": "Takaful (Islamic Insurance)",
+"kind": "Composite Takaful Operator",
+"regulator": "NAICOM",
+"licence": "NAICOM Composite License RTC-097 (005)",
+"since": "Dec 2023",
+"hq": "Plot 72 Ahmadu Bello Way, CBD, Abuja",
+"site": "https://crowntakaful.com",
+"contact": "Via Crown Takaful portal",
+"protection": "Segregated Tabarru Pool",
+"shariah": "Advisory Council of Experts (ACE)",
+"suite": "Education, Hajj & Umrah (with pilgrim disability substitution), Nikkah (Wedding), Target Savings, Student Welfare (direct fee payment), Group/Credit Life, Motor, Property & Agric",
+"goals": [
+"protect"
+],
+"products": [
+"PRD-036"
+]
+},
+{
+"id": "PEN-001",
+"name": "Stanbic IBTC Pension Managers (Fund VI)",
+"sector": "Non-Interest Pensions",
+"kind": "PFA — RSA Fund VI (Active & Retiree)",
+"regulator": "PenCom",
+"licence": "PenCom Licensed PFA — Multi-Fund VI",
+"since": "2021 (Fund VI)",
+"hq": "Plot 1678 Olakunle Bakare Close, Victoria Island, Lagos",
+"site": "https://stanbicibtcpension.com",
+"contact": "Via Stanbic IBTC Pension",
+"protection": "PenCom Ring-Fenced Custodian",
+"shariah": "FRACE Operational Framework",
+"suite": "RSA Active Fund VI & Retiree Fund VI (market scale leader in non-interest pension assets)",
+"goals": [
+"retire"
+],
+"products": []
+},
+{
+"id": "PEN-002",
+"name": "Access ARM Pensions (Fund VI)",
+"sector": "Non-Interest Pensions",
+"kind": "PFA — RSA Fund VI (Active & Retiree)",
+"regulator": "PenCom",
+"licence": "PenCom Licensed PFA — Multi-Fund VI",
+"since": "2021 (Fund VI)",
+"hq": "Lagos & Abuja, Nigeria",
+"site": "https://accessarmpensions.com",
+"contact": "Via Access ARM channels",
+"protection": "PenCom Ring-Fenced Custodian",
+"shariah": "FRACE Operational Framework",
+"suite": "RSA Active Fund VI & Retiree Fund VI (merged Access Pensions & ARM Pension Fund VI portfolios)",
+"goals": [
+"retire"
+],
+"products": []
+},
+{
+"id": "PEN-003",
+"name": "Premium Pension Limited (Fund VI)",
+"sector": "Non-Interest Pensions",
+"kind": "PFA — RSA Fund VI (Active & Retiree)",
+"regulator": "PenCom",
+"licence": "PenCom Licensed PFA — Multi-Fund VI",
+"since": "2021 (Fund VI)",
+"hq": "44 Adetokunbo Ademola Crescent, Wuse II, Abuja",
+"site": "https://premiumpension.com",
+"contact": "Via Premium Pension channels",
+"protection": "PenCom Ring-Fenced Custodian",
+"shariah": "FRACE Operational Framework",
+"suite": "RSA Active Fund VI & Retiree Fund VI (strong Northern footprint and retiree Fund VI performance)",
+"goals": [
+"retire"
+],
+"products": []
+},
+{
+"id": "PEN-004",
+"name": "Other PenCom Licensed PFAs Offering Fund VI (14 PFAs)",
+"sector": "Non-Interest Pensions",
+"kind": "PFAs — RSA Fund VI (Active & Retiree)",
+"regulator": "PenCom",
+"licence": "PenCom Multi-Fund Structure (Fund VI)",
+"since": "2021 (Fund VI)",
+"hq": "Nationwide (Lagos & Abuja HQs)",
+"site": "https://pencom.gov.ng",
+"contact": "Via respective PFAs",
+"protection": "PenCom Ring-Fenced Custodian",
+"shariah": "FRACE Operational Framework",
+"suite": "CrusaderSterling, Trustfund, Leadway Pensure, FCMB Pensions, UBA Pensions, GTBank Pension, PAL, NLPC, Norrenberger, Tangerine APT, Oak, Radix, Veritas Glanvills, NUPEMCO",
+"goals": [
+"retire"
+],
+"products": [
+"PRD-037"
+]
+},
+{
+"id": "FIN-001",
+"name": "Wahed Nigeria",
+"sector": "Fintech & Screening",
+"kind": "Halal Robo-Advisor",
+"regulator": "SEC",
+"licence": "Operates via SEC-Registered Capital Assets Ltd",
+"since": "Active 2026",
+"hq": "Lagos, Nigeria",
+"site": "https://wahed.com/nga",
+"contact": "Via Wahed app/web",
+"protection": "SEC Broker/Dealer Custody",
+"shariah": "Global & Local Shariah Review",
+"suite": "Automated risk-tiered Shariah-compliant model portfolios (6 local portfolios blending Nigerian Sukuk, screened equities & halal funds; 1.50% wrap fee)",
+"goals": [
+"grow"
+],
+"products": [
+"PRD-038"
+]
+},
+{
+"id": "FIN-002",
+"name": "HalalVest",
+"sector": "Fintech & Screening",
+"kind": "Halal Savings & SME Fintech",
+"regulator": "Cooperative / Partner",
+"licence": "Digital Cooperative & Ethical Fintech",
+"since": "Active 2026",
+"hq": "Nigeria",
+"site": "https://halalvest.ng",
+"contact": "Via HalalVest app/web",
+"protection": "Partner Bank Custody",
+"shariah": "Shariah Advisory Review",
+"suite": "Interest-free target savings, Murabaha SME/business inventory financing, and ethical micro-investments",
+"goals": [
+"grow"
+],
+"products": []
+},
+{
+"id": "FIN-003",
+"name": "HalalStock Nigeria",
+"sector": "Fintech & Screening",
+"kind": "Shariah Equity Screener & Directory",
+"regulator": "Information / Analytics",
+"licence": "AAOIFI / NGX Lotus Methodology Screener",
+"since": "Active 2026",
+"hq": "Nigeria",
+"site": "https://halalstock.ng",
+"contact": "Via HalalStock web",
+"protection": "N/A (Analytics Platform)",
+"shariah": "AAOIFI / NGX Lotus Rules",
+"suite": "NGX-listed Shariah stock compliance screening, financial ratio breakdown, Zakat & dividend purification calculators",
+"goals": [
+"grow"
+],
+"products": []
+},
+{
+"id": "FIN-004",
+"name": "HalalWallet Nigeria",
+"sector": "Fintech & Screening",
+"kind": "Islamic Finance Comparison Aggregator",
+"regulator": "Information / Analytics",
+"licence": "Independent Comparison & Review Platform",
+"since": "Active 2026",
+"hq": "Nigeria",
+"site": "https://halalwallet.ng",
+"contact": "Via HalalWallet web",
+"protection": "N/A (Aggregator)",
+"shariah": "N/A (Comparison Engine)",
+"suite": "Independent benchmarking and comparison of Nigeria's non-interest bank accounts, mutual funds, Takaful plans, and Fund VI PFAs",
+"goals": [
+"grow"
+],
+"products": []
+}
+],
+"products": [
+{
+"id": "PRD-001",
+"inst": "NIB-001",
+"instName": "Jaiz Bank Plc",
+"sector": "Commercial Banking",
+"name": "Jaiz Current Account",
+"contract": "Qard",
+"category": "Deposit / Transactional",
+"segment": "Retail & Corporate",
+"min": "Zero / Standard KYC",
+"tenure": "On-demand",
+"pricing": "0% interest; standard CBN e-channel charges",
+"features": "Interest-free demand deposit; principal 100% guaranteed; checkbook & debit card access.",
+"goal": "save"
+},
+{
+"id": "PRD-002",
+"inst": "NIB-001",
+"instName": "Jaiz Bank Plc",
+"sector": "Commercial Banking",
+"name": "Jaiz Savings / JAPSA Term Deposit",
+"contract": "Mudarabah",
+"category": "Savings & Investment",
+"segment": "Retail, Kids & HNW",
+"min": "Varies by tier",
+"tenure": "On-demand / Fixed term",
+"pricing": "Pre-agreed Profit-Sharing Ratio (PSR)",
+"features": "Bank invests pooled funds in Shariah-compliant assets; profits distributed monthly/at maturity.",
+"goal": "save"
+},
+{
+"id": "PRD-003",
+"inst": "NIB-001",
+"instName": "Jaiz Bank Plc",
+"sector": "Commercial Banking",
+"name": "Jaiz Home Finance",
+"contract": "Diminishing Musharakah / Ijarah",
+"category": "Mortgage / Real Estate",
+"segment": "Salary Earners & Business Owners",
+"min": "Typically 20%–30% equity",
+"tenure": "Up to 15–20 years",
+"pricing": "Agreed rental + gradual equity buyout",
+"features": "Co-ownership where customer buys out bank's share over time while paying rent on remaining share.",
+"goal": "home"
+},
+{
+"id": "PRD-004",
+"inst": "NIB-001",
+"instName": "Jaiz Bank Plc",
+"sector": "Commercial Banking",
+"name": "Jaiz Auto & Household Appliances Finance",
+"contract": "Murabaha",
+"category": "Consumer Asset Finance",
+"segment": "Retail / Salary Earners",
+"min": "Equity contribution varies",
+"tenure": "Up to 24 mos (Appliances) / 3–4 yrs (Auto)",
+"pricing": "Fixed disclosed cost-plus markup",
+"features": "Bank purchases vehicle or appliance and resells to customer on fixed installment schedule.",
+"goal": "home"
+},
+{
+"id": "PRD-005",
+"inst": "NIB-001",
+"instName": "Jaiz Bank Plc",
+"sector": "Commercial Banking",
+"name": "Jaiz SME, Agric & Project Finance",
+"contract": "Murabaha / Ijarah / Salam / Istisna'a",
+"category": "Business & Trade Finance",
+"segment": "SMEs, Corporates & Agribusiness",
+"min": "Project/facility dependent",
+"tenure": "Short to medium term",
+"pricing": "Cost-plus markup, lease rental, or forward price",
+"features": "Covers LPOs, equipment leasing, agricultural forward purchase (Salam), and construction (Istisna'a).",
+"goal": "business"
+},
+{
+"id": "PRD-006",
+"inst": "NIB-002",
+"instName": "TAJBank Limited",
+"sector": "Commercial Banking",
+"name": "TAJ Tiered & Partnership Savings / Term Deposit",
+"contract": "Qard / Mudarabah",
+"category": "Savings & Investment",
+"segment": "Retail & HNW",
+"min": "₦500,000 (Term Deposit)",
+"tenure": "1–12 months (Term Deposit)",
+"pricing": "0% (Qard) / Pre-agreed PSR (Mudarabah)",
+"features": "Includes Tiered Savings, Partnership Savings, Emerald Children's Account, and Partnership Term Deposit.",
+"goal": "save"
+},
+{
+"id": "PRD-007",
+"inst": "NIB-002",
+"instName": "TAJBank Limited",
+"sector": "Commercial Banking",
+"name": "TAJ Wakalah Investment Services (WIS)",
+"contract": "Wakalah",
+"category": "Wealth / Treasury",
+"segment": "HNW & Corporates",
+"min": "Negotiated / HNW threshold",
+"tenure": "Fixed investment tenor",
+"pricing": "Expected profit rate + agency fee",
+"features": "Bank acts as investment agent deploying client funds into vetted Shariah-compliant trade/assets.",
+"goal": "grow"
+},
+{
+"id": "PRD-008",
+"inst": "NIB-002",
+"instName": "TAJBank Limited",
+"sector": "Commercial Banking",
+"name": "Murabaha for Traders (MFT) & Asset Finance",
+"contract": "Murabaha / Ijara / Istisna'a",
+"category": "MSME & Retail Finance",
+"segment": "Market Traders, SMEs & Retail",
+"min": "Low entry for micro-traders",
+"tenure": "Short-cycle to medium term",
+"pricing": "Fixed disclosed markup or lease rental",
+"features": "Tailored working-capital stock replenishment for traders alongside vehicle/equipment/construction finance.",
+"goal": "business"
+},
+{
+"id": "PRD-009",
+"inst": "NIB-002",
+"instName": "TAJBank Limited",
+"sector": "Commercial Banking",
+"name": "TAJ Retail Sukuk Investment Service",
+"contract": "Sukuk (Mudarabah / Ijarah)",
+"category": "Capital Markets Access",
+"segment": "Retail & Institutional",
+"min": "₦10,000",
+"tenure": "Matches underlying Sukuk tenor",
+"pricing": "Zero upfront/redemption fee; periodic Sukuk yield",
+"features": "Democratizes access to sovereign and corporate Sukuk (including TAJBank's NGX-listed AT1 Sukuk).",
+"goal": "grow"
+},
+{
+"id": "PRD-010",
+"inst": "NIB-003",
+"instName": "LOTUS Bank Limited",
+"sector": "Commercial Banking",
+"name": "LOTUS Current & Salary Accounts",
+"contract": "Qard",
+"category": "Deposit / Transactional",
+"segment": "Retail, Salary & Corporate",
+"min": "Zero min balance (Salary)",
+"tenure": "On-demand",
+"pricing": "Zero account maintenance fee",
+"features": "Fee-transparent non-interest transactional accounts with full digital and card banking.",
+"goal": "save"
+},
+{
+"id": "PRD-011",
+"inst": "NIB-003",
+"instName": "LOTUS Bank Limited",
+"sector": "Commercial Banking",
+"name": "LOTUS Homes",
+"contract": "Diminishing Musharakah / Ijarah",
+"category": "Mortgage / Real Estate",
+"segment": "Retail & Diaspora",
+"min": "30% equity (up to 70% financed)",
+"tenure": "Up to 20 years",
+"pricing": "Agreed rental + equity buyout",
+"features": "Long-tenor ethical residential mortgage for outright purchase or home completion.",
+"goal": "home"
+},
+{
+"id": "PRD-012",
+"inst": "NIB-003",
+"instName": "LOTUS Bank Limited",
+"sector": "Commercial Banking",
+"name": "LOTUS Rides & Appliance/Gadget Finance",
+"contract": "Murabaha",
+"category": "Consumer Asset Finance",
+"segment": "Retail & Salary Earners",
+"min": "20% equity (up to 80% Auto)",
+"tenure": "Up to 5 yrs (Auto) / 12 mos (Gadgets)",
+"pricing": "Fixed disclosed cost-plus markup",
+"features": "Partnerships with vendors (e.g., Fouani/Samsung) for instant electronics/appliances and vehicle acquisition.",
+"goal": "home"
+},
+{
+"id": "PRD-013",
+"inst": "NIB-003",
+"instName": "LOTUS Bank Limited",
+"sector": "Commercial Banking",
+"name": "LOTUS Export/Import & Agric Value-Chain Finance",
+"contract": "Murabaha / Salam",
+"category": "Corporate & Trade Finance",
+"segment": "Exporters, Importers & Agribusiness",
+"min": "Facility dependent",
+"tenure": "Trade cycle (90–365 days)",
+"pricing": "Cost-plus trade margin",
+"features": "Pre- and post-shipment export financing, import Murabaha, and agricultural value-chain support.",
+"goal": "business"
+},
+{
+"id": "PRD-014",
+"inst": "NIB-004",
+"instName": "The Alternative Bank (AltBank)",
+"sector": "Commercial Banking",
+"name": "AltBank Salary Account + Embedded Takaful",
+"contract": "Qard + Tabarru (Noor Takaful)",
+"category": "Transactional + Protection",
+"segment": "Salary Earners",
+"min": "Salary domiciliation",
+"tenure": "Ongoing while active",
+"pricing": "Free embedded Noor Takaful cover",
+"features": "Includes free job-loss cover (up to 3 mos, max ₦750k/mo) and annual health insurance cover.",
+"goal": "protect"
+},
+{
+"id": "PRD-015",
+"inst": "NIB-004",
+"instName": "The Alternative Bank (AltBank)",
+"sector": "Commercial Banking",
+"name": "Qard Hassan Salary Advance",
+"contract": "Qard Hassan",
+"category": "Short-Term Liquidity",
+"segment": "Salary Earners",
+"min": "No equity deposit",
+"tenure": "30 days",
+"pricing": "0% interest; 1% mgmt fee + 1% Takaful fee",
+"features": "Instant ethical salary advance up to ₦500,000 or 50% of net monthly salary.",
+"goal": "save"
+},
+{
+"id": "PRD-016",
+"inst": "NIB-004",
+"instName": "The Alternative Bank (AltBank)",
+"sector": "Commercial Banking",
+"name": "AltBank Solar/Renewable & Device Upgrade Finance",
+"contract": "Murabaha / Ijarah",
+"category": "Green & Lifestyle Finance",
+"segment": "Retail & Households",
+"min": "Modest down payment",
+"tenure": "12–36 months",
+"pricing": "Fixed installment markup / annual lease",
+"features": "Finances solar/inverter installations (Murabaha) and annual smartphone/laptop upgrades (Ijarah lease).",
+"goal": "home"
+},
+{
+"id": "PRD-017",
+"inst": "NIB-004",
+"instName": "The Alternative Bank (AltBank)",
+"sector": "Commercial Banking",
+"name": "AltBiz SME Finance & AltInvest",
+"contract": "Murabaha / Ijarah / Mudarabah",
+"category": "SME Finance & Wealth",
+"segment": "MSMEs & Retail Investors",
+"min": "20% equity deposit (AltBiz)",
+"tenure": "12 mos (WC) / 24 mos (Assets)",
+"pricing": "Fixed markup or profit-sharing",
+"features": "AltBiz offers up to ₦5M quick SME working capital/asset finance; AltInvest offers ethical asset placements.",
+"goal": "grow"
+},
+{
+"id": "PRD-018",
+"inst": "NIB-005",
+"instName": "Summit Bank Limited",
+"sector": "Commercial Banking",
+"name": "Summit MTD (Mudarabah Term Deposit)",
+"contract": "Mudarabah",
+"category": "Investment Deposit",
+"segment": "HNW & Corporates",
+"min": "₦1,000,000",
+"tenure": "30 to 365 days",
+"pricing": "Pre-agreed Profit-Sharing Ratio",
+"features": "Fixed-tenor ethical investment deposit deploying funds into vetted real-sector transactions.",
+"goal": "save"
+},
+{
+"id": "PRD-019",
+"inst": "NIB-005",
+"instName": "Summit Bank Limited",
+"sector": "Commercial Banking",
+"name": "Summit Cost-Plus (SCP) & Lease to Own (SLOF)",
+"contract": "Murabaha / Ijara",
+"category": "Retail & Corporate Finance",
+"segment": "Retail, SMEs & Corporates",
+"min": "Facility dependent",
+"tenure": "12–60 months (SLOF)",
+"pricing": "Fixed cost-plus markup or lease rental",
+"features": "SCP funds consumer goods and working capital; SLOF provides lease-to-own for vehicles, equipment, and property.",
+"goal": "business"
+},
+{
+"id": "PRD-020",
+"inst": "WIN-002",
+"instName": "Bank of Industry (BOI) — NIB Window",
+"sector": "Development Finance",
+"name": "BOI Industrial Non-Interest Facility",
+"contract": "Murabaha / Ijarah / Istisna'a",
+"category": "Industrial & MSME Finance",
+"segment": "Manufacturers & MSMEs",
+"min": "DFI project criteria",
+"tenure": "Medium to long term",
+"pricing": "Single-digit / DFI concessionary markup/rental",
+"features": "Launched Feb 2026 to fund raw materials (Murabaha), machinery (Ijarah), and factory builds (Istisna'a).",
+"goal": "business"
+},
+{
+"id": "PRD-021",
+"inst": "WIN-003",
+"instName": "Federal Mortgage Bank of Nigeria (FMBN)",
+"sector": "Development Finance",
+"name": "FMBN Non-Interest Mortgage & Rent Assistance",
+"contract": "Ijarah Muntahia Bittamleek",
+"category": "Social Housing Finance",
+"segment": "NHF Contributors",
+"min": "NHF statutory equity",
+"tenure": "Long-term mortgage",
+"pricing": "Fixed agreed rental schedule",
+"features": "Piloted Oct 2026 (Ijarah-01 Estate Kano); transfers home ownership at end of lease term.",
+"goal": "home"
+},
+{
+"id": "PRD-022",
+"inst": "MFB-005",
+"instName": "Amaanah Non-Interest Finance Company",
+"sector": "Non-Interest Finance Co.",
+"name": "HomeFlex, BizFlex & Medium Mudarabah",
+"contract": "Murabaha / Ijarah / Mudarabah",
+"category": "SME Finance & Notes",
+"segment": "MSMEs & Accredited Investors",
+"min": "₦1,000,000 (Medium Mudarabah)",
+"tenure": "6 months (Medium Mudarabah)",
+"pricing": "Fixed markup / PSR on notes",
+"features": "Specialized non-bank ethical asset finance for MSMEs and 6-month Mudarabah investment notes.",
+"goal": "business"
+},
+{
+"id": "PRD-023",
+"inst": "SEC-001",
+"instName": "Lotus Capital Limited",
+"sector": "Capital Markets & Funds",
+"name": "Lotus Halal Investment Fund",
+"contract": "Mudarabah / Equity / Sukuk",
+"category": "Balanced Mutual Fund",
+"segment": "Retail & Institutional",
+"min": "₦5,000",
+"tenure": "Open-ended",
+"pricing": "1.5% annual management fee",
+"features": "Invests in Shariah-screened NGX equities, Sukuk, and asset-backed trading contracts.",
+"goal": "grow"
+},
+{
+"id": "PRD-024",
+"inst": "SEC-001",
+"instName": "Lotus Capital Limited",
+"sector": "Capital Markets & Funds",
+"name": "Lotus Halal Fixed Income Fund",
+"contract": "Sukuk / Murabaha / Ijarah",
+"category": "Fixed Income Mutual Fund",
+"segment": "Conservative Retail & Corporate",
+"min": "5 units (~₦5,000)",
+"tenure": "Open-ended",
+"pricing": "1.5% annual management fee",
+"features": "Flagship ethical income fund (~₦45.5bn NAV in 2026) focused on FGN/corporate Sukuk and lease contracts.",
+"goal": "grow"
+},
+{
+"id": "PRD-025",
+"inst": "SEC-001",
+"instName": "Lotus Capital Limited",
+"sector": "Capital Markets & Funds",
+"name": "Lotus Halal Equity ETF (LOTUSHAL15)",
+"contract": "Equities (Shariah-Screened)",
+"category": "Exchange-Traded Fund (NGX)",
+"segment": "Retail & Institutional",
+"min": "1 unit on NGX",
+"tenure": "Intraday NGX liquidity",
+"pricing": "0.60% total expense ratio",
+"features": "Tracks the 15 Shariah-compliant blue-chip stocks in the NGX Lotus Islamic Index; publishes purification ratios.",
+"goal": "grow"
+},
+{
+"id": "PRD-026",
+"inst": "SEC-001",
+"instName": "Lotus Capital Limited",
+"sector": "Capital Markets & Funds",
+"name": "Lotus Waqf Fund",
+"contract": "Waqf (Islamic Endowment)",
+"category": "Social Impact / Endowment",
+"segment": "Philanthropists & Institutions",
+"min": "Varies by endowment tier",
+"tenure": "Perpetual endowment",
+"pricing": "Principal preserved; yields distributed",
+"features": "Nigeria's first SEC-approved Waqf fund channeling investment returns into education, health, and welfare.",
+"goal": "give"
+},
+{
+"id": "PRD-027",
+"inst": "SEC-002",
+"instName": "Marble Capital Limited",
+"sector": "Capital Markets & Funds",
+"name": "Marble Halal Commodities Fund (MHCF)",
+"contract": "Salam / Murabaha / Commodity Sukuk",
+"category": "Commodities Mutual Fund",
+"segment": "Retail & Institutional",
+"min": "₦50,000 (500 units)",
+"tenure": "Open-ended",
+"pricing": "Management fee per prospectus",
+"features": "Nigeria's first SEC-approved commodities fund investing in securitized agro-commodities and precious metals.",
+"goal": "grow"
+},
+{
+"id": "PRD-028",
+"inst": "SEC-006",
+"instName": "Stanbic IBTC Asset Management",
+"sector": "Capital Markets & Funds",
+"name": "Stanbic IBTC Imaan Fund & Shari'ah Fixed Income Fund",
+"contract": "Equities / Sukuk / Mudarabah",
+"category": "Equity & Fixed Income Funds",
+"segment": "Retail & Institutional",
+"min": "₦5,000",
+"tenure": "Open-ended",
+"pricing": "1.5% annual management fee",
+"features": "Imaan Fund (~₦31.9bn NAV) holds min. 70% screened NGX equities; Shari'ah Fixed Income holds min. 70% Sukuk.",
+"goal": "grow"
+},
+{
+"id": "PRD-029",
+"inst": "SEC-008",
+"instName": "ARM Investment Managers",
+"sector": "Capital Markets & Funds",
+"name": "ARM Halal Balanced & Shari'ah Fixed Income Funds",
+"contract": "Equities / Sukuk / Murabaha",
+"category": "Balanced & Fixed Income Funds",
+"segment": "Retail & Institutional",
+"min": "₦10,000 (Fixed Income)",
+"tenure": "90-day min holding (Fixed Income)",
+"pricing": "1.5% management fee",
+"features": "ARM Halal Balanced (~₦18.5bn NAV) blends screened equities and Sukuk; Fixed Income targets steady Sukuk yield.",
+"goal": "grow"
+},
+{
+"id": "PRD-030",
+"inst": "SEC-009",
+"instName": "United Capital Asset Management",
+"sector": "Capital Markets & Funds",
+"name": "United Capital Sukuk Fund",
+"contract": "Sukuk (Ijarah / Mudarabah)",
+"category": "Sukuk Mutual Fund",
+"segment": "Retail & Institutional",
+"min": "₦10,000",
+"tenure": "Open-ended",
+"pricing": "1.5% mgmt fee (1.80% TER)",
+"features": "Dedicated collective investment scheme pooling retail capital into FGN, state, and corporate Sukuk.",
+"goal": "grow"
+},
+{
+"id": "PRD-031",
+"inst": "SEC-010",
+"instName": "First Asset / Afrinvest / Capitaltrust / Norrenberger / FSDH / Cordros / Emerging Africa",
+"sector": "Capital Markets & Funds",
+"name": "SEC-Regulated Halal Fixed Income & Balanced Funds",
+"contract": "Sukuk / Murabaha / Equities",
+"category": "Mutual Funds Suite",
+"segment": "Retail & Institutional",
+"min": "₦5,000 – ₦20,000",
+"tenure": "Open-ended (30–90 day lockups vary)",
+"pricing": "1.5% standard management fee",
+"features": "Includes FBN Halal, Afrinvest Halal, Capitaltrust Halal (80% quarterly payout), Norrenberger Islamic, FSDH, Cordros & Emerging Africa Halal Funds.",
+"goal": "grow"
+},
+{
+"id": "PRD-032",
+"inst": "TAK-001",
+"instName": "Noor Takaful Insurance Plc",
+"sector": "Takaful (Islamic Insurance)",
+"name": "Motor, Home/Flood, Prosave/Provest & Hajj/Umrah Takaful",
+"contract": "Hybrid Wakalah–Mudarabah + Tabarru",
+"category": "General & Family Takaful",
+"segment": "Individuals, Pilgrims & SMEs",
+"min": "Varies by sum covered",
+"tenure": "Annual (General) / Multi-year (Family)",
+"pricing": "Wakalah fee + Mudarabah investment share",
+"features": "Over ₦11bn claims paid and ~₦1bn underwriting surplus returned to claim-free participants.",
+"goal": "protect"
+},
+{
+"id": "PRD-033",
+"inst": "TAK-002",
+"instName": "Jaiz Takaful Insurance Plc",
+"sector": "Takaful (Islamic Insurance)",
+"name": "Agric Takaful, Motor, Education & Mortgage Takaful",
+"contract": "Hybrid Wakalah–Mudarabah + Tabarru",
+"category": "General, Agric & Family Takaful",
+"segment": "Farmers, Retail & Banks",
+"min": "Varies by risk class",
+"tenure": "Annual / Policy term",
+"pricing": "80% class underwriting surplus shared",
+"features": "Covers poultry, crops, livestock, fishery, alongside motor, marine, child education, and credit Takaful.",
+"goal": "protect"
+},
+{
+"id": "PRD-034",
+"inst": "TAK-003",
+"instName": "Hilal Takaful Nigeria Limited",
+"sector": "Takaful (Islamic Insurance)",
+"name": "Esusu Takaful, Hajj/Umrah, Marriage & Commercial Bonds",
+"contract": "Hybrid Wakalah–Mudarabah + Tabarru",
+"category": "Micro, Family & Corporate Takaful",
+"segment": "Informal Sector, Retail & Corporates",
+"min": "₦200/day (Esusu) | ₦12,500/mo (Hajj)",
+"tenure": "Flexible micro-contributions",
+"pricing": "Wakalah fee + surplus sharing",
+"features": "Accessible micro-Takaful savings/protection alongside engineering, performance bonds, and Keyman cover.",
+"goal": "protect"
+},
+{
+"id": "PRD-035",
+"inst": "TAK-004",
+"instName": "Salam Takaful Insurance Limited",
+"sector": "Takaful (Islamic Insurance)",
+"name": "Comprehensive Agric Index, Livestock, Motor & Family Plans",
+"contract": "Hybrid Wakalah–Mudarabah + Tabarru",
+"category": "General, Agric & Family Takaful",
+"segment": "Agribusiness, Retail & Families",
+"min": "Accessible retail/farm tiers",
+"tenure": "Annual / Multi-year",
+"pricing": "Wakalah fee + surplus sharing",
+"features": "48-hour validated claims settlement commitment; accessible via SalamShield app and USSD *2200#.",
+"goal": "protect"
+},
+{
+"id": "PRD-036",
+"inst": "TAK-005",
+"instName": "Crown Takaful Insurance Limited",
+"sector": "Takaful (Islamic Insurance)",
+"name": "Student Welfare, Nikkah, Hajj/Umrah & Target Savings Takaful",
+"contract": "Hybrid Wakalah–Mudarabah + Tabarru",
+"category": "Goal Savings & General Takaful",
+"segment": "Families, Schools & SMEs",
+"min": "₦10,000/mo (Target Savings)",
+"tenure": "Annual / Goal duration",
+"pricing": "Wakalah fee + surplus sharing",
+"features": "Student Welfare pays school fees directly if parent dies/is disabled; Hajj plan includes pilgrim substitution.",
+"goal": "protect"
+},
+{
+"id": "PRD-037",
+"inst": "PEN-004",
+"instName": "PenCom Licensed PFAs (17 PFAs)",
+"sector": "Non-Interest Pensions",
+"name": "RSA Fund VI (Active & Retiree Variants)",
+"contract": "Sukuk / Equities / Mudarabah",
+"category": "Mandatory & Voluntary Pension",
+"segment": "All RSA Holders & Retirees",
+"min": "Statutory pension contributions",
+"tenure": "Long-term retirement",
+"pricing": "PenCom regulated fee cap",
+"features": "Free annual switch from Funds I–IV into FRACE-certified non-interest pension portfolio.",
+"goal": "retire"
+},
+{
+"id": "PRD-038",
+"inst": "FIN-001",
+"instName": "Wahed Nigeria",
+"sector": "Fintech & Screening",
+"name": "Automated Halal Model Portfolios (6 Risk Tiers)",
+"contract": "Sukuk / Screened Equities / Funds",
+"category": "Digital Robo-Advisory",
+"segment": "Retail & Diaspora",
+"min": "Low digital entry threshold",
+"tenure": "Open-ended",
+"pricing": "1.50% annual wrap fee",
+"features": "Automated rebalancing across Nigerian Sukuk, screened equities, and SEC halal mutual funds.",
+"goal": "grow"
+}
+],
+"contracts": [
+{
+"name": "Qard / Qard Hassan",
+"meaning": "Loan / Benevolent Loan",
+"how": "Interest-free demand deposit or benevolent loan where borrower/bank guarantees 100% principal repayment without promising any financial return.",
+"risk": "Principal guaranteed; zero return promised (nominal administrative/Takaful recovery allowed where approved by ACE).",
+"uses": "Current accounts, salary accounts, AltBank Qard Hassan Salary Advance."
+},
+{
+"name": "Mudarabah",
+"meaning": "Trust-Based Profit Sharing",
+"how": "Partnership between Rab-ul-Mal (investor/depositor providing capital) and Mudarib (bank/fund manager providing expertise).",
+"risk": "Profits shared via pre-agreed ratio (e.g., 70:30); financial losses borne solely by investor unless caused by manager negligence.",
+"uses": "Savings accounts, Term Deposits (JAPSA, Summit MTD), Mutual Funds, AT1 Sukuk."
+},
+{
+"name": "Musharakah / Diminishing Musharakah",
+"meaning": "Joint Venture / Declining Partnership",
+"how": "All partners contribute capital and share equity. In Diminishing Musharakah, client gradually buys out the bank's equity units.",
+"risk": "Profits shared by agreement; losses strictly proportional to capital contribution. Client pays rent on bank's unpurchased share.",
+"uses": "Home mortgages (Jaiz Home Finance, LOTUS Homes), SME equity partnerships."
+},
+{
+"name": "Murabaha",
+"meaning": "Cost-Plus Sale Financing",
+"how": "Institution purchases a tangible asset/commodity at client's request and resells it to client at cost + disclosed fixed profit margin.",
+"risk": "Institution bears asset ownership risk prior to resale; once sold, price is fixed and cannot increase even on late payment.",
+"uses": "Auto finance, appliances, solar systems, trader inventory (MFT), LPO & trade finance."
+},
+{
+"name": "Ijarah / Ijarah Muntahia Bittamleek",
+"meaning": "Operating Lease / Lease-to-Own",
+"how": "Institution buys an asset and leases its usufruct (right of use) to client for agreed rentals, with separate gift/sale transfer at lease end.",
+"risk": "Lessor retains ownership and major structural maintenance risk during lease; lessee pays periodic rentals.",
+"uses": "Equipment leasing, device upgrades, FMBN Non-Interest Mortgage, Sovereign FGN Sukuk."
+},
+{
+"name": "Istisna'a",
+"meaning": "Manufacturing / Construction Finance",
+"how": "Contract to manufacture, build, or construct a specified asset with staged delivery and flexible milestone payments.",
+"risk": "Contractor/bank bears construction completion risk; price and delivery specs fixed upfront.",
+"uses": "Factory construction (BOI NIB), real estate development, infrastructure projects."
+},
+{
+"name": "Salam",
+"meaning": "Forward Purchase Contract",
+"how": "Full payment made upfront at contract signing for future delivery of standardized commodities/crops at a specified future date.",
+"risk": "Buyer provides working capital upfront; seller delivers specified quantity/quality of goods at harvest/maturity.",
+"uses": "Agricultural crop/input financing (Jaiz Bank, Tijarah MFB, Marble Commodities Fund)."
+},
+{
+"name": "Wakalah",
+"meaning": "Agency Agreement",
+"how": "Principal appoints an agent (Wakeel) to manage investments or administer a Takaful fund for a disclosed upfront agency fee.",
+"risk": "Principal bears investment risk and keeps returns above expected profit; agent earns fixed fee (plus optional performance incentive).",
+"uses": "TAJBank Wakalah Investment Services, Takaful operator management fee structure."
+},
+{
+"name": "Sukuk",
+"meaning": "Islamic Investment Certificates",
+"how": "Certificates of equal value representing undivided ownership in tangible assets, usufruct, or projects—not debt obligations.",
+"risk": "Returns generated from underlying asset rentals or business profits rather than interest coupons.",
+"uses": "FGN Sovereign Road Sukuk, TAJBank AT1 Sukuk, Halal Fixed Income Mutual Funds."
+},
+{
+"name": "Tabarru",
+"meaning": "Cooperative Donation",
+"how": "Participants contribute donations into a mutual risk pool used to indemnify members who suffer defined losses.",
+"risk": "Underwriting risk is shared mutually among participants rather than transferred to shareholders; surplus returned to participants.",
+"uses": "All 5 NAICOM-licensed Takaful operators (Noor, Jaiz, Hilal, Salam, Crown)."
+}
+]
+}

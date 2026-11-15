@@ -33,12 +33,18 @@ const ic = {
   coins: <><ellipse cx="9" cy="7" rx="6" ry="2.5" /><path d="M3 7v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V7" /><path d="M9 16.5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V12c0-1.4-2.7-2.5-6-2.5" /></>,
   home: <path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />,
   heart: <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />,
-  trend: <><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></>
+  trend: <><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></>,
+  sun: <><circle cx="12" cy="13" r="4" /><path d="M12 3v3M4.2 6.2l2 2M19.8 6.2l-2 2M2 13h3M19 13h3M3 20h18" /></>,
+  briefcase: <><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" /></>,
+  spark: <path d="M12 3l2.2 6.3L20 12l-5.8 2.7L12 21l-2.2-6.3L4 12l5.8-2.7z" />,
+  phonecall: <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />,
+  pin: <><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z" /><circle cx="12" cy="9" r="2.5" /></>,
+  download: <><path d="M12 4v11M7 10l5 5 5-5" /><path d="M5 20h14" /></>
 };
 export function Ic({ n, s = 20, w = 2 }) {
   return <svg viewBox="0 0 24 24" width={s} height={s} fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ic[n]}</svg>;
 }
-export const GOAL_ICON = { save: "coins", grow: "trend", protect: "shield", home: "home", give: "heart" };
+export const GOAL_ICON = { save: "coins", grow: "trend", protect: "shield", home: "home", retire: "sun", business: "briefcase", give: "heart" };
 export const rise = { initial: { opacity: 0, y: 22 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-60px" }, transition: { duration: .6, ease: [.16, 1, .3, 1] } };
 
 /* ₦ amounts given in thousands: 1000 → ₦1m, 950 → ₦950k */

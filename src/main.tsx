@@ -7,7 +7,9 @@ import Guide from "./Guide";
 import Institutions from "./Institutions";
 import Trust from "./Trust";
 import { AppShell } from "./ui";
-import { Home, Check, Plan, Learn, Tools } from "./AppPages";
+import { Check, Learn, Tools } from "./AppPages";
+import { Home } from "./Result";
+import { Plan } from "./Plan";
 import { Present, Room } from "./Present";
 
 function ScrollTop() {

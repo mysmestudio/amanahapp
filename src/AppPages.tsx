@@ -1,7 +1,8 @@
 // @ts-nocheck
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Row, { PlantIcon } from "./Row";
+import { PlantIcon, STAGE_TONE } from "./Row";
+import { Ic } from "./site";
 import { AppTop, Html, Fine } from "./ui";
 import { STAGES, PARTS, SEED, CUR, Q, SCORED, compute, levelWord, BUCKETS, roadmap, TRACKS, LESSONS, SITTINGS, SLIDES, REFS, APPROVAL, ROOM, ORIGIN, money } from "./content";
 import { load, save, useStore, result, saveCheck, api, subscribePush, uuid } from "./store";
@@ -22,102 +23,6 @@ export function partSays(k, v, a) {
 }
 const RUNWAY_WORDS = { 0: "less than two weeks", 30: "about a month", 60: "one to three months", 85: "three to six months", 100: "more than six months" };
 
-/* ============================ HOME ============================ */
-export function Home() {
-  const loc = useLocation();
-  const r = result();
-  const [history] = useStore("history", []);
-  const [course] = useStore("course");
-  const [picks] = useStore("picks", {});
-  const animate = !!loc.state?.animate;
-  const [shown, setShown] = useState(animate ? 0 : 1);
-  useEffect(() => { if (animate) { const t0 = performance.now(); let raf; const f = t => { const p = Math.min(1, (t - t0) / 1400); setShown(1 - Math.pow(1 - p, 3)); if (p < 1) raf = requestAnimationFrame(f); }; raf = requestAnimationFrame(f); return () => cancelAnimationFrame(raf); } }, [animate]);
-
-  if (!r) return (
-    <div className="app">
-      <AppTop />
-      <div className="fieldhead"><Row grow={.08} /><div className="over"><span className="stage">Your seed is waiting</span></div></div>
-      <h1 className="h-md">Let's see where your family stands.</h1>
-      <p className="lede muted">Thirteen questions, about four minutes. You'll get your score, your stage, and the one part of your money holding your home back.</p>
-      <Link className="btn gold block" to="/app/check">Start the family check</Link>
-      <Link className="btn ghost block" to="/how-it-works">How Seedline works</Link>
-      <Fine>Your answers stay on your phone. Only anonymous totals are shared.</Fine>
-    </div>
-  );
-
-  const a = r.last.answers, st = r.stage;
-  const weakF = Object.keys(r.factors).sort((x, y) => r.factors[x] - r.factors[y])[0];
-  const band = a.band != null && a.country ? CUR[a.country].bands[a.band] : null;
-  const prev = history.length > 1 ? history[history.length - 2] : null;
-  const done = course ? Object.keys(course.done || {}).length : 0;
-  return (
-    <div className="app">
-      <AppTop />
-      <div className="fieldhead">
-        <Row grow={Math.max(.06, r.score / 100)} shade />
-        <div className="over"><div><div className="score tnum">{Math.round(r.score * shown)}</div><div className="stage">{st.plant} · {st.name}</div></div>
-          {prev && <span className="chip" style={{ background: "rgba(255,255,255,.92)", color: "#0A1A3F" }}>{r.score > prev.score ? `Up ${r.score - prev.score}` : r.score < prev.score ? `Down ${prev.score - r.score}` : "No change"}</span>}</div>
-      </div>
-      <p className="explain">This is your <strong>Seedline score</strong>: a teaching indicator from 0 to 100, not a verdict. As your score rises, your line grows from seed to sprout to stalk to harvest.</p>
-      <div className="plantstrip">{STAGES.map((s, i) => <div key={s.id} className={s.id === st.id ? "on" : ""}><PlantIcon stage={i} size={44} light={s.id === st.id} /><b>{s.plant}</b><span>{s.name}</span></div>)}</div>
-
-      <section className="card">
-        <span className="kicker">What {r.score} · {st.name} means, in plain words</span>
-        <div className="meaning">
-          <div><b>Right now</b><p>{st.means}</p></div>
-          <div><b>Next goal</b><p>{st.next}</p></div>
-          <div><b>Your focus</b><p><strong>{st.focus}</strong></p></div>
-        </div>
-        {r.capped && <p className="small muted"><strong>Why your score stops at 34:</strong> almost nothing is left each month, so there's no seed to grow. Wealth can't build until there's a gap between money in and money out.</p>}
-      </section>
-
-      <section className="card raised">
-        <span className="kicker">The six parts of your family's money</span>
-        <p className="explain">Your score is made of these six parts. Each is rated from Weak to Strong based on your answers. The weakest one is tagged <strong>Holding you back</strong>: that's where your plan starts.</p>
-        <div className="parts">{Object.keys(PARTS).map(k => { const lw = levelWord(r.lev[k]); return (
-          <div className="part" key={k}>
-            <div className="nm">{PARTS[k].name}{k === r.weakest && <span className="flag">Holding you back</span>}</div>
-            <div className="lvl" style={{ color: lw.c }}>{lw.w}</div>
-            <div className="bar"><i style={{ width: r.lev[k] * shown + "%", background: lw.c }} /></div>
-            <p>{partSays(k, r.lev[k], a)}</p>
-          </div>); })}</div>
-      </section>
-
-      <section className="card raised">
-        <span className="kicker">Your seed story</span>
-        <p className="explain">The six parts tell you <strong>what's wrong</strong>. The seed story tells you <strong>why it stops your wealth growing</strong>. It regroups the same answers into the four things a crop needs. Income is left out on purpose: it's the rain, helpful but not the point. What matters is the seed you keep.</p>
-        <div className="seedgrid">{Object.entries(SEED).map(([k, s]) => { const v = r.factors[k], lw = levelWord(v); return (
-          <div key={k} className={"seedcard" + (k === weakF ? " weak" : "")} style={{ "--c": s.color }}>
-            <div className="k"><b>{k}</b><span>{s.story}</span></div>
-            <h4>{s.name}</h4><p>{s.plain}</p><p className="built"><b>Built from:</b> {s.built}</p>
-            <div className="st" style={{ color: lw.c }}>{lw.w}{k === weakF ? " · your weakest link" : ""}</div>
-          </div>); })}</div>
-        <div className="formula" aria-label="W equals S times T times P times G" style={{ fontSize: 34 }}><b>W</b><span className="op">=</span><b style={{ color: "var(--seed)" }}>S</b><span className="op">×</span><b style={{ color: "var(--season)" }}>T</b><span className="op">×</span><b style={{ color: "var(--soil)" }}>P</b><span className="op">×</span><b style={{ color: "var(--harvest)" }}>G</b></div>
-        <p className="small muted">Wealth = Surplus × Time × Productive use × Good stewardship. It multiplies: if any one is near zero, the whole field stays small, however strong the others are.</p>
-      </section>
-
-      {band && <section className="card dark">
-        <span className="kicker" style={{ color: "#D9A93A" }}>One more thing</span>
-        <p>At the start, you told us about <strong>{band}</strong> comes in each month. <strong>That number is not in your score at all.</strong></p>
-        <p style={{ color: "#C9D3E6" }}>That's deliberate. Income is money passing through your hands; wealth is what you keep, protect, put to work and pass on. A high earner who keeps nothing can score lower than a modest earner who saves.</p>
-      </section>}
-
-      {history.length > 1 && <section className="card">
-        <span className="kicker">Your history</span>
-        <div className="history" style={{ marginTop: 18 }}>{history.slice(-8).map((h, i) => <div key={i} style={{ height: Math.max(6, h.score) + "%" }}><span className="tnum">{h.score}</span></div>)}</div>
-        <div className="row tiny muted" style={{ justifyContent: "space-between" }}><span>{fmt(history.slice(-8)[0].at, { day: "numeric", month: "short" })}</span><span>{fmt(history[history.length - 1].at, { day: "numeric", month: "short" })}</span></div>
-      </section>}
-
-      <section className="stack">
-        <Link className="btn gold block" to="/app/plan">{picks.made ? "See my 30-day plan" : "Make my plan"}</Link>
-        <Link className="btn ghost block" to="/app/learn">{course ? `Continue my course · ${done} done` : "Start the Surviving to Building course"}</Link>
-        <Link className="btn ghost block" to="/app/check">Retake the check</Link>
-      </section>
-      <Fine>A teaching indicator, not financial or Shariah advice. {load("offline") ? "Your result couldn't reach the room, but it's saved on this phone." : ""}</Fine>
-    </div>
-  );
-}
-
 /* ============================ CHECK ============================ */
 export function Check() {
   const nav = useNavigate();
@@ -130,24 +35,25 @@ export function Check() {
   const setA = (next) => { setAnswers(next); save("draft", next); };
 
   if (busy) return (
-    <div className="app" style={{ minHeight: "70vh", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
-      <div className="fieldhead" style={{ width: "100%" }}><Row grow={.5} /></div>
-      <p className="lede muted">Reading your seed, season, soil and harvest…</p>
+    <div className="app ck-busy">
+      <div className="ck-grow">{[0, 1, 2, 3].map(i => <span key={i} style={{ animationDelay: i * .3 + "s" }}><PlantIcon stage={i} size={64} tile /></span>)}</div>
+      <h2 className="h-md">Growing your result…</h2>
+      <p className="muted">Reading your seed, season, soil and harvest.</p>
     </div>
   );
 
   if (step < 0) return (
     <div className="app">
       <AppTop />
-      <span className="kicker">Family check</span>
-      <h1 className="h-md">Where does your home stand today?</h1>
-      <p className="lede muted">Thirteen simple questions about six parts of your family's money. You'll get a score from 0 to 100, your stage, and the one part holding you back most.</p>
-      <div className="row"><span className="chip">About 4 minutes</span><span className="chip">Ranges, not exact figures</span><span className="chip">Anonymous</span><span className="chip">Singles welcome</span></div>
-      <section className="card"><span className="kicker">What we look at</span>
-        {Object.values(PARTS).map(p => <p key={p.name}><strong>{p.name}.</strong> <span className="muted">{p.plain}</span></p>)}
-      </section>
-      {r && <section className="card"><span className="small muted">Your last check · {fmt(r.last.at, { day: "numeric", month: "short", year: "numeric" })}</span><div className="row" style={{ justifyContent: "space-between" }}><b className="h-md tnum">{r.score} · {r.stage.name}</b><Link className="btn sm ghost" to="/app">See result</Link></div></section>}
-      <button className="btn gold block" onClick={() => { if (partial) setStep(firstGap); else { setA({}); setStep(0); } }}>{partial ? "Continue my check" : r ? "Take it again" : "Start my check"}</button>
+      <div className="ck-hero">
+        <span className="rs-eyebrow">Family wealth check</span>
+        <h1>Where does your home stand today?</h1>
+        <p>Thirteen quick questions about six parts of your family's money.</p>
+        <div className="ck-pills"><span><Ic n="pulse" s={15} />4 minutes</span><span><Ic n="ranges" s={15} />Ranges only</span><span><Ic n="lock" s={15} />Private</span></div>
+        <button className="btn gold block lg" onClick={() => { if (partial) setStep(firstGap); else { setA({}); setStep(0); } }}>{partial ? "Continue my check" : r ? "Take it again" : "Start my check"}<Ic n="arrow" s={18} /></button>
+      </div>
+      <div className="ck-parts">{Object.entries(PARTS).map(([k, p], i) => <div key={k} style={{ "--t": ["#13306B", "#1E7A4E", "#2A4FA8", "#B4472A", "#0F6E6E", "#B98A1F"][i] }}><i>{i + 1}</i><span><b>{p.name}</b><small>{p.plain}</small></span></div>)}</div>
+      {r && <Link to="/app" className="rs-door"><span className="rs-door-ic"><Ic n="badge" s={22} /></span><b>Last check: {r.score} · {r.stage.name}</b><small>{fmt(r.last.at, { day: "numeric", month: "short", year: "numeric" })}</small><Ic n="arrow" s={18} /></Link>}
     </div>
   );
 
@@ -163,9 +69,9 @@ export function Check() {
   return (
     <div className="app">
       <AppTop />
-      <div className="progress"><button className="linkbtn" onClick={() => setStep(step - 1)}>← Back</button><div className="track" role="progressbar" aria-label="Progress" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: pct + "%" }} /></div></div>
-      <section className="stack" key={q.id} style={{ gap: 16, animation: "rise .5s cubic-bezier(.16,1,.3,1) both" }}>
-        <span className="chip">{q.setup ? q.tag : `${PARTS[q.part].name} · ${idx} of ${SCORED}`}</span>
+      <div className="ck-top"><button className="ck-back" onClick={() => setStep(step - 1)} aria-label="Back">←</button><div className="ck-track" role="progressbar" aria-label="Progress" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>{Q.map((x, i) => <i key={x.id} className={i < step ? "done" : i === step ? "now" : ""} />)}</div><span className="ck-count tnum">{q.setup ? "Setup" : `${idx}/${SCORED}`}</span></div>
+      <section className="ck-q" key={q.id}>
+        <span className="ck-chip" style={{ "--t": q.setup ? "#4A556B" : ["#13306B", "#1E7A4E", "#2A4FA8", "#B4472A", "#0F6E6E", "#B98A1F"][Object.keys(PARTS).indexOf(q.part)] }}>{q.setup ? q.tag : `${PARTS[q.part].name} · ${idx} of ${SCORED}`}</span>
         <h2 className="qtitle" id="qh">{money(q.q, answers.country)}</h2>
         {q.help && <p className="muted">{money(q.help, answers.country)}</p>}
         <div className="opts" role="group" aria-labelledby="qh">
@@ -183,66 +89,6 @@ export function Check() {
   );
 }
 
-/* ============================ PLAN ============================ */
-export function Plan() {
-  const r = result();
-  const [picks, setPicks] = useStore("picks", {});
-  const [copied, setCopied] = useState(false);
-  if (!r) return (<div className="app"><AppTop /><section className="card"><span className="kicker">Your plan</span><h2 className="h-md">Take the check first</h2><p className="muted">Your plan is built from your answers, so it starts with what's weakest for your home.</p><Link className="btn gold" to="/app/check">Take the check</Link></section></div>);
-  const a = r.last.answers;
-  const rm = roadmap(r, a);
-  const p = { ...picks }; BUCKETS.forEach(b => { if (p[b.id] == null || p[b.id] >= rm[b.id].length) p[b.id] = 0; });
-  const weakL = levelWord(r.lev[r.weakest]);
-  const runway = RUNWAY_WORDS[a.runway];
-  const reason = (b) => { const part = rm[b.id][0]?.part; if (!part) return ""; const lw = levelWord(r.lev[part]); return `because ${PARTS[part].name.toLowerCase()} is ${lw.w.toLowerCase()}`; };
-  const start = new Date(picks.made || Date.now()), end = new Date(start.getTime() + 30 * 864e5);
-  const lines = BUCKETS.map(b => `${b.name}: ${rm[b.id][p[b.id]].t}`);
-  const text = `My 30-day family wealth plan (Seedline)\nScore: ${r.score}/100 · ${r.stage.name}\n${fmt(start, { day: "numeric", month: "short" })} to ${fmt(end, { day: "numeric", month: "short" })}\n\n${lines.join("\n")}\n\nRecheck on ${fmt(end, { day: "numeric", month: "short" })}.\n${ORIGIN}/app`;
-  const copy = async () => { try { await navigator.clipboard.writeText(text); setCopied(true); } catch { setCopied(false); } };
-  return (
-    <div className="app">
-      <AppTop />
-      <span className="kicker">Your family roadmap</span>
-      <h1 className="h-md">Built from your check</h1>
-      <div className="stack" style={{ gap: 8 }}>
-        <div className="because"><i style={{ background: "var(--weak)" }} /><span>Your weakest part is <strong>{PARTS[r.weakest].name}</strong> ({weakL.w.toLowerCase()}). {partSays(r.weakest, r.lev[r.weakest], a)}</span></div>
-        {runway && <div className="because"><i style={{ background: "var(--season)" }} /><span>If income stopped, your home could last <strong>{runway}</strong>.</span></div>}
-        <div className="because"><i style={{ background: "var(--gold)" }} /><span>You're <strong>{r.stage.name}</strong> at {r.score}. {r.stage.focus}</span></div>
-      </div>
-      <p className="explain">Pick one action in each group below. They're ordered by what's weakest for you, so the first one is usually the best place to start. Each one says why it matters, what to do this week, and how you'll know it's done.</p>
-      {BUCKETS.map(b => (
-        <section className="card raised" key={b.id}>
-          <div className="stack" style={{ gap: 4 }}>
-            <h2 className="h-md">{b.name} <span className="small muted" style={{ fontFamily: "var(--body)" }}>· {b.org}</span></h2>
-            <p className="muted small"><strong>{b.verb[0].toUpperCase() + b.verb.slice(1)}.</strong> {b.sub}</p>
-            <span className={"chip" + (b.id === "fix" && r.lev[rm[b.id][0]?.part] < 35 ? " weak" : "")} style={{ marginTop: 4 }}>{b.name} · {reason(b)}</span>
-          </div>
-          {rm[b.id].map((x, i) => (
-            <button className="act" key={i} aria-pressed={p[b.id] === i} onClick={() => setPicks({ ...p, made: picks.made, [b.id]: i })}>
-              <i className="dot" /><span>
-                {i === 0 && <span className="chip" style={{ fontSize: 11 }}>Best place to start</span>}
-                <b>{x.t}</b>
-                <span className="tiny muted">Linked to: {PARTS[x.part].name} ({levelWord(r.lev[x.part]).w.toLowerCase()})</span>
-                <dl><dt>Why</dt><dd>{x.why}</dd><dt>This week</dt><dd>{x.week}</dd><dt>Done when</dt><dd>{x.done}</dd></dl>
-              </span>
-            </button>
-          ))}
-        </section>
-      ))}
-      {!picks.made ? <button className="btn gold block" onClick={() => setPicks({ ...p, made: Date.now() })}>Make my 30-day plan</button> : (
-        <section className="planout">
-          <span className="small" style={{ color: "#C9D3E6", fontWeight: 700 }}>My 30-day family wealth plan</span>
-          <h2 className="h-md">{r.score} · {r.stage.name}</h2>
-          <span className="small tnum" style={{ color: "#C9D3E6" }}>{fmt(start, { day: "numeric", month: "short" })} → recheck on {fmt(end, { day: "numeric", month: "short" })}</span>
-          <ol>{BUCKETS.map(b => <li key={b.id}><b>{b.name}</b><span>{rm[b.id][p[b.id]].t}</span></li>)}</ol>
-          <div className="row"><button className="btn sm" onClick={copy}>{copied ? "Copied" : "Copy plan"}</button><a className="btn sm ghost" target="_blank" rel="noopener" href={"https://wa.me/?text=" + encodeURIComponent(text)}>Send on WhatsApp</a></div>
-        </section>
-      )}
-      {picks.made && <section className="card"><span className="kicker">Next step</span><h3 className="h-sm">Turn your plan into habits</h3><p className="muted">The Surviving to Building course gives you short lessons at your own pace, with reminders.</p><Link className="btn gold" to="/app/learn">Set up my course</Link></section>}
-    </div>
-  );
-}
-
 /* ============================ LEARN ============================ */
 export function Learn() {
   const [tab, setTab] = useState(() => load("learnTab", "course"));
@@ -250,8 +96,11 @@ export function Learn() {
   return (
     <div className="app">
       <AppTop />
-      <span className="kicker">Learn</span>
-      <h1 className="h-md">From Surviving to Building</h1>
+      <div className="ln-hero">
+        <span className="rs-eyebrow">Learn</span>
+        <h1>From Surviving to Building</h1>
+        <div className="ln-tracks">{Object.values(TRACKS).map((t, i) => <span key={t.name} style={{ background: ["#B4472A", "#2A4FA8", "#1E7A4E", "#D9A93A"][i], color: i === 3 ? "#231800" : "#FFFFFF" }}><small>Track {i + 1}</small><b>{t.name}</b></span>)}</div>
+      </div>
       <div className="segtabs" role="tablist">
         {[["course", "My course"], ["curriculum", "Curriculum"], ["workshop", "Workshop notes"]].map(([id, l]) => <button key={id} role="tab" aria-pressed={tab === id} onClick={() => go(id)}>{l}</button>)}
       </div>
@@ -437,10 +286,10 @@ const INVEST = [
 ];
 const LEGACY_ITEMS = ["A written list of everything we own", "A written list of everything we owe", "A trusted person knows where our documents are kept", "Next of kin is current on bank and pension accounts", "Beneficiaries named on takaful or insurance", "A wasiyyah (Islamic will) is written", "A guardian for our children is named", "Key contacts are written down: employer HR, bank, pension, lawyer"];
 const TOOLS = {
-  cushion: { name: "Cushion", what: "Works out how long your home could pay for the basics if income stopped today.", how: "Enter the savings you can reach quickly and your essential monthly spending.", when: "Before any investing, and whenever your spending changes." },
-  surplus: { name: "Surplus", what: "Shows your seed: what's left each month after everything that goes out.", how: "Enter money in and money out for a normal month, including family support and debt payments.", when: "At the start, and each month at your money meeting." },
-  invest: { name: "Investment check", what: "Checks any investment offer against six questions plus a red-flag check, then gives a clear verdict.", how: "Answer honestly for one offer at a time. 'Not sure' is a valid answer.", when: "Every time someone brings you an opportunity, before any money moves." },
-  seven: { name: "7-day test", what: "Shows whether your family could find everything you own within seven days if something happened to you.", how: "Tick what is already true. Your ticks save on this phone.", when: "Now, then once a year or after any big life change." }
+  cushion: { name: "Cushion", icon: "shield", tone: "#2A4FA8", short: "How long could we last?", what: "Works out how long your home could pay for the basics if income stopped today.", how: "Enter the savings you can reach quickly and your essential monthly spending.", when: "Before any investing, and whenever your spending changes." },
+  surplus: { name: "Surplus", icon: "coins", tone: "#1E7A4E", short: "What do we keep?", what: "Shows your seed: what's left each month after everything that goes out.", how: "Enter money in and money out for a normal month, including family support and debt payments.", when: "At the start, and each month at your money meeting." },
+  invest: { name: "Investment check", icon: "badge", tone: "#B4472A", short: "Is this offer safe?", what: "Checks any investment offer against six questions plus a red-flag check, then gives a clear verdict.", how: "Answer honestly for one offer at a time. 'Not sure' is a valid answer.", when: "Every time someone brings you an opportunity, before any money moves." },
+  seven: { name: "7-day test", icon: "doc", tone: "#B98A1F", short: "Could family find it all?", what: "Shows whether your family could find everything you own within seven days if something happened to you.", how: "Tick what is already true. Your ticks save on this phone.", when: "Now, then once a year or after any big life change." }
 };
 export function Tools() {
   const [t, setT] = useState("cushion");
@@ -450,11 +299,9 @@ export function Tools() {
   return (
     <div className="app">
       <AppTop />
-      <span className="kicker">Family money tools</span>
-      <h1 className="h-md">Work it out together</h1>
-      <p className="muted">Four practical tools for decisions families actually face. Pick one; each explains what it does first.</p>
-      <div className="toolnav" role="tablist">{Object.entries(TOOLS).map(([k, v]) => <button key={k} role="tab" aria-pressed={t === k} onClick={() => setT(k)}>{v.name}</button>)}</div>
-      <div className="toolhead"><b>What it does</b><span>{meta.what}</span><b>How to use it</b><span>{meta.how}</span><b>When to use it</b><span>{meta.when}</span></div>
+      <div className="rs-head"><span className="rs-eyebrow dark">Family money tools</span><h2>Work it out together.</h2></div>
+      <div className="tl-nav" role="tablist">{Object.entries(TOOLS).map(([k, v]) => <button key={k} role="tab" aria-pressed={t === k} onClick={() => setT(k)} style={{ "--t": v.tone }}><span><Ic n={v.icon} s={22} /></span><b>{v.name}</b><small>{v.short}</small></button>)}</div>
+      <details className="tl-info" key={t}><summary><Ic n="spark" s={16} />What it does and when to use it</summary><dl><dt>What it does</dt><dd>{meta.what}</dd><dt>How to use it</dt><dd>{meta.how}</dd><dt>When</dt><dd>{meta.when}</dd></dl></details>
       <section className="card raised">
         {t === "cushion" && <Cushion sym={sym} />}
         {t === "surplus" && <Surplus sym={sym} />}

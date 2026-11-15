@@ -5,6 +5,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import { JOIN } from "./content";
 import RoomBoard from "./RoomBoard";
+import "./app.css";
 
 export function Logo({ tone = "#13306B", mark = "#FFFFFF" }) {
   return (
@@ -31,9 +32,23 @@ const I = {
 const TABS = [["/app", "Home", "home", true], ["/app/check", "Check", "check"], ["/app/plan", "Plan", "plan"], ["/app/learn", "Learn", "learn"], ["/app/tools", "Tools", "tools"]];
 
 export function AppShell() {
+  const last = (() => { try { return JSON.parse(localStorage.getItem("seedline:last")); } catch { return null; } })();
   return (
-    <>
-      <div className="gutter"><Outlet /></div>
+    <div className="ashell">
+      <aside className="aside" aria-label="Seedline">
+        <Brand to="/" light />
+        <nav aria-label="App sections">
+          {TABS.map(([to, label, ic, end]) => (
+            <NavLink key={to} to={to} end={!!end} className={({ isActive }) => isActive ? "active" : ""}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">{I[ic]}</svg>{label}
+            </NavLink>
+          ))}
+          <Link to="/institutions" className="aside-ext"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>Halal directory</Link>
+        </nav>
+        {last && <Link to="/app" className="aside-score"><span>Your score</span><b className="tnum">{last.score}</b><small>{last.stageName}</small></Link>}
+        <span className="aside-foot">Launched at the MSMMI Marriage Workshop 2026</span>
+      </aside>
+      <main className="amain"><div className="gutter"><Outlet /></div></main>
       <div className="tabbar"><nav aria-label="App sections">
         {TABS.map(([to, label, ic, end]) => (
           <NavLink key={to} to={to} end={!!end} className={({ isActive }) => isActive ? "active" : ""}>
@@ -41,11 +56,11 @@ export function AppShell() {
           </NavLink>
         ))}
       </nav></div>
-    </>
+    </div>
   );
 }
-export function AppTop() {
-  return <header className="apptop"><Brand to="/" /><div className="co">Launched at<br />MSMMI Workshop 2026</div></header>;
+export function AppTop({ title = null }) {
+  return <header className="apptop"><Brand to="/" />{title ? <span className="apptop-t">{title}</span> : <div className="co">Your family<br />office, online</div>}</header>;
 }
 
 /* Renders trusted slide HTML from content.ts, then mounts live pieces (QR codes, room board). */

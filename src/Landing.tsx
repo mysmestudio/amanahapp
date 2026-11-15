@@ -5,7 +5,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent, useInView, use
 import { PlantIcon, STAGE_TONE } from "./Row";
 import { STAGES } from "./content";
 import { result } from "./store";
-import { GOALS, countByGoal } from "./institutions";
+import { GOALS, countByGoal, INSTITUTIONS } from "./institutions";
 import { Ic, GOAL_ICON, rise, naira, SiteNav, SiteFooter, ListingModal } from "./site";
 
 /* ---------- motion helpers ---------- */
@@ -275,7 +275,7 @@ export default function Landing() {
         <motion.div className="lp-head" {...rise}>
           <span className="lp-eyebrow">The directory</span>
           <h2>Find a halal home for your money.</h2>
-          <p className="lp-lede">Start with what you want to do. We show licensed providers side by side, in alphabetical order, with no paid rankings.</p>
+          <p className="lp-lede">36 licensed institutions and 38 halal products across Nigeria. Start with what you want your money to do. Never ranked, never paid.</p>
         </motion.div>
         <div className="lp-goals">
           {GOALS.map((g, k) => (
@@ -284,10 +284,18 @@ export default function Landing() {
                 <span className="lp-goal-ic"><Ic n={GOAL_ICON[g.id]} s={22} /></span>
                 <b>{g.label}</b>
                 <small>{g.line}</small>
-                <span className="lp-goal-n">{countByGoal(g.id) || "Coming"}{countByGoal(g.id) ? " providers" : " soon"} <Ic n="arrow" s={15} /></span>
+                <span className="lp-goal-n">{countByGoal(g.id)} institution{countByGoal(g.id) === 1 ? "" : "s"} <Ic n="arrow" s={15} /></span>
               </Link>
             </motion.div>
           ))}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .5, delay: .5 }}>
+            <Link to="/institutions" className="lp-goal all">
+              <span className="lp-goal-ic"><Ic n="search" s={22} /></span>
+              <b>See all {INSTITUTIONS.length} institutions</b>
+              <small>Banks, takaful, funds, pensions and fintechs across Nigeria.</small>
+              <span className="lp-goal-n">Open the directory <Ic n="arrow" s={15} /></span>
+            </Link>
+          </motion.div>
         </div>
       </div></section>
 
