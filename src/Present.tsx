@@ -45,12 +45,10 @@ export function Present() {
 
 export function Room() {
   return (
-    <div className="gutter" style={{ paddingBlock: "calc(22px + env(safe-area-inset-top, 0px)) 32px" }}>
-      <div className="container stack" style={{ gap: 18 }}>
-        <div className="row" style={{ justifyContent: "space-between" }}><Brand /><span className="small muted">MSMMI Marriage Workshop 2026</span></div>
-        <h1 className="h-lg">Where this room stands, right now</h1>
-        <RoomBoard />
-      </div>
+    <div className="room-page">
+      <div className="room-top"><Brand light /><span>MSMMI Marriage Workshop 2026 · Live</span></div>
+      <h1>Where this room stands, <span>right now.</span></h1>
+      <RoomBoard dark />
     </div>
   );
 }
