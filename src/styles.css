@@ -365,3 +365,16 @@ input[type=email],input[type=time],input[type=number],input[type=text]{width:100
 .plantstrip div.on{background:#0A1A3F;color:#FFFFFF}
 .plantstrip div.on span{color:#C9D3E6}
 .homecard canvas{height:220px}
+
+/* ===== Global scale: 80% on computers, 90% on tablets, 100% on phones (readability + tap targets) ===== */
+:root{--zf:1}
+@media (min-width:760px){:root{--zf:.9}}
+@media (min-width:1100px){:root{--zf:.8}}
+html{zoom:var(--zf)}
+/* keep full-viewport sections filling the real screen when zoomed */
+html .hx{min-height:calc(100svh / var(--zf) - 68px)}
+html .lp-story-pin{height:calc(100svh / var(--zf))}
+html .st-arch{min-height:min(640px, calc(100svh / var(--zf) - 40px))}
+html .room-page,html .ashell{min-height:calc(100svh / var(--zf))}
+@media (min-width:1020px){html .aside{height:calc(100svh / var(--zf))}}
+@media (max-width:1020px){html .hx{min-height:auto}}

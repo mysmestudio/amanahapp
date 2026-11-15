@@ -44,7 +44,9 @@ createRoot(document.getElementById("root")!).render(
           <Route path="plan" element={<Plan />} />
           <Route path="learn" element={<Learn />} />
           <Route path="tools" element={<Tools />} />
-          <Route path="directory" element={<Institutions inApp />} />
+          <Route path="directory" element={<Institutions view="match" />} />
+          <Route path="directory/all" element={<Institutions view="all" />} />
+          <Route path="directory/contracts" element={<Institutions view="contracts" />} />
         </Route>
         <Route path="/present" element={<Present />} />
         <Route path="/room" element={<Room />} />

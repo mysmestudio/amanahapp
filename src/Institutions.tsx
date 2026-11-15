@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, NavLink, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence, animate, useInView } from "framer-motion";
 import { GOALS, goalOf, INSTITUTIONS, PRODUCTS, CONTRACTS, SECTORS, sortAZ, productsFor, contractsIn } from "./institutions";
 import { Ic, GOAL_ICON, rise, SiteNav, SiteFooter, ListingModal } from "./site";
@@ -77,26 +77,38 @@ function ProductRow({ p, onContract }) {
   );
 }
 
-/* ---------- product card (match results) ---------- */
-function ProductCard({ p, i, onInst, onContract }) {
+/* ---------- slim product card + details sheet ---------- */
+const clip = (t, n = 26) => { if (!t) return ""; const x = String(t).split(/\s*[(;]/)[0].trim(); return x.length > n ? x.slice(0, n - 1) + "…" : x; };
+function ProductCard({ p, i, onOpen }) {
+  const inst = instById(p.inst); const g = goalOf(p.goal); const c = contractsIn(p.contract)[0];
+  return (
+    <motion.button className="sp" onClick={() => onOpen(p)} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45, delay: Math.min(i, 6) * .05, ease: [.16, 1, .3, 1] }}>
+      <span className="sp-top" style={{ background: g.tone }}><small>{clip(p.category, 30)}</small><b>{p.name}</b></span>
+      <span className="sp-body">
+        <span className="sp-by"><span className="lp-mono xs" style={{ background: SECTOR_TONE[inst?.sector] }}>{initials(p.instName)}</span><span>{short(inst?.name || p.instName)}</span><em>{inst?.regulator}</em></span>
+        <span className="sp-facts">{p.min && <span><small>Start</small>{clip(p.min, 18)}</span>}{p.tenure && <span><small>Time</small>{clip(p.tenure, 18)}</span>}</span>
+        <span className="sp-foot">{c ? <span className="sp-ctr">{c.name.split(" / ")[0]}</span> : <span />}<span className="sp-more">Details <Ic n="arrow" s={14} /></span></span>
+      </span>
+    </motion.button>
+  );
+}
+function ProductSheet({ p, onClose, onInst, onContract }) {
   const inst = instById(p.inst); const g = goalOf(p.goal);
   return (
-    <motion.article className="lp-pcard" initial={{ opacity: 0, y: 30, rotate: i % 2 ? 1.5 : -1.5 }} animate={{ opacity: 1, y: 0, rotate: 0 }} transition={{ duration: .5, delay: Math.min(i, 6) * .06, ease: [.16, 1, .3, 1] }}>
-      <div className="lp-pcard-top" style={{ background: g.tone }}>
-        <span className="lp-pcard-cat">{p.category}</span>
-        <b>{p.name}</b>
-      </div>
-      <div className="lp-pcard-body">
-        <button className="lp-pcard-inst" onClick={() => onInst(inst)}><span className="lp-mono sm" style={{ background: SECTOR_TONE[inst?.sector] }}>{initials(p.instName)}</span><span>{short(inst?.name || p.instName)}<small>{inst?.regulator} · tap for details</small></span></button>
-        <p>{p.features}</p>
-        <dl className="lp-pcard-dl">
-          {p.min && <><dt>Start with</dt><dd>{p.min}</dd></>}
-          {p.tenure && <><dt>Time</dt><dd>{p.tenure}</dd></>}
-          {p.pricing && <><dt>How you earn or pay</dt><dd>{p.pricing}</dd></>}
-        </dl>
-        <div className="lp-ctr-chips">{contractsIn(p.contract).map(c => <button key={c.name} onClick={() => onContract(c)}>{c.name.split(" / ")[0]}<Ic n="spark" s={12} /></button>)}</div>
-      </div>
-    </motion.article>
+    <Sheet onClose={onClose} label={p.name}>
+      <span className="lp-eyebrow" style={{ color: g.tone }}>{p.category}</span>
+      <h3 className="lp-sheet-t">{p.name}</h3>
+      <button className="lp-pcard-inst" style={{ margin: "10px 0 6px" }} onClick={() => onInst(inst)}><span className="lp-mono sm" style={{ background: SECTOR_TONE[inst?.sector] }}>{initials(p.instName)}</span><span>{short(inst?.name || p.instName)}<small>{inst?.regulator} · see the institution</small></span></button>
+      {p.features && <p className="lp-muted" style={{ fontSize: 15, lineHeight: 1.55 }}>{p.features}</p>}
+      <dl className="lp-pcard-dl" style={{ marginTop: 14 }}>
+        {p.min && <><dt>Start with</dt><dd>{p.min}</dd></>}
+        {p.tenure && <><dt>Time</dt><dd>{p.tenure}</dd></>}
+        {p.pricing && <><dt>How you earn or pay</dt><dd>{p.pricing}</dd></>}
+        {p.segment && <><dt>Made for</dt><dd>{p.segment}</dd></>}
+      </dl>
+      <div className="lp-ctr-chips" style={{ marginTop: 14 }}>{contractsIn(p.contract).map(c => <button key={c.name} onClick={() => onContract(c)}>{c.name.split(" / ")[0]}<Ic n="spark" s={12} /></button>)}</div>
+      <p className="lp-fine" style={{ textAlign: "left", marginTop: 14 }}>Public information, 2026. Not a recommendation. Confirm details with the institution.</p>
+    </Sheet>
   );
 }
 
@@ -125,7 +137,14 @@ function Flip({ c, i }) {
   );
 }
 
-export default function Institutions({ inApp = false }) {
+const TABS = [["/app/directory", "Match me", "spark", true], ["/app/directory/all", "Institutions", "building"], ["/app/directory/contracts", "Contracts", "doc"]];
+const TITLES = {
+  match: ["Find a halal home for your money.", "Tell us what you want your money to do."],
+  all: [`All ${INSTITUTIONS.length} institutions.`, "Licensed, verified and always A to Z."],
+  contracts: ["Ten words that make finance halal.", "Tap a card to see how it works and who carries the risk."]
+};
+
+export default function Institutions({ view = "match" }) {
   const [params, setParams] = useSearchParams();
   const goal = params.get("goal");
   const [q, setQ] = useState("");
@@ -133,115 +152,90 @@ export default function Institutions({ inApp = false }) {
   const [listing, setListing] = useState(false);
   const [inst, setInst] = useState(null);
   const [ctr, setCtr] = useState(null);
+  const [prod, setProd] = useState(null);
   const resultsRef = useRef(null);
-  useEffect(() => { if (location.hash === "#list") setListing(true); }, []);
-  const pick = g => { const n = new URLSearchParams(params); g ? n.set("goal", g) : n.delete("goal"); setParams(n, { replace: true }); setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80); };
+  const pick = g => { const n = new URLSearchParams(params); g ? n.set("goal", g) : n.delete("goal"); setParams(n, { replace: true }); if (g) setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80); };
   const G = goal ? goalOf(goal) : null;
   const matches = G ? productsFor(G.id) : [];
-  const helpers = G ? INSTITUTIONS.filter(i => i.goals.includes(G.id)).sort(sortAZ) : [];
+  const helpers = G ? INSTITUTIONS.filter(i => i.goals.includes(G.id)) : [];
   const list = useMemo(() => {
     const t = q.trim().toLowerCase();
-    return INSTITUTIONS.filter(i => !sector || i.sector === sector).filter(i => !t || [i.name, i.kind, i.regulator, i.suite, i.hq].join(" ").toLowerCase().includes(t)).sort(sortAZ);
-  }, [q, sector]);
+    return INSTITUTIONS.filter(i => !sector || i.sector === sector).filter(i => view !== "all" || !G || i.goals.includes(G.id))
+      .filter(i => !t || [i.name, i.kind, i.regulator, i.suite, i.hq].join(" ").toLowerCase().includes(t)).sort(sortAZ);
+  }, [q, sector, goal, view]);
+  const [title, sub] = TITLES[view];
 
   return (
-    <div className={"lp" + (inApp ? " lp-inapp" : "")}>
-      {!inApp && <SiteNav />}
-
-      {/* hero */}
-      <section className="lp-phero dir"><div className="lp-wrap lp-phero-in">
-        <span className="lp-eyebrow gold">The halal finance directory · Nigeria 2026</span>
-        <h1>Find a halal home for your money.</h1>
-        <p className="lp-lede">Every licensed non-interest bank, takaful operator, halal fund, pension and fintech we could find, in one place. Tell us what you want your money to do, and we'll show you who can help.</p>
-        <div className="lp-stats">
-          <div><b><Count to={INSTITUTIONS.length} /></b><small>institutions</small></div>
-          <div><b><Count to={PRODUCTS.length} /></b><small>products</small></div>
-          <div><b><Count to={CONTRACTS.length} /></b><small>Islamic contracts</small></div>
-          <div><b><Count to={4} /></b><small>regulators</small></div>
+    <div className="lp lp-inapp dir2">
+      <header className="d2-head">
+        <div className="d2-hero">
+          <span className="lp-eyebrow gold">Halal directory · Nigeria 2026</span>
+          <h1>{title}</h1>
+          <p>{sub}</p>
+          <div className="d2-stats"><span><b>{INSTITUTIONS.length}</b> institutions</span><span><b>{PRODUCTS.length}</b> products</span><span><b>{CONTRACTS.length}</b> contracts</span><span><b>4</b> regulators</span></div>
         </div>
-      </div>
-        <div className="lp-orbit" aria-hidden="true">{SECTORS.map((s, k) => <span key={s} style={{ "--k": k, background: SECTOR_TONE[s] }}>{SECTOR_SHORT[s]}</span>)}</div>
-      </section>
+        <nav className="d2-tabs" aria-label="Directory sections">{TABS.map(([to, l, ic, end]) => <NavLink key={to} to={to + (goal && to !== "/app/directory/contracts" ? `?goal=${goal}` : "")} end={!!end}><Ic n={ic} s={16} />{l}</NavLink>)}</nav>
+      </header>
 
-      {/* matcher */}
-      <section className="lp-sec lp-match"><div className="lp-wrap">
-        <motion.div className="lp-head center" {...rise}>
-          <span className="lp-eyebrow">Match me</span>
-          <h2 className="lp-sentence">I want to <span className="lp-blank" style={{ background: G ? G.tone : "var(--paper-3)", color: G ? "#FFFFFF" : "var(--ink-2)" }}><AnimatePresence mode="wait"><motion.span key={goal || "none"} initial={{ y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -16, opacity: 0 }} transition={{ duration: .25 }}>{G ? G.ask : "…"}</motion.span></AnimatePresence></span></h2>
-        </motion.div>
-        <div className="lp-goalpick" role="group" aria-label="What do you want your money to do?">
-          {GOALS.map((g, k) => (
-            <motion.button key={g.id} className="lp-gp" aria-pressed={goal === g.id} style={{ "--t": g.tone }} onClick={() => pick(goal === g.id ? null : g.id)}
-              initial={{ opacity: 0, scale: .9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: k * .05 }} whileTap={{ scale: .96 }}>
-              <span className="lp-gp-ic"><Ic n={GOAL_ICON[g.id]} s={22} /></span><b>{g.label}</b>
+      {view === "match" && <section className="d2-sec">
+        <h2 className="lp-sentence d2-sentence">I want to <span className="lp-blank" style={{ background: G ? G.tone : "var(--paper-3)", color: G ? "#FFFFFF" : "var(--ink-2)" }}><AnimatePresence mode="wait"><motion.span key={goal || "none"} initial={{ y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -16, opacity: 0 }} transition={{ duration: .25 }}>{G ? G.ask : "…"}</motion.span></AnimatePresence></span></h2>
+        <div className="lp-goalpick d2-goals" role="group" aria-label="What do you want your money to do?">
+          {GOALS.map(g => (
+            <motion.button key={g.id} className="lp-gp" aria-pressed={goal === g.id} style={{ "--t": g.tone }} onClick={() => pick(goal === g.id ? null : g.id)} whileTap={{ scale: .96 }}>
+              <span className="lp-gp-ic"><Ic n={GOAL_ICON[g.id]} s={20} /></span><b>{g.label}</b>
             </motion.button>
           ))}
         </div>
-
         <div ref={resultsRef} className="lp-results">
           <AnimatePresence mode="wait">
             {G ? (
-              <motion.div key={G.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .4 }}>
-                <div className="lp-res-h">
-                  <div><span className="lp-res-n" style={{ color: G.tone }}>{matches.length || helpers.length}</span><span><b>{matches.length ? `halal product${matches.length === 1 ? "" : "s"} to ${G.ask}` : `institution${helpers.length === 1 ? "" : "s"} that can help you ${G.ask}`}</b><small>{G.line} Shown A to Z, never ranked.</small></span></div>
-                  <div className="lp-helpers">{helpers.slice(0, 8).map(i => <button key={i.id} title={i.name} onClick={() => setInst(i)} className="lp-mono sm" style={{ background: SECTOR_TONE[i.sector] }}>{initials(i.name)}</button>)}{helpers.length > 8 && <span className="lp-more">+{helpers.length - 8}</span>}</div>
+              <motion.div key={G.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .35 }}>
+                <div className="d2-res-h">
+                  <span className="lp-res-n" style={{ color: G.tone }}>{matches.length || helpers.length}</span>
+                  <span><b>{matches.length ? `halal product${matches.length === 1 ? "" : "s"} to ${G.ask}` : `institution${helpers.length === 1 ? "" : "s"} that can help`}</b><small>Shown A to Z, never ranked. Tap a card for details.</small></span>
                 </div>
-                {matches.length > 0 && <div className="lp-rail">{matches.map((p, i) => <ProductCard key={p.id} p={p} i={i} onInst={setInst} onContract={setCtr} />)}</div>}
-                <div className="lp-helper-list">
-                  <small>Institutions offering this</small>
-                  <div>{helpers.map(i => <button key={i.id} onClick={() => setInst(i)}><span className="lp-mono xs" style={{ background: SECTOR_TONE[i.sector] }}>{initials(i.name)}</span>{short(i.name)}</button>)}</div>
-                </div>
+                {matches.length > 0 && <div className="lp-rail d2-rail">{matches.map((p, i) => <ProductCard key={p.id} p={p} i={i} onOpen={setProd} />)}</div>}
+                <Link to={`/app/directory/all?goal=${G.id}`} className="d2-seeall"><span className="d2-avs">{helpers.slice(0, 5).map(i => <i key={i.id} style={{ background: SECTOR_TONE[i.sector] }}>{initials(i.name)}</i>)}</span><span><b>See the {helpers.length} institutions that offer this</b><small>Compare who's licensed, what they offer and how to reach them</small></span><Ic n="arrow" s={18} /></Link>
               </motion.div>
             ) : (
-              <motion.p key="hint" className="lp-res-empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>Pick one above. We'll match you with real products and the institutions behind them.</motion.p>
+              <motion.p key="hint" className="lp-res-empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>Pick one above to see matching products.</motion.p>
             )}
           </AnimatePresence>
         </div>
-      </div></section>
+        <Link to="/app/directory/contracts" className="d2-promo"><span className="d2-promo-ic">3<em>×</em></span><span><b>New to words like Mudarabah?</b><small>Decode the 10 contracts behind every product</small></span><Ic n="arrow" s={18} /></Link>
+      </section>}
 
-      {/* contract decoder */}
-      <section className="lp-sec navy"><div className="lp-wrap">
-        <motion.div className="lp-head" {...rise}>
-          <span className="lp-eyebrow gold">Decode the contracts</span>
-          <h2>Ten words that make finance halal.</h2>
-          <p className="lp-lede" style={{ color: "#C9D3E6" }}>Every product here runs on a classical Islamic contract. Tap a card to see how it works and who carries the risk.</p>
-        </motion.div>
-        <div className="lp-flips">{CONTRACTS.map((c, i) => <Flip key={c.name} c={c} i={i} />)}</div>
-      </div></section>
-
-      {/* ecosystem */}
-      <section className="lp-sec"><div className="lp-wrap">
-        <motion.div className="lp-head" {...rise}>
-          <span className="lp-eyebrow">The whole ecosystem</span>
-          <h2>All {INSTITUTIONS.length} institutions, A to Z.</h2>
-        </motion.div>
-        <div className="lp-sectors">
-          <button className="lp-sector" aria-pressed={!sector} onClick={() => setSector(null)} style={{ "--t": "#0B1530" }}><b>{INSTITUTIONS.length}</b><span>Everyone</span></button>
-          {SECTORS.map(s => <button key={s} className="lp-sector" aria-pressed={sector === s} onClick={() => setSector(sector === s ? null : s)} style={{ "--t": SECTOR_TONE[s] }}><b>{INSTITUTIONS.filter(i => i.sector === s).length}</b><span>{SECTOR_SHORT[s]}</span></button>)}
+      {view === "all" && <section className="d2-sec">
+        <div className="d2-filters">
+          <label className="lp-search wide"><Ic n="search" s={18} /><input type="search" placeholder="Search by name, product or city" value={q} onChange={e => setQ(e.target.value)} aria-label="Search institutions" /></label>
+          <div className="d2-chips">
+            {G && <button className="d2-chip on" style={{ "--t": G.tone }} onClick={() => pick(null)}>{G.label} <Ic n="x" s={13} /></button>}
+            <button className="d2-chip" aria-pressed={!sector} onClick={() => setSector(null)}>All <em>{INSTITUTIONS.length}</em></button>
+            {SECTORS.map(s => <button key={s} className="d2-chip" aria-pressed={sector === s} style={{ "--t": SECTOR_TONE[s] }} onClick={() => setSector(sector === s ? null : s)}>{SECTOR_SHORT[s]} <em>{INSTITUTIONS.filter(i => i.sector === s).length}</em></button>)}
+          </div>
         </div>
-        <label className="lp-search wide"><Ic n="search" s={18} /><input type="search" placeholder="Search by name, product or city" value={q} onChange={e => setQ(e.target.value)} aria-label="Search institutions" /></label>
-        <motion.div layout className="lp-instgrid">
+        <motion.div layout className="d2-list">
           <AnimatePresence>
-            {list.map(i => (
-              <motion.button layout key={i.id} className="lp-icard" onClick={() => setInst(i)} initial={{ opacity: 0, scale: .95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .95 }} transition={{ duration: .2 }}>
+            {list.map(i => { const n = PRODUCTS.filter(p => p.inst === i.id).length; return (
+              <motion.button layout key={i.id} className="d2-row" onClick={() => setInst(i)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }}>
                 <span className="lp-mono" style={{ background: SECTOR_TONE[i.sector] }}>{initials(i.name)}</span>
-                <span className="lp-icard-t"><b>{short(i.name)}</b><small>{i.kind}</small></span>
-                <span className="lp-icard-f"><span className="lp-reg sm">{i.regulator}</span><span className="lp-icard-goals">{i.goals.slice(0, 4).map(g => <i key={g} title={goalOf(g).label} style={{ background: goalOf(g).tone }}><Ic n={GOAL_ICON[g]} s={12} /></i>)}</span></span>
-              </motion.button>
-            ))}
+                <span className="d2-row-t"><b>{short(i.name)}</b><small>{i.kind}</small></span>
+                <span className="d2-row-m"><span className="lp-reg sm">{i.regulator}</span>{n > 0 && <small>{n} product{n === 1 ? "" : "s"}</small>}</span>
+                <Ic n="arrow" s={16} />
+              </motion.button>); })}
           </AnimatePresence>
         </motion.div>
-        {!list.length && <div className="lp-empty"><b>No institutions match that.</b><button className="btn ghost sm" onClick={() => { setQ(""); setSector(null); }}>Clear</button></div>}
+        {!list.length && <div className="lp-empty"><b>No institutions match that.</b><button className="btn ghost sm" onClick={() => { setQ(""); setSector(null); pick(null); }}>Clear filters</button></div>}
+        <button className="d2-list-cta" onClick={() => setListing(true)}><Ic n="building" s={18} /><span><b>Missing an institution?</b><small>Licensed providers can request a free, verified listing</small></span><Ic n="arrow" s={16} /></button>
+      </section>}
 
-        <div className="lp-listband" id="list">
-          <div><h3>Missing from the list?</h3><p>Licensed Islamic institutions can request a free, verified listing. Shown equally, never ranked.</p></div>
-          <button className="btn" onClick={() => setListing(true)}>Request a free listing<Ic n="arrow" s={18} /></button>
-        </div>
-        <p className="lp-fine" style={{ marginTop: 20, textAlign: "left" }}>Compiled from public sources (2026). Information, not a recommendation or financial advice; confirm details directly with each institution. Not sure where you stand yet? <Link to="/app/check">Take the family check</Link> first.</p>
-      </div></section>
+      {view === "contracts" && <section className="d2-sec">
+        <div className="lp-flips d2-flips">{CONTRACTS.map((c, i) => <Flip key={c.name} c={c} i={i} />)}</div>
+      </section>}
 
-      {!inApp && <SiteFooter onList={() => setListing(true)} />}
+      <p className="lp-fine d2-fine">Compiled from public sources (2026). Information, not a recommendation or financial advice. Confirm details directly with each institution.</p>
       <ListingModal open={listing} onClose={() => setListing(false)} />
+      {prod && <ProductSheet p={prod} onClose={() => setProd(null)} onInst={i => { setProd(null); setInst(i); }} onContract={c => { setProd(null); setCtr(c); }} />}
       {inst && <InstSheet inst={inst} onClose={() => setInst(null)} onContract={c => { setInst(null); setCtr(c); }} />}
       {ctr && <ContractSheet c={ctr} onClose={() => setCtr(null)} />}
     </div>
